@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-Inventori UPK — Sistem Pengurusan Aset &amp; Inventori Rasmi</title>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#0F3E5D',
+            'on-primary': '#FFFFFF',
+            'secondary': '#16719A',
+            'on-secondary': '#FFFFFF',
+            'accent': '#C18C3B',
+            'on-accent': '#291800',
+            'accent-soft': '#E2EEF5',
+            'on-accent-soft': '#0F3E5D',
+            'surface': '#FFFFFF',
+            'on-surface': '#0F172A',
+            'surface-dim': '#F8FAFC',
+            'on-surface-dim': '#0F172A',
+            'surface-variant': '#F1F5F9',
+            'on-surface-variant': '#475569',
+            'outline': '#CBD5E1',
+            'outline-variant': '#E2E8F0',
+            'danger': '#D62828',
+            'on-danger': '#FFFFFF',
+            'status-active-bg': '#DCFCE7',
+            'on-status-active-bg': '#166534',
+            'status-active-border': '#86EFAC',
+            'status-maint-bg': '#FEF9C3',
+            'on-status-maint-bg': '#854D0E',
+            'status-maint-border': '#FDE047',
+            'status-disposal-bg': '#FEE2E2',
+            'on-status-disposal-bg': '#991B1B',
+            'status-disposal-border': '#FCA5A5',
+            'status-archived-bg': '#F1F5F9',
+            'on-status-archived-bg': '#475569',
+            'status-archived-border': '#CBD5E1',
+            'chart-emerald': '#2A9D8F',
+            'chart-amber': '#E9C46A',
+            'chart-crimson': '#D62828',
+          },
+          borderRadius: {
+            'sm': '6px',
+            'DEFAULT': '10px',
+            'md': '12px',
+            'lg': '16px',
+            'xl': '20px',
+            'full': '9999px',
+          },
+          fontFamily: {
+            'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+            'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+            'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+            'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+            'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+            'mono': ['"Source Code Pro"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    .material-symbols-outlined {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1 !important;
+      box-sizing: content-box;
+      overflow: hidden;
+      white-space: nowrap;
+      direction: ltr;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body antialiased flex flex-col min-h-screen">
+
+  <!-- FLOATING PILL TOP NAVBAR -->
+  <header class="w-full px-4 sm:px-6 lg:px-8 pt-5 z-30">
+    <div class="max-w-7xl mx-auto bg-surface border border-outline-variant rounded-full px-5 py-2.5 shadow-sm flex items-center justify-between gap-4">
+      
+      <!-- Brand Mark -->
+      <a href="landing.html" class="flex items-center gap-2.5 shrink-0">
+        <img src="assets/logo-upk.png" alt="Logo UPK" class="w-9 h-9 rounded-full object-contain bg-white p-0.5 border border-accent/40 shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
+        <div class="flex flex-col">
+          <span class="font-title text-base font-bold text-primary leading-none">e-Inventori UPK</span>
+          <span class="font-label text-[11px] text-on-surface-variant">Jabatan Sekolah-Sekolah</span>
+        </div>
+      </a>
+
+      <!-- Center Pill Links -->
+      <nav aria-label="Navigasi Laman Utama" class="hidden md:flex items-center gap-6 text-xs font-semibold">
+        <a href="#modul" class="text-on-surface-variant hover:text-primary transition-colors">Modul Teras</a>
+        <a href="index.html#katalog" class="text-on-surface-variant hover:text-primary transition-colors">Katalog Aset</a>
+        <a href="index.html#stockcard" class="text-on-surface-variant hover:text-primary transition-colors">Kad Stok Rasmi</a>
+        <a href="index.html#pelupusan" class="text-on-surface-variant hover:text-primary transition-colors">Pelupusan Aset</a>
+      </nav>
+
+      <!-- Right Pill Actions -->
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="index.html#scan" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-variant text-primary hover:bg-accent-soft transition-colors text-xs font-bold">
+          <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+          <span>Imbas QR</span>
+        </a>
+        <a href="index.html#dashboard" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-on-primary hover:bg-secondary transition-colors shadow-sm text-xs font-bold">
+          <span>Masuk Sistem</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main class="flex-1 w-full">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+      <!-- Left Hero Copy (6 cols) -->
+      <div class="lg:col-span-6 flex flex-col gap-6">
+        <!-- Trust Pill -->
+        <div class="inline-flex items-center gap-2.5 self-start px-3.5 py-1.5 rounded-full bg-surface border border-outline-variant shadow-sm">
+          <span class="w-6 h-6 rounded-full bg-primary text-accent flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[14px]">verified_user</span>
+          </span>
+          <span class="font-label text-[11px] font-bold uppercase text-primary tracking-wider">Selamat • Masa Nyata • Piawaian KPM</span>
+        </div>
+
+        <!-- 3-Line Display Headline -->
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary tracking-tight leading-tight">
+          <span class="block">Jejak Aset.</span>
+          <span class="block">Audit Pantas.</span>
+          <span class="block text-secondary">Tanpa Ketirisan.</span>
+        </h1>
+
+        <p class="font-body text-sm sm:text-base text-on-surface-variant max-w-prose leading-relaxed">
+          Platform pengurusan aset alih dan barang guna habis rasmi untuk <strong class="font-semibold text-primary">Unit Pendidikan Kerjaya (UPK)</strong>, Jabatan Sekolah-Sekolah. Menggabungkan pengimbasan Kod QR telefon pintar, Buku Simpanan digital, serta perbandingan visual pelupusan kerajaan Brunei Darussalam.
+        </p>
+
+        <!-- Pill Quick-Lookup Bar -->
+        <form onsubmit="handleQuickLookup(event)" class="bg-surface border border-outline-variant rounded-full p-2 pl-4 shadow-md flex items-center gap-2 max-w-xl">
+          <span class="material-symbols-outlined text-[20px] text-secondary shrink-0">qr_code_2</span>
+          <input type="text" id="quick-kod-aset" placeholder="Kod Aset (cth: UPK-AST-001)" aria-label="Masukkan Kod Aset" class="flex-1 min-w-0 border-0 bg-transparent p-1.5 font-body text-sm text-on-surface placeholder:text-on-surface-variant focus:ring-0 outline-none">
+          <span class="hidden sm:inline-block w-px h-6 bg-outline-variant shrink-0"></span>
+          <select id="quick-bilik-select" aria-label="Pilih Bilik UPK" class="hidden sm:block border-0 bg-transparent py-1.5 pl-2 pr-7 font-label text-xs text-on-surface-variant focus:ring-0 outline-none cursor-pointer">
+            <option value="Semua">Semua Bilik UPK</option>
+            <option value="Makmal Kerjaya">Makmal Kerjaya</option>
+            <option value="Pentadbiran">Pentadbiran Am</option>
+            <option value="Stor">Stor Utama</option>
+          </select>
+          <button type="submit" aria-label="Semak aset sekarang" class="w-11 h-11 rounded-full bg-secondary hover:bg-primary text-on-secondary flex items-center justify-center shrink-0 transition-colors shadow">
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          </button>
+        </form>
+
+        <!-- 3 Stat Counters -->
+        <div class="pt-2 grid grid-cols-3 gap-4 max-w-lg">
+          <div class="pr-4 border-r border-outline-variant">
+            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">1,248+</p>
+            <p class="font-body text-xs text-on-surface-variant mt-0.5">Unit Aset Berdaftar</p>
+          </div>
+          <div class="pr-4 border-r border-outline-variant">
+            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">94.5%</p>
+            <p class="font-body text-xs text-on-surface-variant mt-0.5">Beroperasi Baik</p>
+          </div>
+          <div>
+            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">4 Buku</p>
+            <p class="font-body text-xs text-on-surface-variant mt-0.5">Kad Stok Digital</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Hero 3D Isometric Visual (6 cols) -->
+      <div class="lg:col-span-6">
+        <div class="relative rounded-2xl overflow-hidden border border-outline-variant bg-surface shadow-xl group">
+          <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="w-full h-auto object-cover group-hover:scale-102 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=800&q=80'">
+          
+          <div class="absolute bottom-4 left-4 right-4 bg-surface/95 backdrop-blur-md border border-outline-variant rounded-xl p-3.5 shadow-md flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-lg bg-status-active-bg text-on-status-active-bg flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+              </span>
+              <div>
+                <p class="font-label text-xs font-bold text-primary">Audit Bilik Masa Nyata</p>
+                <p class="font-body text-[11px] text-on-surface-variant">Padanan foto asal &amp; lokasi bilik serta-merta</p>
+              </div>
+            </div>
+            <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-accent-soft text-primary shrink-0 border border-outline-variant">
+              UPK-AST-014
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- CORE CAPABILITIES STRIP (4 MODULES) -->
+    <section id="modul" class="bg-surface border-t border-outline-variant py-14 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex flex-col gap-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 class="font-headline text-xl sm:text-2xl font-extrabold text-primary">Ekosistem Pengurusan Inventori Bersepadu</h2>
+            <p class="font-body text-xs sm:text-sm text-on-surface-variant mt-1">Dari pendaftaran foto manual hingga pengeluaran dokumen PDF pelupusan aset kerajaan.</p>
+          </div>
+          <a href="index.html#dashboard" class="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:underline">
+            <span>Buka Papan Pemuka Pentadbiran</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          
+          <!-- Modul 1 -->
+          <a href="index.html#katalog" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
+              <span class="material-symbols-outlined text-[22px]">grid_view</span>
+            </div>
+            <h3 class="font-title text-sm font-bold text-primary">Katalog Visual &amp; Foto Asal</h3>
+            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Pendaftaran aset dengan pemampatan imej automatik di pelayar serta label Kod QR unik.</p>
+          </a>
+
+          <!-- Modul 2 -->
+          <a href="index.html#scan" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
+              <span class="material-symbols-outlined text-[22px]">qr_code_scanner</span>
+            </div>
+            <h3 class="font-title text-sm font-bold text-primary">Pengimbas Kamera Telefon</h3>
+            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Imbas kod QR terus di bilik kerja untuk sahkan penempatan rasmi tanpa aplikasi tambahan.</p>
+          </a>
+
+          <!-- Modul 3 -->
+          <a href="index.html#stockcard" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
+              <span class="material-symbols-outlined text-[22px]">assignment</span>
+            </div>
+            <h3 class="font-title text-sm font-bold text-primary">Buku Simpanan &amp; Kad Stok</h3>
+            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Rekod keluar-masuk dan pindahan bilik yang sedia dieksport ke Excel, CSV, dan PDF.</p>
+          </a>
+
+          <!-- Modul 4 -->
+          <a href="index.html#pelupusan" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
+              <span class="material-symbols-outlined text-[22px]">balance</span>
+            </div>
+            <h3 class="font-title text-sm font-bold text-primary">Pelupusan Bukti Bersebelahan</h3>
+            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Bandingkan foto asal dan bukti kerosakan untuk perakuan juruteknik dan kelulusan Ketua Unit.</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- INSTITUTIONAL FOOTER -->
+  <footer class="bg-primary text-on-primary py-6 px-4 sm:px-6 lg:px-8 border-t border-primary/20">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs">
+      <p class="font-body text-accent-soft">
+        &copy; 2026 Unit Pendidikan Kerjaya (UPK), Jabatan Sekolah-Sekolah, Kementerian Pendidikan Brunei Darussalam.
+      </p>
+      <span class="font-label font-semibold text-on-primary">Sistem Pengurusan Aset Alih &amp; Inventori Kerajaan</span>
+    </div>
+  </footer>
+
+  <script>
+    function handleQuickLookup(e) {
+      e.preventDefault();
+      const code = document.getElementById('quick-kod-aset').value.trim();
+      const bilik = document.getElementById('quick-bilik-select').value;
+      if (code) {
+        window.location.href = `index.html#katalog?q=${encodeURIComponent(code)}&bilik=${encodeURIComponent(bilik)}`;
+      } else {
+        window.location.href = `index.html#katalog?bilik=${encodeURIComponent(bilik)}`;
+      }
+    }
+  </script>
+</body>
+</html>

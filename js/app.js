@@ -34,7 +34,7 @@ const App = (function () {
     setupEventListeners();
     await bootSystem();
     await loadDashboardData();
-    navigate('dashboard');
+    parseHashAndNavigate();
   }
 
   function initUser() {
@@ -111,6 +111,9 @@ const App = (function () {
   }
 
   function setupEventListeners() {
+    // Navigasi URL hash (cth: #katalog?q=... atau #scan dari laman utama)
+    window.addEventListener('hashchange', parseHashAndNavigate);
+
     // Tutup mega menu jika klik luar
     document.addEventListener('click', function (e) {
       const panel = document.getElementById('mega-menu-panel');
@@ -135,6 +138,48 @@ const App = (function () {
         if (searchInput) searchInput.focus();
       }
     });
+  }
+
+  function parseHashAndNavigate() {
+    const rawHash = window.location.hash.replace(/^#/, '');
+    if (!rawHash) {
+      navigate('dashboard');
+      return;
+    }
+
+    const [routePart, queryPart] = rawHash.split('?');
+    const validRoutes = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr'];
+
+    if (routePart === 'scan') {
+      navigate('katalog');
+      setTimeout(() => openScannerModal(), 200);
+      return;
+    }
+
+    if (validRoutes.includes(routePart)) {
+      navigate(routePart);
+    } else {
+      navigate('dashboard');
+    }
+
+    if (queryPart) {
+      const params = new URLSearchParams(queryPart);
+      const q = params.get('q');
+      const bilik = params.get('bilik');
+      if (bilik && bilik !== 'Semua') {
+        _currentBilik = bilik;
+        const globalRoom = document.getElementById('global-room-select');
+        if (globalRoom) globalRoom.value = bilik;
+      }
+      if (q) {
+        _searchQuery = q.toLowerCase();
+        const searchInput = document.getElementById('katalog-search-input');
+        if (searchInput) searchInput.value = q;
+      }
+      if (routePart === 'katalog' && _katalogData.length > 0) {
+        renderKatalogGrid(filterKatalogList(_katalogData));
+      }
+    }
   }
 
   // ==========================================================================
