@@ -1670,7 +1670,16 @@ const App = (function () {
       let left = 0;
       let top = 0;
 
-      if (_pelanMode === '3d' && item.map3d_x && item.map3d_y) {
+      // Cari elemen penanda fizikal di skrin untuk kedudukan pixel-sempurna
+      const markerEl = (event && event.currentTarget) || document.getElementById(`marker3d-${item.ID_Aset}`) || document.getElementById(`marker-${item.ID_Aset}`);
+      if (markerEl && typeof markerEl.getBoundingClientRect === 'function') {
+        const mRect = markerEl.getBoundingClientRect();
+        left = (mRect.left - rect.left) + (mRect.width / 2) - 140;
+        top = (mRect.bottom - rect.top) + 10;
+        if (top + 260 > container.offsetHeight) {
+          top = (mRect.top - rect.top) - 265;
+        }
+      } else if (_pelanMode === '3d' && item.map3d_x && item.map3d_y) {
         const scaleX = rect.width / 1024;
         const scaleY = (rect.width * (683 / 1024)) / 683;
         left = (item.map3d_x * scaleX) - 140;
@@ -1683,8 +1692,8 @@ const App = (function () {
       }
 
       if (left < 10) left = 10;
-      if (left + 290 > rect.width) left = rect.width - 295;
-      if (top + 260 > container.offsetHeight) top = top - 270;
+      if (left + 290 > rect.width) left = Math.max(10, rect.width - 295);
+      if (top < 10) top = 10;
 
       popover.style.left = left + 'px';
       popover.style.top = top + 'px';

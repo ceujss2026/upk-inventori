@@ -311,6 +311,31 @@ body {
   filter: drop-shadow(0 0 14px rgba(193, 140, 59, 0.45));
 }
 
+/* Pelan 3D Isometrik: Zon Bilik Telus, Sorotan Hover & Pilihan Bilik */
+#svg-3d-overlay .svg-room {
+  opacity: 0;
+  stroke: transparent;
+  stroke-width: 3px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, stroke 0.2s ease, fill-opacity 0.2s ease;
+}
+
+#svg-3d-overlay .svg-room:hover {
+  opacity: 0.3 !important;
+  fill-opacity: 0.75 !important;
+  stroke: #0F3E5D !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 4px 12px rgba(15, 62, 93, 0.5)) !important;
+}
+
+#svg-3d-overlay .svg-room.active-room {
+  opacity: 0.42 !important;
+  fill-opacity: 0.85 !important;
+  stroke: #C18C3B !important;
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 16px rgba(193, 140, 59, 0.75)) !important;
+}
+
 /* Penanda Item / Hotspots */
 .asset-marker {
   cursor: pointer;
