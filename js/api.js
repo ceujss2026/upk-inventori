@@ -134,7 +134,7 @@ const API = (function () {
 
     // Dapatkan data setempat dari localStorage atau data awal
     let mockAset = JSON.parse(localStorage.getItem('upk_mock_aset') || 'null');
-    if (!mockAset || !mockAset[0]?.map3d_calibrated_v2) {
+    if (!mockAset || !mockAset[0]?.map3d_calibrated_v3) {
       mockAset = [
         {
           ID_Aset: 'UPK-AST-001',
@@ -148,7 +148,7 @@ const API = (function () {
           map_y: 390,
           map3d_x: 525,
           map3d_y: 350,
-          map3d_calibrated_v2: true,
+          map3d_calibrated_v3: true,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
@@ -213,8 +213,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-MEETING',
           map_x: 180,
           map_y: 450,
-          map3d_x: 275,
-          map3d_y: 510,
+          map3d_x: 272,
+          map3d_y: 380,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Cadangan Pelupusan',
@@ -235,8 +235,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-MEETING',
           map_x: 210,
           map_y: 520,
-          map3d_x: 275,
-          map3d_y: 590,
+          map3d_x: 272,
+          map3d_y: 441,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
@@ -279,8 +279,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-KITCHEN',
           map_x: 100,
           map_y: 220,
-          map3d_x: 821,
-          map3d_y: 605,
+          map3d_x: 273,
+          map3d_y: 262,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
@@ -301,8 +301,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-STORE',
           map_x: 120,
           map_y: 110,
-          map3d_x: 585,
-          map3d_y: 498,
+          map3d_x: 273,
+          map3d_y: 141,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
@@ -345,8 +345,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-STORE',
           map_x: 230,
           map_y: 110,
-          map3d_x: 300,
-          map3d_y: 195,
+          map3d_x: 295,
+          map3d_y: 155,
           Baki_Stok: 4,
           Paras_Amaran_Minimum: 5,
           Status_Aset: 'Beroperasi Baik',
