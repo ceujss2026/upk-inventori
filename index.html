@@ -645,11 +645,14 @@
         <!-- Suis Mod Paparan & Tindakan -->
         <div class="flex flex-wrap items-center gap-2">
           <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold">
-            <button id="btn-pelan-mode-svg" onclick="App.setPelanMode('svg')" class="px-3 py-1.5 rounded-lg bg-white text-upk-navy shadow-sm transition">
-              <i class="fa-solid fa-vector-square mr-1 text-upk-cerulean"></i> Peta Vektor (SVG)
+            <button id="btn-pelan-mode-clean" onclick="App.setPelanMode('clean')" class="px-3 py-1.5 rounded-lg bg-white text-upk-navy shadow-sm transition">
+              <i class="fa-solid fa-layer-group mr-1 text-upk-cerulean"></i> Pelan Digital Kemas
+            </button>
+            <button id="btn-pelan-mode-svg" onclick="App.setPelanMode('svg')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              <i class="fa-solid fa-vector-square mr-1 text-slate-500"></i> Peta Vektor (SVG)
             </button>
             <button id="btn-pelan-mode-source" onclick="App.setPelanMode('source')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
-              <i class="fa-solid fa-image mr-1 text-amber-600"></i> Pelan Asal (Foto)
+              <i class="fa-solid fa-camera mr-1 text-amber-600"></i> Rujukan Foto Bilik
             </button>
           </div>
 
@@ -709,8 +712,34 @@
               <span>Klik mana-mana bilik atau titik item</span>
             </div>
 
-            <!-- MOD 1: PETA VEKTOR INTERAKTIF (SVG) -->
-            <div id="pelan-svg-viewport" class="overflow-hidden p-2 sm:p-4">
+            <!-- MOD 1: PELAN DIGITAL ARKITEK KEMAS (DENGAN PENANDA INTERAKTIF) -->
+            <div id="pelan-clean-viewport" class="overflow-hidden p-2 sm:p-4">
+              <div class="relative rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-50">
+                <img id="img-clean-floor-plan" src="assets/floor-plan-clean-trimmed.png" alt="Pelan Arkitek Kemas UPK" class="w-full h-auto block">
+                <!-- Lapisan SVG Interaktif Di Atas Pelan Kemas -->
+                <svg id="svg-clean-overlay" viewBox="0 0 600 528" class="absolute inset-0 w-full h-full pointer-events-auto">
+                  <!-- Zon Panas Bilik (Clickable Room Hotspots with Gold/Navy Hover Glow) -->
+                  <rect x="45" y="65" width="115" height="65" rx="3" class="svg-room opacity-0 hover:opacity-25" fill="#C18C3B" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
+                  <rect x="45" y="130" width="115" height="95" rx="3" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
+                  <path d="M 45 225 L 160 225 L 160 380 Q 102 425 45 380 Z" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                  <rect x="160" y="20" width="45" height="45" rx="2" class="svg-room opacity-0 hover:opacity-25" fill="#0284C7" data-room-id="TANDAS-NORTH" onclick="App.selectMapRoom('TANDAS-NORTH')" />
+                  <rect x="205" y="20" width="50" height="95" rx="2" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
+                  <rect x="160" y="115" width="95" height="110" class="svg-room opacity-0 hover:opacity-25" fill="#10B981" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
+                  <rect x="255" y="225" width="70" height="50" rx="2" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                  <rect x="325" y="225" width="70" height="50" rx="2" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
+                  <path d="M 160 320 L 240 320 L 240 405 Q 200 425 160 405 Z" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+                  <rect x="350" y="295" width="130" height="115" rx="2" class="svg-room opacity-0 hover:opacity-25" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+                  
+                  <!-- Penanda Aset Pada Pelan Kemas -->
+                  <g id="clean-overlay-asset-markers">
+                    <!-- Dijana secara dinamik oleh App.renderMapMarkers() -->
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <!-- MOD 2: PETA VEKTOR BLUEPRINT (SVG PENUH) -->
+            <div id="pelan-svg-viewport" class="hidden overflow-hidden p-2 sm:p-4">
               <svg id="svg-upk-floor-plan" viewBox="0 0 850 720" class="svg-floor-plan">
                 <defs>
                   <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
