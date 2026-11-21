@@ -103,6 +103,10 @@
       <!-- Center Pill Links -->
       <nav aria-label="Navigasi Laman Utama" class="hidden md:flex items-center gap-6 text-xs font-semibold">
         <a href="#modul" class="text-on-surface-variant hover:text-primary transition-colors">Modul Teras</a>
+        <a href="index.html#pelan" class="text-primary font-bold hover:text-secondary transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px] text-accent">map</span>
+          <span>Pelan Lantai</span>
+        </a>
         <a href="index.html#katalog" class="text-on-surface-variant hover:text-primary transition-colors">Katalog Aset</a>
         <a href="index.html#stockcard" class="text-on-surface-variant hover:text-primary transition-colors">Kad Stok Rasmi</a>
         <a href="index.html#pelupusan" class="text-on-surface-variant hover:text-primary transition-colors">Pelupusan Aset</a>
@@ -154,9 +158,11 @@
           <span class="hidden sm:inline-block w-px h-6 bg-outline-variant shrink-0"></span>
           <select id="quick-bilik-select" aria-label="Pilih Bilik UPK" class="hidden sm:block border-0 bg-transparent py-1.5 pl-2 pr-7 font-label text-xs text-on-surface-variant focus:ring-0 outline-none cursor-pointer">
             <option value="Semua">Semua Bilik UPK</option>
-            <option value="Makmal Kerjaya">Makmal Kerjaya</option>
-            <option value="Pentadbiran">Pentadbiran Am</option>
-            <option value="Stor">Stor Utama</option>
+            <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
+            <option value="Bilik Kaunseling">Bilik Kaunseling & Kerjaya C</option>
+            <option value="Bilik Eksekutif">Bilik Eksekutif & Sumber D</option>
+            <option value="Dapur">Dapur & Pantri</option>
+            <option value="Stor">Bilik Stor & Suis</option>
           </select>
           <button type="submit" aria-label="Semak aset sekarang" class="w-11 h-11 rounded-full bg-secondary hover:bg-primary text-on-secondary flex items-center justify-center shrink-0 transition-colors shadow">
             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>

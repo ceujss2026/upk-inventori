@@ -148,7 +148,7 @@ const App = (function () {
     }
 
     const [routePart, queryPart] = rawHash.split('?');
-    const validRoutes = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr'];
+    const validRoutes = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
 
     if (routePart === 'scan') {
       navigate('katalog');
@@ -190,7 +190,7 @@ const App = (function () {
     closeMegaMenu();
 
     // Sembunyikan semua views
-    const views = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr'];
+    const views = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
     views.forEach(v => {
       const el = document.getElementById('view-' + v);
       if (el) el.classList.add('hidden');
@@ -216,6 +216,7 @@ const App = (function () {
     if (viewId === 'aduan') loadAduanData();
     if (viewId === 'pelupusan') loadPelupusanData();
     if (viewId === 'cetak-qr') renderPrintStickers();
+    if (viewId === 'pelan') loadPelanData();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -476,9 +477,12 @@ const App = (function () {
         </div>
 
         <!-- Butang Tindakan Bawah Kad -->
-        <div class="px-3.5 pb-3 pt-0">
-          <button class="w-full py-1.5 rounded-lg bg-slate-100 hover:bg-upk-cerulean hover:text-white text-slate-700 font-semibold text-[11px] transition flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-eye text-[10px]"></i> Butiran Lengkap
+        <div class="px-3.5 pb-3 pt-0 grid grid-cols-2 gap-1.5">
+          <button onclick="event.stopPropagation(); App.locateAssetOnMap('${item.ID_Aset}')" class="py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold text-[10px] transition flex items-center justify-center gap-1 border border-amber-200" title="Tunjuk kedudukan di pelan lantai">
+            <i class="fa-solid fa-map-location-dot text-[10px] text-amber-600"></i> Peta
+          </button>
+          <button class="py-1.5 rounded-lg bg-slate-100 hover:bg-upk-cerulean hover:text-white text-slate-700 font-semibold text-[10px] transition flex items-center justify-center gap-1">
+            <i class="fa-solid fa-eye text-[10px]"></i> Butiran
           </button>
         </div>
       </div>
@@ -1282,6 +1286,545 @@ const App = (function () {
     }
   }
 
+  // ==========================================================================
+  // MODUL PELAN LANTAI INTERAKTIF & PETA LOKASI ASET (FLOOR PLAN ENGINE)
+  // ==========================================================================
+  let _pelanMode = 'svg';
+  let _selectedMapRoom = 'BILIK-MEETING';
+  let _selectedMapAsset = null;
+  let _mapZoom = 1;
+
+  const ROOM_DIRECTORY = {
+    'BILIK-MEETING': {
+      nama: 'Bilik Mesyuarat Utama (Meeting Room)',
+      kod: 'BILIK-MEETING',
+      kategori: 'Dewan / Bilik Utama',
+      kapasiti: '25 Orang',
+      foto: 'assets/rooms/meeting-room.jpg',
+      pegawai: 'Ketua Unit UPK'
+    },
+    'BILIK-ROOM-C': {
+      nama: 'Bilik Kaunseling & Kerjaya C (Room C)',
+      kod: 'BILIK-ROOM-C',
+      kategori: 'Bilik Kaunseling',
+      kapasiti: '10 Orang',
+      foto: 'assets/rooms/room-c.jpg',
+      pegawai: 'Cikgu Siti (Kaunselor Kanan)'
+    },
+    'BILIK-ROOM-D': {
+      nama: 'Bilik Eksekutif & Sumber D (Room D)',
+      kod: 'BILIK-ROOM-D',
+      kategori: 'Bilik Eksekutif & Sumber',
+      kapasiti: '15 Orang',
+      foto: 'assets/rooms/room-d.jpg',
+      pegawai: 'Pegawai Sumber UPK'
+    },
+    'BILIK-ROOM-A': {
+      nama: 'Bilik Pegawai A (Room A)',
+      kod: 'BILIK-ROOM-A',
+      kategori: 'Bilik Pegawai',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-a.jpg',
+      pegawai: 'Cikgu Ahmad (Pegawai Kerjaya A)'
+    },
+    'BILIK-ROOM-B': {
+      nama: 'Bilik Pegawai B (Room B)',
+      kod: 'BILIK-ROOM-B',
+      kategori: 'Bilik Pegawai',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-b.jpg',
+      pegawai: 'Pegawai Kerjaya B'
+    },
+    'BILIK-KITCHEN': {
+      nama: 'Dapur & Pantri (Kitchen)',
+      kod: 'BILIK-KITCHEN',
+      kategori: 'Pantri Kakitangan',
+      kapasiti: '8 Orang',
+      foto: 'assets/rooms/kitchen.jpg',
+      pegawai: 'Penyelia Pantri UPK'
+    },
+    'BILIK-STORE': {
+      nama: 'Bilik Stor & Suis Elektrik',
+      kod: 'BILIK-STORE',
+      kategori: 'Stor & Utiliti',
+      kapasiti: '3 Orang',
+      foto: 'assets/rooms/store.jpg',
+      pegawai: 'Pegawai Stor & Aset'
+    },
+    'BILIK-ROOM-TOP': {
+      nama: 'Bilik Arkib & Rekod (Room Top)',
+      kod: 'BILIK-ROOM-TOP',
+      kategori: 'Arkib Rasmi',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-top.jpg',
+      pegawai: 'Pegawai Arkib'
+    },
+    'BILIK-OUTDOOR': {
+      nama: 'Ruang Terbuka / Laman Luar (Outdoor)',
+      kod: 'BILIK-OUTDOOR',
+      kategori: 'Ruang Terbuka',
+      kapasiti: '15 Orang',
+      foto: 'assets/rooms/outdoor.jpg',
+      pegawai: 'Penyelia Bangunan'
+    },
+    'BILIK-WALKWAY': {
+      nama: 'Laluan Koridor Utama (Walkway)',
+      kod: 'BILIK-WALKWAY',
+      kategori: 'Koridor',
+      kapasiti: 'Laluan Pergerakan',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Semua Kakitangan'
+    },
+    'TANDAS-NORTH': {
+      nama: 'Tandas Sayap Utara',
+      kod: 'TANDAS-NORTH',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-top.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'TANDAS-1': {
+      nama: 'Tandas Kakitangan 1',
+      kod: 'TANDAS-1',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'TANDAS-2': {
+      nama: 'Tandas Kakitangan 2',
+      kod: 'TANDAS-2',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'TANDAS-3': {
+      nama: 'Tandas Tetamu 3',
+      kod: 'TANDAS-3',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'TANDAS-4': {
+      nama: 'Tandas 4',
+      kod: 'TANDAS-4',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'TANDAS-5': {
+      nama: 'Tandas 5',
+      kod: 'TANDAS-5',
+      kategori: 'Kemudahan Sanitari',
+      kapasiti: '1 Orang',
+      foto: 'assets/rooms/walkway-center.jpg',
+      pegawai: 'Penyelia Kebersihan'
+    },
+    'SUIS-AC': {
+      nama: 'Panel Suis Penghawa Dingin',
+      kod: 'SUIS-AC',
+      kategori: 'Utiliti Elektrik',
+      kapasiti: 'Utiliti',
+      foto: 'assets/rooms/store.jpg',
+      pegawai: 'Juruteknik Elektrik'
+    },
+    'ALMARI-MASUK': {
+      nama: 'Almari Masuk (Walk-in Closet)',
+      kod: 'ALMARI-MASUK',
+      kategori: 'Stor Simpanan',
+      kapasiti: 'Simpanan',
+      foto: 'assets/rooms/store.jpg',
+      pegawai: 'Pegawai Sumber'
+    },
+    'ALMARI-STOR': {
+      nama: 'Almari Stor Bawah',
+      kod: 'ALMARI-STOR',
+      kategori: 'Stor Simpanan',
+      kapasiti: 'Simpanan',
+      foto: 'assets/rooms/store.jpg',
+      pegawai: 'Pegawai Stor'
+    }
+  };
+
+  async function loadPelanData() {
+    if (!_katalogData || !_katalogData.length) {
+      await loadKatalogData();
+    }
+    populatePelanBilikFilter();
+    renderMapMarkers();
+    selectMapRoom(_selectedMapRoom || 'BILIK-MEETING');
+  }
+
+  function populatePelanBilikFilter() {
+    const select = document.getElementById('pelan-bilik-select');
+    if (!select) return;
+    select.innerHTML = '<option value="Semua">Semua Bilik UPK</option>';
+    Object.keys(ROOM_DIRECTORY).forEach(key => {
+      const r = ROOM_DIRECTORY[key];
+      select.innerHTML += `<option value="${key}">${r.nama}</option>`;
+    });
+  }
+
+  function renderMapMarkers(filterKeyword = '') {
+    const container = document.getElementById('map-asset-markers');
+    if (!container) return;
+
+    const kw = (filterKeyword || '').toLowerCase().trim();
+    let items = _katalogData.filter(item => item.map_x && item.map_y);
+
+    if (kw) {
+      items = items.filter(item => 
+        (item.Nama_Barang || '').toLowerCase().includes(kw) ||
+        (item.ID_Aset || '').toLowerCase().includes(kw) ||
+        (item.Buku_Simpanan || '').toLowerCase().includes(kw) ||
+        (item.Lokasi_Bilik || '').toLowerCase().includes(kw)
+      );
+    }
+
+    container.innerHTML = items.map(item => {
+      let color = '#10B981'; // Baik
+      if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
+      if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
+
+      const isActive = _selectedMapAsset === item.ID_Aset;
+
+      return `
+        <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
+           id="marker-${item.ID_Aset}" 
+           data-asset-id="${item.ID_Aset}"
+           transform="translate(${item.map_x}, ${item.map_y})" 
+           onclick="App.onMarkerClick('${item.ID_Aset}', event)">
+          <!-- Gelombang Radar Animasi -->
+          <circle class="radar-pulse" r="10" stroke="${color}" stroke-width="2" fill="${color}" fill-opacity="0.25" />
+          <!-- Bulatan Penanda Utama -->
+          <circle r="12" fill="${color}" stroke="#FFFFFF" stroke-width="2.5" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.25))" />
+          <!-- Label Kod Mini -->
+          <rect x="-24" y="-22" width="48" height="12" rx="3" fill="#0F172A" fill-opacity="0.85" />
+          <text x="0" y="-13" text-anchor="middle" font-size="7" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
+        </g>
+      `;
+    }).join('');
+  }
+
+  function selectMapRoom(roomId) {
+    _selectedMapRoom = roomId;
+
+    // Padamkan kelas aktif pada semua bilik
+    document.querySelectorAll('.svg-room').forEach(el => el.classList.remove('active-room'));
+
+    // Aktifkan bilik yang dipilih
+    const targetEl = document.querySelector(`[data-room-id="${roomId}"]`);
+    if (targetEl) targetEl.classList.add('active-room');
+
+    // Selaraskan nilai dropdown bilik
+    const select = document.getElementById('pelan-bilik-select');
+    if (select && select.value !== roomId) select.value = roomId;
+
+    // Ambil metadata bilik
+    const rInfo = ROOM_DIRECTORY[roomId] || {
+      nama: roomId,
+      kod: roomId,
+      kategori: 'Ruang UPK',
+      kapasiti: 'Fleksibel',
+      foto: 'assets/hero-isometric.png',
+      pegawai: 'Pentadbiran UPK'
+    };
+
+    // Kemas kini panel pemeriksaan bilik
+    const imgEl = document.getElementById('inspect-room-img');
+    const nameEl = document.getElementById('inspect-room-name');
+    const codeEl = document.getElementById('inspect-room-code');
+    const catEl = document.getElementById('inspect-room-category-badge');
+    const capEl = document.getElementById('inspect-room-capacity');
+
+    if (imgEl) imgEl.src = rInfo.foto;
+    if (nameEl) nameEl.textContent = rInfo.nama;
+    if (codeEl) codeEl.textContent = rInfo.kod;
+    if (catEl) catEl.textContent = rInfo.kategori;
+    if (capEl) capEl.textContent = rInfo.kapasiti;
+
+    // Tapis aset di dalam bilik ini
+    const roomItems = _katalogData.filter(a => {
+      if (a.map_bilik_id === roomId) return true;
+      const bStr = (a.Lokasi_Bilik || '').toLowerCase();
+      const rStr = (rInfo.nama || '').toLowerCase();
+      if (rStr.includes('meeting') && bStr.includes('mesyuarat')) return true;
+      if (rStr.includes('kitchen') && (bStr.includes('dapur') || bStr.includes('pantri'))) return true;
+      if (rStr.includes('store') && bStr.includes('stor')) return true;
+      if (rStr.includes('room a') && bStr.includes('bilik a')) return true;
+      if (rStr.includes('room b') && bStr.includes('bilik b')) return true;
+      if (rStr.includes('room c') && (bStr.includes('bilik c') || bStr.includes('kaunseling'))) return true;
+      if (rStr.includes('room d') && (bStr.includes('bilik d') || bStr.includes('sumber'))) return true;
+      if (rStr.includes('room top') && bStr.includes('arkib')) return true;
+      return false;
+    });
+
+    const totalEl = document.getElementById('inspect-room-total-count');
+    if (totalEl) totalEl.textContent = `${roomItems.length} Unit`;
+
+    // Kira pecahan status kesihatan aset
+    const baikCount = roomItems.filter(a => a.Status_Aset === 'Beroperasi Baik').length;
+    const maintCount = roomItems.filter(a => a.Status_Aset === 'Dalam Penyelenggaraan').length;
+    const rosakCount = roomItems.filter(a => a.Status_Aset === 'Cadangan Pelupusan' || a.Status_Aset === 'Dilupuskan').length;
+    const total = roomItems.length || 1;
+
+    const pBaik = Math.round((baikCount / total) * 100);
+    const pMaint = Math.round((maintCount / total) * 100);
+    const pRosak = Math.round((rosakCount / total) * 100);
+
+    const bBaik = document.getElementById('inspect-bar-baik');
+    const bMaint = document.getElementById('inspect-bar-maint');
+    const bRosak = document.getElementById('inspect-bar-rosak');
+    if (bBaik) bBaik.style.width = pBaik + '%';
+    if (bMaint) bMaint.style.width = pMaint + '%';
+    if (bRosak) bRosak.style.width = pRosak + '%';
+
+    const tBaik = document.getElementById('inspect-txt-baik');
+    const tMaint = document.getElementById('inspect-txt-maint');
+    const tRosak = document.getElementById('inspect-txt-rosak');
+    if (tBaik) tBaik.textContent = `${pBaik}% Baik`;
+    if (tMaint) tMaint.textContent = `${pMaint}% Selenggara`;
+    if (tRosak) tRosak.textContent = `${pRosak}% Rosak`;
+
+    // Paparkan senarai item di bilik
+    const listEl = document.getElementById('inspect-room-items-list');
+    if (listEl) {
+      if (!roomItems.length) {
+        listEl.innerHTML = `
+          <div class="p-4 text-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            <i class="fa-solid fa-box-open text-2xl text-slate-300 mb-1"></i>
+            <p class="text-xs">Tiada aset berdaftar di bilik ini setakat ini.</p>
+          </div>
+        `;
+      } else {
+        listEl.innerHTML = roomItems.map(item => `
+          <div class="p-2.5 rounded-xl border border-slate-100 hover:border-upk-cerulean bg-slate-50/70 hover:bg-white transition flex items-center justify-between gap-3 cursor-pointer group" onclick="App.locateAssetOnMap('${item.ID_Aset}')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <img src="${item.URL_Foto_Asal || 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=150&q=80'}" class="w-10 h-10 rounded-lg object-cover bg-white border border-slate-200 shrink-0">
+              <div class="min-w-0">
+                <p class="font-bold text-xs text-slate-800 truncate group-hover:text-upk-cerulean transition">${item.Nama_Barang}</p>
+                <div class="flex items-center gap-1.5 mt-0.5 text-[10px]">
+                  <span class="font-mono text-slate-500">${item.ID_Aset}</span>
+                  <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                  <span class="${getStatusBadgeClass(item.Status_Aset)} !py-0 !px-1.5 !text-[9px]">${item.Status_Aset}</span>
+                </div>
+              </div>
+            </div>
+            <button class="w-7 h-7 rounded-lg bg-white border border-slate-200 group-hover:bg-upk-cerulean group-hover:text-white text-slate-400 flex items-center justify-center shrink-0 transition" title="Fokus di Peta">
+              <i class="fa-solid fa-crosshairs text-xs"></i>
+            </button>
+          </div>
+        `).join('');
+      }
+    }
+  }
+
+  function onMarkerClick(assetId, event) {
+    if (event) event.stopPropagation();
+    _selectedMapAsset = assetId;
+    const item = _katalogData.find(a => a.ID_Aset === assetId);
+    if (!item) return;
+
+    if (item.map_bilik_id) {
+      selectMapRoom(item.map_bilik_id);
+    }
+
+    renderMapMarkers();
+    showAssetPopover(item, event);
+  }
+
+  function showAssetPopover(item, event) {
+    const popover = document.getElementById('map-asset-popover');
+    if (!popover) return;
+
+    const container = document.querySelector('.floor-map-container');
+    if (container && item.map_x && item.map_y) {
+      const rect = container.getBoundingClientRect();
+      const scaleX = rect.width / 850;
+      const scaleY = (rect.width * (720 / 850)) / 720;
+      
+      let left = (item.map_x * scaleX) - 140;
+      let top = (item.map_y * scaleY) + 20;
+
+      if (left < 10) left = 10;
+      if (left + 290 > rect.width) left = rect.width - 295;
+      if (top + 260 > container.offsetHeight) top = top - 270;
+
+      popover.style.left = left + 'px';
+      popover.style.top = top + 'px';
+    }
+
+    popover.innerHTML = `
+      <div class="relative">
+        <button onclick="App.closeAssetPopover()" class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xs z-10">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="flex gap-3">
+          <img src="${item.URL_Foto_Asal || 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=300&q=80'}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0 bg-slate-50">
+          <div class="min-w-0 flex-1">
+            <span class="${getStatusBadgeClass(item.Status_Aset)} !text-[9px] !py-0.5 !px-1.5 mb-1 inline-block">${item.Status_Aset}</span>
+            <h4 class="font-bold text-xs text-slate-900 leading-tight truncate">${item.Nama_Barang}</h4>
+            <p class="font-mono text-[10px] text-slate-500 mt-0.5">${item.ID_Aset}</p>
+            <p class="text-[10px] text-slate-600 mt-1 flex items-center gap-1 truncate">
+              <i class="fa-solid fa-map-pin text-amber-500 text-[9px]"></i> ${item.Lokasi_Bilik}
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-3 pt-2.5 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center">
+          <button onclick="App.openDetailModal('${item.ID_Aset}')" class="py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition">
+            Butiran
+          </button>
+          <button onclick="App.openAduanModalWithAsset('${item.ID_Aset}')" class="py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] font-semibold transition border border-amber-200">
+            Aduan
+          </button>
+          <button onclick="App.openPindahBilikModalWithAsset('${item.ID_Aset}')" class="py-1 rounded-lg bg-upk-navy hover:bg-upk-cerulean text-white text-[10px] font-semibold transition">
+            Pindah
+          </button>
+        </div>
+      </div>
+    `;
+
+    popover.classList.remove('hidden');
+  }
+
+  function closeAssetPopover() {
+    const popover = document.getElementById('map-asset-popover');
+    if (popover) popover.classList.add('hidden');
+    _selectedMapAsset = null;
+    renderMapMarkers();
+  }
+
+  function locateAssetOnMap(assetId) {
+    navigate('pelan');
+    const item = _katalogData.find(a => a.ID_Aset === assetId);
+    if (!item) return;
+
+    if (item.map_bilik_id) {
+      selectMapRoom(item.map_bilik_id);
+    }
+
+    _selectedMapAsset = assetId;
+    renderMapMarkers();
+
+    setTimeout(() => {
+      showAssetPopover(item);
+    }, 200);
+  }
+
+  function locateAssetFromDetailModal() {
+    if (_selectedAsetDetail) {
+      const id = _selectedAsetDetail.ID_Aset;
+      closeDetailModal();
+      locateAssetOnMap(id);
+    }
+  }
+
+  function setPelanMode(mode) {
+    _pelanMode = mode;
+    const svgView = document.getElementById('pelan-svg-viewport');
+    const srcView = document.getElementById('pelan-source-viewport');
+    const btnSvg = document.getElementById('btn-pelan-mode-svg');
+    const btnSrc = document.getElementById('btn-pelan-mode-source');
+
+    if (mode === 'svg') {
+      if (svgView) svgView.classList.remove('hidden');
+      if (srcView) srcView.classList.add('hidden');
+      if (btnSvg) {
+        btnSvg.classList.add('bg-white', 'text-upk-navy', 'shadow-sm');
+        btnSvg.classList.remove('text-slate-600');
+      }
+      if (btnSrc) {
+        btnSrc.classList.remove('bg-white', 'text-upk-navy', 'shadow-sm');
+        btnSrc.classList.add('text-slate-600');
+      }
+    } else {
+      if (svgView) svgView.classList.add('hidden');
+      if (srcView) srcView.classList.remove('hidden');
+      if (btnSrc) {
+        btnSrc.classList.add('bg-white', 'text-upk-navy', 'shadow-sm');
+        btnSrc.classList.remove('text-slate-600');
+      }
+      if (btnSvg) {
+        btnSvg.classList.remove('bg-white', 'text-upk-navy', 'shadow-sm');
+        btnSvg.classList.add('text-slate-600');
+      }
+    }
+  }
+
+  function zoomMap(factor) {
+    _mapZoom = Math.max(0.6, Math.min(2.5, _mapZoom * factor));
+    const svg = document.getElementById('svg-upk-floor-plan');
+    if (svg) {
+      svg.style.transform = `scale(${_mapZoom})`;
+      svg.style.transformOrigin = 'center center';
+      svg.style.transition = 'transform 0.25s ease';
+    }
+  }
+
+  function resetMapZoom() {
+    _mapZoom = 1;
+    const svg = document.getElementById('svg-upk-floor-plan');
+    if (svg) {
+      svg.style.transform = 'scale(1)';
+    }
+  }
+
+  function onPelanSearch(kw) {
+    renderMapMarkers(kw);
+    const matched = _katalogData.filter(a => 
+      (a.Nama_Barang || '').toLowerCase().includes(kw.toLowerCase()) ||
+      (a.ID_Aset || '').toLowerCase().includes(kw.toLowerCase())
+    );
+    if (matched.length === 1 && matched[0].map_bilik_id) {
+      selectMapRoom(matched[0].map_bilik_id);
+    }
+  }
+
+  function onPelanBilikFilter(roomId) {
+    if (roomId === 'Semua') {
+      document.querySelectorAll('.svg-room').forEach(el => el.classList.remove('active-room'));
+      renderMapMarkers();
+    } else {
+      selectMapRoom(roomId);
+    }
+  }
+
+  function openDaftarAsetModalWithRoom() {
+    openDaftarAsetModal();
+    const select = document.getElementById('daftar-bilik-select');
+    if (select && _selectedMapRoom) {
+      const rInfo = ROOM_DIRECTORY[_selectedMapRoom];
+      if (rInfo) select.value = rInfo.nama;
+    }
+  }
+
+  function viewRoomStockCard() {
+    const rInfo = ROOM_DIRECTORY[_selectedMapRoom];
+    navigate('stockcard');
+    const filter = document.getElementById('stock-bilik-filter');
+    if (filter && rInfo) {
+      filter.value = rInfo.nama;
+      filterStockCardList();
+    }
+  }
+
+  function openAduanModalWithAsset(assetId) {
+    closeAssetPopover();
+    const ast = _katalogData.find(a => a.ID_Aset === assetId);
+    if (!ast) return;
+    openAduanModal(ast.ID_Aset, ast.Nama_Barang, ast.Lokasi_Bilik);
+  }
+
+  function openPindahBilikModalWithAsset(assetId) {
+    closeAssetPopover();
+    openPindahBilikModal(assetId);
+  }
+
   // Mulakan aplikasi apabila DOM siap
   document.addEventListener('DOMContentLoaded', init);
 
@@ -1322,6 +1865,22 @@ const App = (function () {
     submitLogin,
     logout,
     showSettingsModal,
-    showMigrationModal
+    showMigrationModal,
+    // Modul Pelan Lantai & Peta Aset
+    selectMapRoom,
+    onMarkerClick,
+    showAssetPopover,
+    closeAssetPopover,
+    locateAssetOnMap,
+    locateAssetFromDetailModal,
+    setPelanMode,
+    zoomMap,
+    resetMapZoom,
+    onPelanSearch,
+    onPelanBilikFilter,
+    openDaftarAsetModalWithRoom,
+    viewRoomStockCard,
+    openAduanModalWithAsset,
+    openPindahBilikModalWithAsset
   };
 })();
