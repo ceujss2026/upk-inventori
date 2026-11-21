@@ -1289,7 +1289,7 @@ const App = (function () {
   // ==========================================================================
   // MODUL PELAN LANTAI INTERAKTIF & PETA LOKASI ASET (FLOOR PLAN ENGINE)
   // ==========================================================================
-  let _pelanMode = 'svg';
+  let _pelanMode = '3d';
   let _selectedMapRoom = 'BILIK-MEETING';
   let _selectedMapAsset = null;
   let _mapZoom = 1;
@@ -1469,11 +1469,11 @@ const App = (function () {
   }
 
   function renderMapMarkers(filterKeyword = '') {
-    const container = document.getElementById('map-asset-markers');
-    if (!container) return;
+    const container2D = document.getElementById('map-asset-markers');
+    const container3D = document.getElementById('map3d-asset-markers');
 
     const kw = (filterKeyword || '').toLowerCase().trim();
-    let items = _katalogData.filter(item => item.map_x && item.map_y);
+    let items = _katalogData.filter(item => (item.map_x && item.map_y) || (item.map3d_x && item.map3d_y));
 
     if (kw) {
       items = items.filter(item => 
@@ -1484,40 +1484,64 @@ const App = (function () {
       );
     }
 
-    container.innerHTML = items.map(item => {
-      let color = '#10B981'; // Baik
-      if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
-      if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
+    // Render penanda pada 2D SVG Blueprint
+    if (container2D) {
+      container2D.innerHTML = items.filter(item => item.map_x && item.map_y).map(item => {
+        let color = '#10B981'; // Baik
+        if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
+        if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
+        const isActive = _selectedMapAsset === item.ID_Aset;
 
-      const isActive = _selectedMapAsset === item.ID_Aset;
+        return `
+          <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
+             id="marker-${item.ID_Aset}" 
+             data-asset-id="${item.ID_Aset}"
+             transform="translate(${item.map_x}, ${item.map_y})" 
+             onclick="App.onMarkerClick('${item.ID_Aset}', event)">
+            <circle class="radar-pulse" r="10" stroke="${color}" stroke-width="2" fill="${color}" fill-opacity="0.25" />
+            <circle r="12" fill="${color}" stroke="#FFFFFF" stroke-width="2.5" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.25))" />
+            <rect x="-24" y="-22" width="48" height="12" rx="3" fill="#0F172A" fill-opacity="0.85" />
+            <text x="0" y="-13" text-anchor="middle" font-size="7" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
+          </g>
+        `;
+      }).join('');
+    }
 
-      return `
-        <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
-           id="marker-${item.ID_Aset}" 
-           data-asset-id="${item.ID_Aset}"
-           transform="translate(${item.map_x}, ${item.map_y})" 
-           onclick="App.onMarkerClick('${item.ID_Aset}', event)">
-          <!-- Gelombang Radar Animasi -->
-          <circle class="radar-pulse" r="10" stroke="${color}" stroke-width="2" fill="${color}" fill-opacity="0.25" />
-          <!-- Bulatan Penanda Utama -->
-          <circle r="12" fill="${color}" stroke="#FFFFFF" stroke-width="2.5" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.25))" />
-          <!-- Label Kod Mini -->
-          <rect x="-24" y="-22" width="48" height="12" rx="3" fill="#0F172A" fill-opacity="0.85" />
-          <text x="0" y="-13" text-anchor="middle" font-size="7" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
-        </g>
-      `;
-    }).join('');
+    // Render penanda pada Pelan 3D Isometrik
+    if (container3D) {
+      container3D.innerHTML = items.map(item => {
+        const x3d = item.map3d_x || (item.map_x ? (item.map_x * 1024 / 850) : 512);
+        const y3d = item.map3d_y || (item.map_y ? (item.map_y * 683 / 720) : 341);
+        let color = '#10B981';
+        if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
+        if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
+        const isActive = _selectedMapAsset === item.ID_Aset;
+
+        return `
+          <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
+             id="marker3d-${item.ID_Aset}" 
+             data-asset-id="${item.ID_Aset}"
+             transform="translate(${x3d}, ${y3d})" 
+             onclick="App.onMarkerClick('${item.ID_Aset}', event)">
+            <circle class="radar-pulse" r="12" stroke="${color}" stroke-width="2.5" fill="${color}" fill-opacity="0.3" />
+            <circle r="13" fill="${color}" stroke="#FFFFFF" stroke-width="3" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))" />
+            <rect x="-26" y="-24" width="52" height="13" rx="3" fill="#0F172A" fill-opacity="0.9" />
+            <text x="0" y="-14" text-anchor="middle" font-size="7.5" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
+          </g>
+        `;
+      }).join('');
+    }
   }
 
   function selectMapRoom(roomId) {
     _selectedMapRoom = roomId;
 
-    // Padamkan kelas aktif pada semua bilik
+    // Padamkan kelas aktif pada semua bilik (2D dan 3D)
     document.querySelectorAll('.svg-room').forEach(el => el.classList.remove('active-room'));
 
     // Aktifkan bilik yang dipilih
-    const targetEl = document.querySelector(`[data-room-id="${roomId}"]`);
-    if (targetEl) targetEl.classList.add('active-room');
+    const targetEls = document.querySelectorAll(`[data-room-id="${roomId}"]`);
+    targetEls.forEach(el => el.classList.add('active-room'));
 
     // Selaraskan nilai dropdown bilik
     const select = document.getElementById('pelan-bilik-select');
@@ -1641,13 +1665,22 @@ const App = (function () {
     if (!popover) return;
 
     const container = document.querySelector('.floor-map-container');
-    if (container && item.map_x && item.map_y) {
+    if (container) {
       const rect = container.getBoundingClientRect();
-      const scaleX = rect.width / 850;
-      const scaleY = (rect.width * (720 / 850)) / 720;
-      
-      let left = (item.map_x * scaleX) - 140;
-      let top = (item.map_y * scaleY) + 20;
+      let left = 0;
+      let top = 0;
+
+      if (_pelanMode === '3d' && item.map3d_x && item.map3d_y) {
+        const scaleX = rect.width / 1024;
+        const scaleY = (rect.width * (683 / 1024)) / 683;
+        left = (item.map3d_x * scaleX) - 140;
+        top = (item.map3d_y * scaleY) + 20;
+      } else if (item.map_x && item.map_y) {
+        const scaleX = rect.width / 850;
+        const scaleY = (rect.width * (720 / 850)) / 720;
+        left = (item.map_x * scaleX) - 140;
+        top = (item.map_y * scaleY) + 20;
+      }
 
       if (left < 10) left = 10;
       if (left + 290 > rect.width) left = rect.width - 295;
@@ -1726,52 +1759,65 @@ const App = (function () {
 
   function setPelanMode(mode) {
     _pelanMode = mode;
+    const v3d = document.getElementById('pelan-3d-viewport');
     const svgView = document.getElementById('pelan-svg-viewport');
     const srcView = document.getElementById('pelan-source-viewport');
+    const btn3d = document.getElementById('btn-pelan-mode-3d');
     const btnSvg = document.getElementById('btn-pelan-mode-svg');
     const btnSrc = document.getElementById('btn-pelan-mode-source');
 
-    if (mode === 'svg') {
+    [v3d, svgView, srcView].forEach(v => { if (v) v.classList.add('hidden'); });
+    [btn3d, btnSvg, btnSrc].forEach(b => { 
+      if (b) {
+        b.classList.remove('bg-white', 'text-upk-navy', 'shadow-sm');
+        b.classList.add('text-slate-600');
+      }
+    });
+
+    if (mode === '3d') {
+      if (v3d) v3d.classList.remove('hidden');
+      if (btn3d) {
+        btn3d.classList.add('bg-white', 'text-upk-navy', 'shadow-sm');
+        btn3d.classList.remove('text-slate-600');
+      }
+    } else if (mode === 'svg') {
       if (svgView) svgView.classList.remove('hidden');
-      if (srcView) srcView.classList.add('hidden');
       if (btnSvg) {
         btnSvg.classList.add('bg-white', 'text-upk-navy', 'shadow-sm');
         btnSvg.classList.remove('text-slate-600');
       }
-      if (btnSrc) {
-        btnSrc.classList.remove('bg-white', 'text-upk-navy', 'shadow-sm');
-        btnSrc.classList.add('text-slate-600');
-      }
     } else {
-      if (svgView) svgView.classList.add('hidden');
       if (srcView) srcView.classList.remove('hidden');
       if (btnSrc) {
         btnSrc.classList.add('bg-white', 'text-upk-navy', 'shadow-sm');
         btnSrc.classList.remove('text-slate-600');
       }
-      if (btnSvg) {
-        btnSvg.classList.remove('bg-white', 'text-upk-navy', 'shadow-sm');
-        btnSvg.classList.add('text-slate-600');
-      }
     }
+    closeAssetPopover();
   }
 
   function zoomMap(factor) {
     _mapZoom = Math.max(0.6, Math.min(2.5, _mapZoom * factor));
     const svg = document.getElementById('svg-upk-floor-plan');
+    const box3d = document.querySelector('#pelan-3d-viewport > div');
     if (svg) {
       svg.style.transform = `scale(${_mapZoom})`;
       svg.style.transformOrigin = 'center center';
       svg.style.transition = 'transform 0.25s ease';
+    }
+    if (box3d) {
+      box3d.style.transform = `scale(${_mapZoom})`;
+      box3d.style.transformOrigin = 'center center';
+      box3d.style.transition = 'transform 0.25s ease';
     }
   }
 
   function resetMapZoom() {
     _mapZoom = 1;
     const svg = document.getElementById('svg-upk-floor-plan');
-    if (svg) {
-      svg.style.transform = 'scale(1)';
-    }
+    const box3d = document.querySelector('#pelan-3d-viewport > div');
+    if (svg) svg.style.transform = 'scale(1)';
+    if (box3d) box3d.style.transform = 'scale(1)';
   }
 
   function onPelanSearch(kw) {

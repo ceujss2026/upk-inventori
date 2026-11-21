@@ -645,11 +645,14 @@
         <!-- Suis Mod Paparan & Tindakan -->
         <div class="flex flex-wrap items-center gap-2">
           <div class="inline-flex p-1 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold">
-            <button id="btn-pelan-mode-svg" onclick="App.setPelanMode('svg')" class="px-3 py-1.5 rounded-lg bg-white text-upk-navy shadow-sm transition">
-              <i class="fa-solid fa-vector-square mr-1 text-upk-cerulean"></i> Peta Vektor (SVG)
+            <button id="btn-pelan-mode-3d" onclick="App.setPelanMode('3d')" class="px-3 py-1.5 rounded-lg bg-white text-upk-navy shadow-sm transition">
+              <i class="fa-solid fa-cube mr-1 text-upk-cerulean"></i> Pelan 3D Isometrik
+            </button>
+            <button id="btn-pelan-mode-svg" onclick="App.setPelanMode('svg')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              <i class="fa-solid fa-vector-square mr-1 text-slate-500"></i> Peta Vektor (2D)
             </button>
             <button id="btn-pelan-mode-source" onclick="App.setPelanMode('source')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
-              <i class="fa-solid fa-image mr-1 text-amber-600"></i> Pelan Asal (Foto)
+              <i class="fa-solid fa-image mr-1 text-amber-600"></i> Rujukan Lakaran
             </button>
           </div>
 
@@ -709,8 +712,54 @@
               <span>Klik mana-mana bilik atau titik item</span>
             </div>
 
-            <!-- MOD 1: PETA VEKTOR INTERAKTIF (SVG) -->
-            <div id="pelan-svg-viewport" class="overflow-hidden p-2 sm:p-4">
+            <!-- MOD 1: PELAN 3D ISOMETRIK (RENDER MEWAH DENGAN PENANDA INTERAKTIF) -->
+            <div id="pelan-3d-viewport" class="overflow-hidden p-2 sm:p-4">
+              <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-900 group">
+                <img id="img-3d-floor-plan" src="assets/floor-plan-3d.jpg" alt="Pelan 3D Isometrik UPK" class="w-full h-auto block select-none">
+                
+                <!-- Lapisan SVG Interaktif Di Atas Pelan 3D (viewBox: 0 0 1024 683) -->
+                <svg id="svg-3d-overlay" viewBox="0 0 1024 683" class="absolute inset-0 w-full h-full pointer-events-auto">
+                  <!-- Zon Panas Bilik 3D (Clickable Room Hotspots with Gold/Navy Hover Tint) -->
+                  <!-- 1. Bilik Stor & Suis Elektrik (Top-Left) -->
+                  <rect x="165" y="105" width="195" height="200" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#C18C3B" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
+                  
+                  <!-- 2. Dapur & Pantri (Kitchen - Middle-Left) -->
+                  <rect x="175" y="310" width="185" height="150" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
+                  
+                  <!-- 3. Dewan Mesyuarat Utama (Meeting Room - Curved Bottom) -->
+                  <path d="M 175 460 L 360 460 L 360 580 Q 268 640 175 580 Z" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                  
+                  <!-- 4. Tandas Sayap Utara (Top Toilet) -->
+                  <rect x="365" y="30" width="60" height="75" rx="3" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#0284C7" data-room-id="TANDAS-NORTH" onclick="App.selectMapRoom('TANDAS-NORTH')" />
+                  
+                  <!-- 5. Bilik Arkib & Rekod (Room Top / Office) -->
+                  <rect x="425" y="30" width="170" height="200" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
+                  
+                  <!-- 6. Ruang Terbuka / Laman Tengah (Outdoor) -->
+                  <rect x="365" y="225" width="130" height="230" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#10B981" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
+                  
+                  <!-- 7. Bilik Pegawai A (Room A - Meja Merah) -->
+                  <rect x="475" y="460" width="105" height="120" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#C18C3B" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                  
+                  <!-- 8. Bilik Pegawai B (Room B - Meja Biru) -->
+                  <rect x="580" y="460" width="105" height="120" rx="4" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#0284C7" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
+                  
+                  <!-- 9. Bilik Kaunseling & Kerjaya C (Room C - Karpet Ungu) -->
+                  <path d="M 365 500 L 525 500 L 525 590 Q 445 635 365 590 Z" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#8B5CF6" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+                  
+                  <!-- 10. Bilik Eksekutif & Sumber D (Room D & Balcony - Sofa Hijau & Meja Kopi) -->
+                  <path d="M 600 460 L 805 460 L 805 600 Q 700 660 600 600 Z" class="svg-room opacity-0 hover:opacity-20 cursor-pointer transition-opacity" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+                  
+                  <!-- Kumpulan Penanda Aset Dinamik Pada Pelan 3D -->
+                  <g id="map3d-asset-markers">
+                    <!-- Dijana secara dinamik oleh App.render3DMapMarkers() -->
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <!-- MOD 2: PETA VEKTOR INTERAKTIF (SVG 2D) -->
+            <div id="pelan-svg-viewport" class="hidden overflow-hidden p-2 sm:p-4">
               <svg id="svg-upk-floor-plan" viewBox="0 0 850 720" class="svg-floor-plan">
                 <defs>
                   <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
