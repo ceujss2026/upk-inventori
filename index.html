@@ -705,6 +705,11 @@
               <button onclick="App.resetMapZoom()" class="px-2 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-700 font-medium" title="Tetapkan Semula">
                 Semula
               </button>
+              <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
+              <button id="btn-toggle-coord-inspector" onclick="App.toggleCoordinateInspector()" class="px-2.5 h-7 rounded-lg hover:bg-amber-50 text-slate-700 flex items-center gap-1.5 font-medium transition-all" title="Buka / Tutup Pemeriksa Koordinat (Crosshair HUD)">
+                <i class="fa-solid fa-crosshairs text-amber-600"></i>
+                <span class="hidden sm:inline text-[11px]">Semak Koordinat</span>
+              </button>
             </div>
 
             <div class="absolute top-3 right-3 z-20 hidden sm:flex items-center gap-1.5 bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-xl px-2.5 py-1 shadow-sm text-[11px] text-slate-600">
@@ -766,6 +771,9 @@
                   <g id="map3d-asset-markers">
                     <!-- Dijana secara dinamik oleh App.render3DMapMarkers() -->
                   </g>
+
+                  <!-- Sasaran Pemeriksa Koordinat 3D -->
+                  <g id="map3d-inspector-marker"></g>
                 </svg>
               </div>
             </div>
@@ -900,6 +908,9 @@
                 <g id="map-asset-markers">
                   <!-- Dijana secara dinamik oleh App.renderMapMarkers() -->
                 </g>
+
+                <!-- Sasaran Pemeriksa Koordinat 2D -->
+                <g id="map-inspector-marker"></g>
               </svg>
             </div>
 
@@ -940,6 +951,29 @@
             <!-- KAD POPOVER TERAPUNG OAKORY (UNTUK ITEM YANG DITEKAN DI PETA) -->
             <div id="map-asset-popover" class="hidden map-popover-card p-3.5">
               <!-- Dijana secara dinamik oleh App.showAssetPopover() -->
+            </div>
+
+            <!-- HUD BAR PEMERIKSA KOORDINAT (INTERAKTIF & SALIN KOORDINAT SEGERA) -->
+            <div id="coord-inspector-hud" class="hidden absolute bottom-3 left-3 right-3 z-30 bg-slate-900/95 text-white backdrop-blur-md border border-amber-500/50 rounded-xl px-4 py-2.5 shadow-2xl flex flex-wrap items-center justify-between gap-2 text-xs select-none pointer-events-auto transition-all">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34D399]"></div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] text-amber-400 uppercase tracking-wider font-semibold">Pemeriksa Koordinat:</span>
+                    <span class="font-mono text-amber-300 font-bold text-sm tracking-wide" id="hud-coord-display">X: --, Y: --</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-300" id="hud-room-hint">Klik mana-mana titik pada pelan untuk meletakkan sasaran & menyalin kod koordinat</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="App.copyCurrentCoordinate()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all active:scale-95" title="Salin Kod Koordinat Terpilih">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Salin Kod</span>
+                </button>
+                <button onclick="App.toggleCoordinateInspector()" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-xs" title="Tutup Pemeriksa">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
             </div>
 
           </div>

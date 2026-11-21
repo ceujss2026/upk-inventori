@@ -1880,6 +1880,147 @@ const App = (function () {
     openPindahBilikModal(assetId);
   }
 
+  // --------------------------------------------------------------------------
+  // MODUL PEMERIKSA KOORDINAT PELAN (COORDINATE INSPECTOR HUD)
+  // --------------------------------------------------------------------------
+  let _isCoordInspectorActive = false;
+  let _lastInspectedCoords = { x: 512, y: 341, mode: '3d' };
+  let _coordInspectorEventsAttached = false;
+
+  function toggleCoordinateInspector() {
+    _isCoordInspectorActive = !_isCoordInspectorActive;
+    const btn = document.getElementById('btn-toggle-coord-inspector');
+    const hud = document.getElementById('coord-inspector-hud');
+    const svg3d = document.getElementById('svg-3d-overlay');
+    const svg2d = document.getElementById('svg-upk-floor-plan');
+
+    if (_isCoordInspectorActive) {
+      if (btn) {
+        btn.classList.add('bg-amber-100', 'text-amber-900', 'ring-2', 'ring-amber-400');
+        btn.classList.remove('text-slate-700');
+      }
+      if (hud) hud.classList.remove('hidden');
+      if (svg3d) svg3d.style.cursor = 'crosshair';
+      if (svg2d) svg2d.style.cursor = 'crosshair';
+      showToast('Pemeriksa Koordinat Diaktifkan! Klik mana-mana titik pada pelan.', 'info');
+      initCoordinateInspectorEvents();
+    } else {
+      if (btn) {
+        btn.classList.remove('bg-amber-100', 'text-amber-900', 'ring-2', 'ring-amber-400');
+        btn.classList.add('text-slate-700');
+      }
+      if (hud) hud.classList.add('hidden');
+      if (svg3d) svg3d.style.cursor = '';
+      if (svg2d) svg2d.style.cursor = '';
+      clearInspectorMarker();
+    }
+  }
+
+  function initCoordinateInspectorEvents() {
+    if (_coordInspectorEventsAttached) return;
+    _coordInspectorEventsAttached = true;
+
+    const svg3d = document.getElementById('svg-3d-overlay');
+    const svg2d = document.getElementById('svg-upk-floor-plan');
+
+    [
+      { el: svg3d, mode: '3d' },
+      { el: svg2d, mode: 'svg' }
+    ].forEach(({ el, mode }) => {
+      if (!el) return;
+
+      el.addEventListener('mousemove', (e) => {
+        if (!_isCoordInspectorActive) return;
+        const pt = getSvgCoordinates(el, e);
+        if (!pt) return;
+        _lastInspectedCoords = { x: pt.x, y: pt.y, mode };
+        updateHudDisplay(pt.x, pt.y, mode);
+      });
+
+      el.addEventListener('click', (e) => {
+        if (!_isCoordInspectorActive) return;
+        const pt = getSvgCoordinates(el, e);
+        if (!pt) return;
+        _lastInspectedCoords = { x: pt.x, y: pt.y, mode };
+        updateHudDisplay(pt.x, pt.y, mode);
+        renderInspectorTarget(pt.x, pt.y, mode);
+        copyCurrentCoordinate();
+      });
+    });
+  }
+
+  function getSvgCoordinates(svgEl, event) {
+    try {
+      const pt = svgEl.createSVGPoint();
+      pt.x = event.clientX;
+      pt.y = event.clientY;
+      const ctm = svgEl.getScreenCTM();
+      if (!ctm) return null;
+      const svgP = pt.matrixTransform(ctm.inverse());
+      return {
+        x: Math.round(svgP.x),
+        y: Math.round(svgP.y)
+      };
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function updateHudDisplay(x, y, mode) {
+    const disp = document.getElementById('hud-coord-display');
+    const hint = document.getElementById('hud-room-hint');
+    if (disp) {
+      disp.textContent = `X: ${x}, Y: ${y} (${mode === '3d' ? '3D' : '2D'})`;
+    }
+    if (hint) {
+      hint.textContent = `Kod: ${mode === '3d' ? 'map3d_x' : 'map_x'}: ${x}, ${mode === '3d' ? 'map3d_y' : 'map_y'}: ${y} (Klik untuk menyalin)`;
+    }
+  }
+
+  function renderInspectorTarget(x, y, mode) {
+    const g3d = document.getElementById('map3d-inspector-marker');
+    const g2d = document.getElementById('map-inspector-marker');
+    const targetG = mode === '3d' ? g3d : g2d;
+    if (!targetG) return;
+
+    targetG.innerHTML = `
+      <g transform="translate(${x}, ${y})" class="pointer-events-none">
+        <circle r="18" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="3,3" opacity="0.95">
+          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="6" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="-24" y1="0" x2="24" y2="0" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+        <line x1="0" y1="-24" x2="0" y2="24" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+        <rect x="-35" y="-36" width="70" height="16" rx="4" fill="#0F172A" opacity="0.95"/>
+        <text x="0" y="-24" text-anchor="middle" font-size="9" font-weight="700" fill="#FDE68A" font-family="monospace">${x}, ${y}</text>
+      </g>
+    `;
+  }
+
+  function clearInspectorMarker() {
+    const g3d = document.getElementById('map3d-inspector-marker');
+    const g2d = document.getElementById('map-inspector-marker');
+    if (g3d) g3d.innerHTML = '';
+    if (g2d) g2d.innerHTML = '';
+  }
+
+  function copyCurrentCoordinate() {
+    const { x, y, mode } = _lastInspectedCoords;
+    const snippet = mode === '3d'
+      ? `map3d_x: ${x}, map3d_y: ${y}`
+      : `map_x: ${x}, map_y: ${y}`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(snippet).then(() => {
+        showToast(`Koordinat Disalin! (${snippet})`, 'success');
+      }).catch(() => {
+        prompt('Salin kod koordinat berikut:', snippet);
+      });
+    } else {
+      prompt('Salin kod koordinat berikut:', snippet);
+    }
+  }
+
   // Mulakan aplikasi apabila DOM siap
   document.addEventListener('DOMContentLoaded', init);
 
@@ -1936,6 +2077,9 @@ const App = (function () {
     openDaftarAsetModalWithRoom,
     viewRoomStockCard,
     openAduanModalWithAsset,
-    openPindahBilikModalWithAsset
+    openPindahBilikModalWithAsset,
+    // Pemeriksa Koordinat
+    toggleCoordinateInspector,
+    copyCurrentCoordinate
   };
 })();
