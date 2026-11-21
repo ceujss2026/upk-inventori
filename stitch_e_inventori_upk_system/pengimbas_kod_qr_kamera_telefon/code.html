@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="ms"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengimbas Kod QR Kamera — e-Inventori UPK</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#0F3E5D',
+        'on-primary': '#FFFFFF',
+        'secondary': '#16719A',
+        'on-secondary': '#FFFFFF',
+        'accent': '#C18C3B',
+        'on-accent': '#291800',
+        'accent-soft': '#E2EEF5',
+        'on-accent-soft': '#0F3E5D',
+        'surface': '#FFFFFF',
+        'on-surface': '#0F172A',
+        'surface-dim': '#F8FAFC',
+        'on-surface-dim': '#0F172A',
+        'surface-variant': '#F1F5F9',
+        'on-surface-variant': '#475569',
+        'outline': '#CBD5E1',
+        'outline-variant': '#E2E8F0',
+        'danger': '#D62828',
+        'on-danger': '#FFFFFF',
+        'status-active-bg': '#DCFCE7',
+        'on-status-active-bg': '#166534',
+        'status-active-border': '#86EFAC',
+        'status-maint-bg': '#FEF9C3',
+        'on-status-maint-bg': '#854D0E',
+        'status-maint-border': '#FDE047',
+        'status-disposal-bg': '#FEE2E2',
+        'on-status-disposal-bg': '#991B1B',
+        'status-disposal-border': '#FCA5A5',
+        'status-archived-bg': '#F1F5F9',
+        'on-status-archived-bg': '#475569',
+        'status-archived-border': '#CBD5E1',
+        'chart-emerald': '#2A9D8F',
+        'chart-amber': '#E9C46A',
+        'chart-crimson': '#D62828',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'DEFAULT': '10px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.72px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '-0.44px', fontWeight: '700' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '-0.27px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.12px', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.55px', fontWeight: '600' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.24px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '220ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-primary text-on-primary font-body antialiased">
+  <div class="min-h-[884px] relative flex flex-col justify-between overflow-hidden" data-stitch-vh="min-h-[884px]===min-h-screen">
+
+    <!-- Camera Feed Background -->
+    <img src="https://lh3.googleusercontent.com/aida/ALJJyrCXBMUDAQ0yDAg4jZK172TkBLQgzz0jOb-S_6i9zJSuE9haX_lpsTKoUKClvMOukxiEhBYpXyaucQzEzZv8eG6bvH7FWbE9MozZykvCp-P2wv2Mjc-hy_UPeXfOx0Q0xzlKrbJxQMz_Z-Q25Px39lAwhfHTISobmafL6Nu9W76HuGPdhZ4iO5Vt7I3GNICIgDFLlXEPR5O-wIrsrVX8AwthOd451pDz-M9tBRUyeoBMFFqH3XQMYQ2z" alt="Paparan kamera bilik" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-primary/60"></div>
+
+    <!-- Top Camera Controls -->
+    <header class="relative z-20 px-4 pt-4 pb-3 flex items-center justify-between gap-3">
+      <a href="../katalog-mudah-alih/KatalogMudahAlih.html" aria-label="Kembali ke katalog" class="w-10 h-10 rounded-full bg-primary/80 border border-surface/30 text-on-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div class="px-3.5 py-1.5 rounded-full bg-primary/80 border border-surface/30">
+        <span data-design-text-token="label-md" class="font-label text-label-md text-on-primary">Pengimbas Kod QR UPK</span>
+      </div>
+      <button type="button" aria-label="Hidupkan lampu suluh" class="w-10 h-10 rounded-full bg-primary/80 border border-surface/30 text-accent flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">flashlight_on</span>
+      </button>
+    </header>
+
+    <!-- Center Targeting Reticle -->
+    <div class="relative z-20 flex-1 flex flex-col items-center justify-center px-6 gap-4">
+      <div class="relative w-56 h-56 rounded-xl border-2 border-accent-soft/60 bg-surface/5 flex items-center justify-center shadow-2xl">
+        <!-- Corner Brackets -->
+        <span class="absolute -top-0.5 -left-0.5 w-7 h-7 border-t-4 border-l-4 border-accent rounded-tl-lg"></span>
+        <span class="absolute -top-0.5 -right-0.5 w-7 h-7 border-t-4 border-r-4 border-accent rounded-tr-lg"></span>
+        <span class="absolute -bottom-0.5 -left-0.5 w-7 h-7 border-b-4 border-l-4 border-accent rounded-bl-lg"></span>
+        <span class="absolute -bottom-0.5 -right-0.5 w-7 h-7 border-b-4 border-r-4 border-accent rounded-br-lg"></span>
+
+        <!-- Active Scanning Beam -->
+        <div class="w-48 h-1 rounded-full bg-secondary shadow-md"></div>
+      </div>
+
+      <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-primary text-center max-w-xs bg-primary/75 px-4 py-2 rounded-full border border-surface/20">
+        Halakan kamera tepat pada label Kod QR di atas barang inventori
+      </p>
+    </div>
+
+    <!-- Instant Slide-Up Match Result Sheet -->
+    <section aria-label="Keputusan Imbasan Kod QR" class="relative z-30 bg-surface text-on-surface rounded-t-xl border-t border-outline-variant p-5 shadow-2xl flex flex-col gap-4">
+      <div class="w-10 h-1 rounded-full bg-outline mx-auto"></div>
+
+      <!-- Verification Status Banner -->
+      <div class="px-3.5 py-2.5 rounded-md bg-status-active-bg border border-status-active-border flex items-start gap-2.5">
+        <span class="material-symbols-outlined text-[20px] text-on-status-active-bg shrink-0 mt-0.5">verified</span>
+        <p data-design-text-token="label-md" class="font-label text-label-md text-on-status-active-bg">
+          Lokasi Tepat: Barang ini berada di bilik penempatan rasminya.
+        </p>
+      </div>
+
+      <!-- Matched Asset Summary -->
+      <div class="flex items-center gap-3.5">
+        <img src="https://lh3.googleusercontent.com/aida/ALJJyrC4n0SUqMSwCnyaI9VxeP-0tL1w3BwcVhFwnGG9O7HFl-HEs3vY2tfEbcaCDtMQ3tlIUV9KNvti4P0P6zjDnkuFWqgTO6wnJhRzVr93Ci9enRNQmT0zCP-AbJBLY4ECIgdNgJ_RGdQl0avcfpmq93c60q3s4i-DXS4bhRDcUBfQ0uDHc5Izsp88AQ-HnxrIxSlCBijVHcfY8K1Y5wnSZy6Og8CQ7600b7h-kuImHX5gzLwfPT40AMFaSA90AQ" alt="Komputer Riba Dell Latitude 3420" class="w-20 h-16 rounded-md object-cover border border-outline-variant shrink-0">
+        <div class="flex flex-col gap-0.5 min-w-0">
+          <span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-secondary">UPK-AST-014</span>
+          <h2 data-design-text-token="title-md" class="font-title text-title-md text-on-surface truncate">Dell Latitude 3420</h2>
+          <div class="flex items-center gap-1 text-on-surface-variant">
+            <span class="material-symbols-outlined text-[15px]">location_on</span>
+            <span data-design-text-token="body-sm" class="font-body text-body-sm truncate">Makmal Kerjaya UPK (Bilik 2)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="grid grid-cols-1 gap-2.5 pt-1">
+        <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded bg-secondary text-on-secondary hover:bg-primary transition-colors">
+          <span class="material-symbols-outlined text-[18px]">visibility</span>
+          <span data-design-text-token="label-lg" class="font-label text-label-lg">Buka Maklumat Lengkap</span>
+        </button>
+        <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded bg-status-disposal-bg text-on-status-disposal-bg border border-status-disposal-border transition-colors">
+          <span class="material-symbols-outlined text-[18px]">warning</span>
+          <span data-design-text-token="label-md" class="font-label text-label-md">Hantar Aduan Kerosakan Pantas</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+
+</body></html>

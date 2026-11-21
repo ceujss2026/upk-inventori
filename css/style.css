@@ -1,0 +1,263 @@
+/* ==========================================================================
+   e-Inventori UPK — Frontend: css/style.css
+   Gaya Reka Bentuk Korporat UPK, ZARE Mega Menu, Kad Oakory & Cetakan A4
+   Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah, Brunei Darussalam
+   ========================================================================== */
+
+:root {
+  --upk-navy: #0F3E5D;
+  --upk-navy-dark: #0A293E;
+  --upk-cerulean: #16719A;
+  --upk-cerulean-light: #1D8ABB;
+  --upk-gold: #C18C3B;
+  --upk-gold-light: #D4A359;
+  --upk-ice-blue: #E2EEF5;
+  --upk-ice-light: #F0F7FB;
+  --upk-canvas: #F8FAFC;
+  --upk-text-primary: #0F172A;
+  --upk-text-secondary: #475569;
+  --upk-border: #E2E8F0;
+  
+  --status-green-bg: #DCFCE7;
+  --status-green-txt: #166534;
+  --status-amber-bg: #FEF9C3;
+  --status-amber-txt: #854D0E;
+  --status-red-bg: #FEE2E2;
+  --status-red-txt: #991B1B;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--upk-canvas);
+  color: var(--upk-text-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   ZARE MEGA MENU & DUAL-TIER HEADER
+-------------------------------------------------------------------------- */
+.top-navy-bar {
+  background-color: var(--upk-navy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.horizontal-navbar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--upk-border);
+  box-shadow: 0 1px 3px rgba(15, 62, 93, 0.04);
+}
+
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--upk-text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.nav-tab-btn:hover,
+.nav-tab-btn.active {
+  color: var(--upk-cerulean);
+  border-bottom-color: var(--upk-cerulean);
+}
+
+.nav-tab-btn.active {
+  font-weight: 600;
+}
+
+/* Floating Mega Menu Dropdown Container */
+.mega-menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0 20px 40px -10px rgba(15, 62, 93, 0.18);
+  border-top: 1px solid var(--upk-border);
+  border-bottom: 2px solid var(--upk-cerulean);
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mega-menu-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mega-menu-col-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--upk-cerulean);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--upk-ice-blue);
+}
+
+.mega-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  color: var(--upk-text-primary);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.mega-menu-link:hover {
+  background-color: var(--upk-ice-light);
+  color: var(--upk-cerulean);
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   KAD ELEVASI & GAYA OAKORY
+-------------------------------------------------------------------------- */
+.upk-card {
+  background: #FFFFFF;
+  border: 1px solid var(--upk-border);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(15, 62, 93, 0.04), 0 4px 12px rgba(15, 62, 93, 0.02);
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.upk-card:hover {
+  box-shadow: 0 10px 25px -4px rgba(15, 62, 93, 0.10);
+  transform: translateY(-2px);
+  border-color: #CBDCE7;
+}
+
+.img-4-3 {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+  background-color: var(--upk-ice-blue);
+}
+
+/* --------------------------------------------------------------------------
+   LENCANA STATUS (STATUS BADGES)
+-------------------------------------------------------------------------- */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  line-height: 1;
+}
+
+.badge-baik {
+  background-color: var(--status-green-bg);
+  color: var(--status-green-txt);
+  border: 1px solid #86EFAC;
+}
+
+.badge-penyelenggaraan {
+  background-color: var(--status-amber-bg);
+  color: var(--status-amber-txt);
+  border: 1px solid #FDE047;
+}
+
+.badge-pelupusan {
+  background-color: var(--status-red-bg);
+  color: var(--status-red-txt);
+  border: 1px solid #FCA5A5;
+}
+
+.badge-dilupuskan {
+  background-color: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
+}
+
+/* --------------------------------------------------------------------------
+   PEMIDANG TILIK PENGIMBAS QR (CAMERA VIEWFINDER)
+-------------------------------------------------------------------------- */
+.scanner-frame {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  box-shadow: 0 0 0 9999px rgba(15, 62, 93, 0.65);
+}
+
+.scanner-frame::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: #38BDF8;
+  box-shadow: 0 0 12px #38BDF8;
+  animation: scanLine 2s infinite linear;
+}
+
+@keyframes scanLine {
+  0% { top: 0; }
+  50% { top: 100%; }
+  100% { top: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   SEMAKAN VISUAL BERSEBELAHAN (SIDE-BY-SIDE INSPECTION)
+-------------------------------------------------------------------------- */
+.side-by-side-box {
+  border: 1px solid var(--upk-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.side-by-side-header {
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   CETAKAN PELEKAT KOD QR & DOKUMEN (PRINT MEDIA)
+-------------------------------------------------------------------------- */
+@media print {
+  body {
+    background: #FFFFFF !important;
+  }
+  .no-print,
+  .top-navy-bar,
+  .horizontal-navbar,
+  .bottom-nav-mobile,
+  .toast-container {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .sticker-unit {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

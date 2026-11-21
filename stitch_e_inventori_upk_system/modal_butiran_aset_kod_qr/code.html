@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="ms"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Butiran Aset &amp; Kod QR — e-Inventori UPK</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#0F3E5D',
+        'on-primary': '#FFFFFF',
+        'secondary': '#16719A',
+        'on-secondary': '#FFFFFF',
+        'accent': '#C18C3B',
+        'on-accent': '#291800',
+        'accent-soft': '#E2EEF5',
+        'on-accent-soft': '#0F3E5D',
+        'surface': '#FFFFFF',
+        'on-surface': '#0F172A',
+        'surface-dim': '#F8FAFC',
+        'on-surface-dim': '#0F172A',
+        'surface-variant': '#F1F5F9',
+        'on-surface-variant': '#475569',
+        'outline': '#CBD5E1',
+        'outline-variant': '#E2E8F0',
+        'danger': '#D62828',
+        'on-danger': '#FFFFFF',
+        'status-active-bg': '#DCFCE7',
+        'on-status-active-bg': '#166534',
+        'status-active-border': '#86EFAC',
+        'status-maint-bg': '#FEF9C3',
+        'on-status-maint-bg': '#854D0E',
+        'status-maint-border': '#FDE047',
+        'status-disposal-bg': '#FEE2E2',
+        'on-status-disposal-bg': '#991B1B',
+        'status-disposal-border': '#FCA5A5',
+        'status-archived-bg': '#F1F5F9',
+        'on-status-archived-bg': '#475569',
+        'status-archived-border': '#CBD5E1',
+        'chart-emerald': '#2A9D8F',
+        'chart-amber': '#E9C46A',
+        'chart-crimson': '#D62828',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'DEFAULT': '10px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.72px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '-0.44px', fontWeight: '700' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '-0.27px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.12px', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.55px', fontWeight: '600' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.24px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '220ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body antialiased">
+  <div class="min-h-[1024px] relative flex items-center justify-center p-gutter-lg bg-primary/40" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+    <!-- MODAL DIALOG CONTAINER -->
+    <div role="dialog" aria-modal="true" aria-labelledby="modalTitle" class="w-full max-w-5xl bg-surface border border-outline-variant rounded-lg shadow-2xl overflow-hidden flex flex-col">
+
+      <!-- Modal Header -->
+      <header class="px-gutter-lg py-4 bg-primary text-on-primary flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded bg-surface/10 border border-accent flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[20px] text-accent">qr_code_2</span>
+          </div>
+          <div>
+            <h1 id="modalTitle" data-design-text-token="title-md" class="font-title text-title-md text-on-primary">Butiran Lengkap Aset &amp; Kod QR Rasmi</h1>
+            <p data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Kembar Digital Aset Kerajaan — Unit Pendidikan Kerjaya (UPK)</p>
+          </div>
+        </div>
+        <button data-component-id="button-icon" data-component-type="button" data-component-variant="icon" type="button" aria-label="Tutup modal butiran aset" class="w-9 h-9 rounded-full bg-surface/10 hover:bg-surface/20 text-on-primary flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </header>
+
+      <!-- Modal Body (2 Columns) -->
+      <div class="p-gutter-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg">
+
+        <!-- Left Column (5 cols): Official Photo + QR Code Block -->
+        <div class="lg:col-span-5 flex flex-col gap-5">
+          <!-- Verified Asset Photo -->
+          <div class="relative rounded-lg overflow-hidden border border-outline-variant bg-surface-variant aspect-[4/3]">
+            <img src="https://lh3.googleusercontent.com/aida/ALJJyrC4n0SUqMSwCnyaI9VxeP-0tL1w3BwcVhFwnGG9O7HFl-HEs3vY2tfEbcaCDtMQ3tlIUV9KNvti4P0P6zjDnkuFWqgTO6wnJhRzVr93Ci9enRNQmT0zCP-AbJBLY4ECIgdNgJ_RGdQl0avcfpmq93c60q3s4i-DXS4bhRDcUBfQ0uDHc5Izsp88AQ-HnxrIxSlCBijVHcfY8K1Y5wnSZy6Og8CQ7600b7h-kuImHX5gzLwfPT40AMFaSA90AQ" alt="Komputer Riba Dell Latitude 3420" class="w-full h-full object-cover">
+            <button type="button" aria-label="Besarkan gambar aset" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface/90 text-primary border border-outline-variant flex items-center justify-center shadow-sm hover:bg-surface">
+              <span class="material-symbols-outlined text-[18px]">zoom_in</span>
+            </button>
+            <div class="absolute bottom-3 left-3 right-3 px-3 py-1.5 rounded bg-primary/90 text-on-primary flex items-center justify-between gap-2">
+              <span data-design-text-token="label-sm" class="font-label text-label-sm">Foto Rasmi Pendaftaran</span>
+              <span data-design-text-token="label-sm" class="font-label text-label-sm tabular-nums text-accent-soft">14 Jan 2025</span>
+            </div>
+          </div>
+
+          <!-- High-Resolution QR Code Block -->
+          <div class="bg-surface-dim border border-outline-variant rounded-lg p-5 flex flex-col items-center text-center gap-3">
+            <div class="w-full flex items-center justify-between border-b border-outline-variant pb-2">
+              <span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">UNIT PENDIDIKAN KERJAYA</span>
+              <span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-secondary">UPK-AST-014</span>
+            </div>
+
+            <!-- Crisp High-Contrast QR SVG -->
+            <div class="p-3 bg-surface border border-outline-variant rounded-md shadow-sm">
+              <svg width="132" height="132" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-label="Kod QR UPK-AST-014">
+                <rect width="29" height="29" fill="#FFFFFF"></rect>
+                <path fill="#0F172A" d="M1,1 h7v7h-7z M2,2 v5h5v-5z M3,3 h3v3h-3z M21,1 h7v7h-7z M22,2 v5h5v-5z M23,3 h3v3h-3z M1,21 h7v7h-7z M2,22 v5h5v-5z M3,23 h3v3h-3z M10,2 h2v2h-2z M14,1 h3v2h-3z M12,4 h2v3h-2z M16,5 h2v2h-2z M9,7 h2v2h-2z M13,8 h3v2h-3z M18,7 h2v3h-2z M2,10 h3v2h-3z M7,11 h2v3h-2z M11,11 h5v5h-5z M12,12 v3h3v-3z M18,12 h2v2h-2z M22,10 h3v2h-3z M26,11 h2v4h-2z M1,15 h2v3h-2z M5,16 h3v2h-3z M9,17 h2v2h-2z M14,18 h3v2h-3z M19,17 h2v3h-2z M23,16 h2v2h-2z M10,21 h2v3h-2z M14,22 h3v2h-3z M18,21 h2v2h-2z M21,21 h3v3h-3z M25,21 h3v2h-3z M12,25 h2v3h-2z M16,25 h4v2h-4z M22,25 h2v3h-2z M26,25 h2v3h-2z"></path>
+              </svg>
+            </div>
+
+            <p data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant">HAK MILIK KERAJAAN — JANGAN ALIHKAN</p>
+
+            <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded bg-surface text-primary border border-outline-variant hover:bg-accent-soft hover:border-secondary transition-colors">
+              <span class="material-symbols-outlined text-[18px]">print</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Cetak Pelekat Kod QR Ini</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column (7 cols): Status, Specs, Stock Movement History -->
+        <div class="lg:col-span-7 flex flex-col gap-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 border-b border-outline-variant pb-4">
+            <div>
+              <span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-secondary">PERALATAN KOMPUTER &amp; IT</span>
+              <h2 data-design-text-token="headline-md" class="font-headline text-headline-md text-on-surface mt-0.5">Komputer Riba Dell Latitude 3420</h2>
+            </div>
+            <span data-component-id="badge-status-active" data-component-type="badge" data-component-variant="success" class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-status-active-bg text-on-status-active-bg border border-status-active-border">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Beroperasi Baik</span>
+            </span>
+          </div>
+
+          <!-- Structured Key-Value Grid -->
+          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-surface-dim border border-outline-variant rounded-lg p-4">
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Nombor Siri Pendaftaran</dt>
+              <dd data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary mt-0.5">KPM/JSS/UPK/2025/014</dd>
+            </div>
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Buku Simpanan</dt>
+              <dd data-design-text-token="label-md" class="font-label text-label-md text-on-surface mt-0.5">Peralatan Komputer &amp; IT</dd>
+            </div>
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Penempatan Bilik Semasa</dt>
+              <dd data-design-text-token="label-md" class="font-label text-label-md text-on-surface mt-0.5">Makmal Kerjaya UPK (Bilik 2)</dd>
+            </div>
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Pegawai Penanggungjawab</dt>
+              <dd data-design-text-token="label-md" class="font-label text-label-md text-on-surface mt-0.5">Cikgu Hjh Nurulain binti Hj Ali</dd>
+            </div>
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Tarikh Pendaftaran</dt>
+              <dd data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface tabular-nums mt-0.5">14 Jan 2025</dd>
+            </div>
+            <div>
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Harga Perolehan / Nilai Semasa</dt>
+              <dd data-design-text-token="label-md" class="font-label text-label-md text-primary tabular-nums mt-0.5">BND $1,250.00 / $980.00</dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant uppercase">Spesifikasi Teknikal</dt>
+              <dd data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface mt-0.5">Intel Core i5-1135G7, 16GB RAM DDR4, 512GB NVMe SSD, Paparan 14&#34; FHD, Windows 11 Pro.</dd>
+            </div>
+          </dl>
+
+          <!-- Mini Stock Movement History -->
+          <div class="flex flex-col gap-2.5">
+            <h3 data-design-text-token="label-md" class="font-label text-label-md uppercase text-primary">Sejarah Pergerakan Kad Stok (3 Terkini)</h3>
+            <div class="border border-outline-variant rounded-lg divide-y divide-outline-variant bg-surface">
+              <div class="px-4 py-2.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-chart-emerald shrink-0"></span>
+                  <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Imbasan Audit QR Bilik — Disahkan di Makmal Kerjaya</span>
+                </div>
+                <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant tabular-nums shrink-0">20 Nov 2026</span>
+              </div>
+              <div class="px-4 py-2.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+                  <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Pindahan Bilik: Stor Utama UPK → Makmal Kerjaya (Bilik 2)</span>
+                </div>
+                <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant tabular-nums shrink-0">03 Feb 2025</span>
+              </div>
+              <div class="px-4 py-2.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-2 h-2 rounded-full bg-accent shrink-0"></span>
+                  <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Masuk Baharu (+1 Unit) — Perolehan Kerajaan Bil. 01/2025</span>
+                </div>
+                <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-variant tabular-nums shrink-0">14 Jan 2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Action Footer -->
+      <footer class="px-gutter-lg py-4 bg-surface-dim border-t border-outline-variant flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded bg-surface text-secondary border border-secondary hover:bg-accent-soft transition-colors">
+            <span class="material-symbols-outlined text-[18px]">edit</span>
+            <span data-design-text-token="label-md" class="font-label text-label-md">Kemaskini Maklumat</span>
+          </button>
+          <button type="button" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded bg-surface text-primary border border-outline-variant hover:bg-accent-soft transition-colors">
+            <span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+            <span data-design-text-token="label-md" class="font-label text-label-md">Pindah Lokasi Bilik</span>
+          </button>
+        </div>
+        <button data-component-id="button-destructive" data-component-type="button" data-component-variant="destructive" type="button" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded bg-danger text-on-danger hover:opacity-90 transition-opacity shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+          <span data-design-text-token="label-md" class="font-label text-label-md">Laporkan Kerosakan</span>
+        </button>
+      </footer>
+
+    </div>
+  </div>
+
+
+</body></html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="ms"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buku Simpanan &amp; Kad Stok Rasmi — e-Inventori UPK</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#0F3E5D',
+        'on-primary': '#FFFFFF',
+        'secondary': '#16719A',
+        'on-secondary': '#FFFFFF',
+        'accent': '#C18C3B',
+        'on-accent': '#291800',
+        'accent-soft': '#E2EEF5',
+        'on-accent-soft': '#0F3E5D',
+        'surface': '#FFFFFF',
+        'on-surface': '#0F172A',
+        'surface-dim': '#F8FAFC',
+        'on-surface-dim': '#0F172A',
+        'surface-variant': '#F1F5F9',
+        'on-surface-variant': '#475569',
+        'outline': '#CBD5E1',
+        'outline-variant': '#E2E8F0',
+        'danger': '#D62828',
+        'on-danger': '#FFFFFF',
+        'status-active-bg': '#DCFCE7',
+        'on-status-active-bg': '#166534',
+        'status-active-border': '#86EFAC',
+        'status-maint-bg': '#FEF9C3',
+        'on-status-maint-bg': '#854D0E',
+        'status-maint-border': '#FDE047',
+        'status-disposal-bg': '#FEE2E2',
+        'on-status-disposal-bg': '#991B1B',
+        'status-disposal-border': '#FCA5A5',
+        'status-archived-bg': '#F1F5F9',
+        'on-status-archived-bg': '#475569',
+        'status-archived-border': '#CBD5E1',
+        'chart-emerald': '#2A9D8F',
+        'chart-amber': '#E9C46A',
+        'chart-crimson': '#D62828',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'DEFAULT': '10px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.72px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '-0.44px', fontWeight: '700' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '-0.27px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.12px', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.55px', fontWeight: '600' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.24px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '220ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body antialiased">
+  <div class="min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+    <!-- TIER 1: TOP INSTITUTIONAL NAVY BAR (SHARED SHELL) -->
+    <header class="bg-primary text-on-primary h-16 w-full px-gutter-lg flex items-center justify-between border-b border-primary z-30">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-md bg-surface/10 border border-accent flex items-center justify-center shrink-0" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.6 12 23C16.6 21.6 20 16.8 20 11.5V5.5L12 2Z" stroke="#C18C3B" stroke-width="1.8" fill="rgba(193,140,59,0.18)"></path>
+            <path d="M8.5 10.5H15.5M8.5 14H13.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span data-design-text-token="title-md" class="font-title text-title-md text-on-primary leading-tight">e-Inventori UPK</span>
+          <span data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button type="button" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/10 hover:bg-surface/20 text-on-primary border border-surface/20 transition-colors">
+          <span class="material-symbols-outlined text-[18px] text-accent">meeting_room</span>
+          <span data-design-text-token="label-md" class="font-label text-label-md">Semua Bilik UPK</span>
+          <span class="material-symbols-outlined text-[18px]">expand_more</span>
+        </button>
+
+        <button type="button" aria-label="Notifikasi aduan kerosakan" class="relative w-10 h-10 rounded-full hover:bg-surface/10 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[22px]">notifications</span>
+          <span aria-hidden="true" class="absolute top-1 right-1 min-w-5 h-5 px-1 rounded-full bg-danger text-on-danger flex items-center justify-center tabular-nums">
+            <span data-design-text-token="label-sm" class="font-label text-label-sm">4</span>
+          </span>
+        </button>
+
+        <button type="button" aria-label="Buletin dan mesej sistem" class="relative w-10 h-10 rounded-full hover:bg-surface/10 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[22px]">mail</span>
+          <span aria-hidden="true" class="absolute top-1 right-1 min-w-5 h-5 px-1 rounded-full bg-secondary text-on-secondary flex items-center justify-center tabular-nums">
+            <span data-design-text-token="label-sm" class="font-label text-label-sm">5</span>
+          </span>
+        </button>
+
+        <div class="flex items-center gap-2.5 pl-3 border-l border-surface/20">
+          <img src="https://lh3.googleusercontent.com/aida/ALJJyrCV-OyNWGFIbmK12lE0-HCzrWnL84GpJ4gXghy9v_DBXya3GHXVEWRlBelz1LVu3wNTEY5Fd8aYvaj-NFbk4VBLZbD2XwcC8uwwXysPGNQTcIFPPF4HDHFqePO7TCB38l09JHVVovKHNWwkF5VZqVQq9Oye4cRWggmTb_RiAREZgdbZ_EBOZHEk6pHypWHlfogVd7nMdtsImg7e6feN8n_JdrVoa6ETiXhTcQ-lNk3682MuvfjITqY88g" alt="Jessica Roy" class="w-9 h-9 rounded-full object-cover border border-accent">
+          <div class="hidden sm:flex flex-col text-left">
+            <span data-design-text-token="label-md" class="font-label text-label-md text-on-primary leading-tight">Jessica Roy</span>
+            <span data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Pentadbir Inventori</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-accent-soft">expand_more</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TIER 2: HORIZONTAL NAVBAR (SHARED SHELL) -->
+    <nav aria-label="Navigasi Utama" class="relative bg-surface border-b border-outline-variant w-full px-gutter-lg z-20 shadow-sm">
+      <div class="flex items-center justify-between h-[52px]">
+        <ul class="flex items-center gap-1 overflow-x-auto">
+          <li class="shrink-0">
+            <a href="../papan-pemuka/PapanPemukaPentadbiran.html" class="inline-flex items-center gap-2 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">home</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Papan Pemuka</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <a href="../katalog-aset/KatalogAsetInventori.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Katalog Aset</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <a href="#" aria-current="page" class="inline-flex items-center gap-1.5 px-3 py-2 rounded bg-accent-soft text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">assignment</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Buku Simpanan &amp; Kad Stok</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <button type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Imbasan &amp; Aduan</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </button>
+          </li>
+          <li class="shrink-0">
+            <a href="../semakan-teknikal/SemakanTeknikalBersebelahan.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">balance</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Pemeriksaan &amp; Pelupusan</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <button type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">settings</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Pentadbiran Sistem</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="flex-1 w-full px-gutter-lg py-gutter-lg flex flex-col gap-gutter-lg">
+
+      <!-- Header & Export Actions -->
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-primary">Buku Simpanan &amp; Kad Stok Rasmi</h1>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant mt-1">Lejar transaksi keluar-masuk, pindahan bilik, dan baki stok semasa mengikut piawaian perbendaharaan.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button type="button" class="shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded bg-surface text-primary border border-outline-variant hover:bg-accent-soft transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-chart-emerald">table_view</span>
+            <span data-design-text-token="label-md" class="font-label text-label-md">Eksport Excel (.xlsx)</span>
+          </button>
+          <button type="button" class="shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded bg-surface text-primary border border-outline-variant hover:bg-accent-soft transition-colors">
+            <span class="material-symbols-outlined text-[18px] text-secondary">download</span>
+            <span data-design-text-token="label-md" class="font-label text-label-md">Muat Turun CSV</span>
+          </button>
+          <button type="button" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded bg-secondary text-on-secondary hover:bg-primary transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+            <span data-design-text-token="label-md" class="font-label text-label-md">Cetak PDF Kad Stok</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Room Selector & 4 Official Storage Book Tabs -->
+      <section class="bg-surface border border-outline-variant rounded-lg p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" class="px-4 py-1.5 rounded-full bg-secondary text-on-secondary">
+            <span data-design-text-token="label-md" class="font-label text-label-md">Semua Buku</span>
+          </button>
+          <button type="button" class="px-4 py-1.5 rounded-full bg-surface text-on-surface-variant border border-outline-variant hover:border-secondary">
+            <span data-design-text-token="label-md" class="font-label text-label-md">Perabot Pejabat</span>
+          </button>
+          <button type="button" class="px-4 py-1.5 rounded-full bg-surface text-on-surface-variant border border-outline-variant hover:border-secondary">
+            <span data-design-text-token="label-md" class="font-label text-label-md">Peralatan Komputer</span>
+          </button>
+          <button type="button" class="px-4 py-1.5 rounded-full bg-surface text-on-surface-variant border border-outline-variant hover:border-secondary">
+            <span data-design-text-token="label-md" class="font-label text-label-md">Peralatan Elektrik</span>
+          </button>
+          <button type="button" class="px-4 py-1.5 rounded-full bg-surface text-on-surface-variant border border-outline-variant hover:border-secondary">
+            <span data-design-text-token="label-md" class="font-label text-label-md">Barang Guna Habis</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <select aria-label="Pilih Bilik" class="px-3.5 py-2 rounded border border-outline-variant bg-surface-dim text-on-surface font-label text-label-md">
+            <option>Semua Bilik UPK</option>
+            <option>Pejabat Pentadbiran Am</option>
+            <option>Makmal Kerjaya UPK (Bilik 2)</option>
+            <option>Stor Utama UPK</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- OFFICIAL STOCK LEDGER TABLE -->
+      <div data-component-id="table-standard" data-component-type="table" data-component-variant="standard" class="bg-surface border border-outline-variant rounded-lg overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-accent-soft border-b border-outline-variant">
+              <tr>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Tarikh</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">ID Aset</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Perihal Barang</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Transaksi</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Dari Bilik</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Ke Bilik</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase text-right"><span data-design-text-token="label-sm" class="font-label text-label-sm">Masuk</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase text-right"><span data-design-text-token="label-sm" class="font-label text-label-sm">Keluar</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase text-right"><span data-design-text-token="label-sm" class="font-label text-label-sm">Baki</span></th>
+                <th scope="col" class="px-4 py-3 text-on-accent-soft uppercase"><span data-design-text-token="label-sm" class="font-label text-label-sm">Pegawai</span></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+              <tr class="hover:bg-surface-dim transition-colors">
+                <td class="px-4 py-3.5 tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">20 Nov 2026</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary bg-surface-variant px-2 py-0.5 rounded-sm border border-outline-variant">UPK-GNH-042</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="label-md" class="font-label text-label-md">Kertas A4 Double A 80gsm</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="label-sm" class="font-label text-label-sm px-2.5 py-0.5 rounded-full bg-status-disposal-bg text-on-status-disposal-bg">Keluar / Guna</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Stor Utama UPK</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Pentadbiran Am</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">—</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-danger"><span data-design-text-token="label-md" class="font-label text-label-md">-2</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-primary"><span data-design-text-token="label-md" class="font-label text-label-md">8 Rim</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="body-sm" class="font-body text-body-sm">Jessica Roy</span></td>
+              </tr>
+              <tr class="hover:bg-surface-dim transition-colors">
+                <td class="px-4 py-3.5 tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">19 Nov 2026</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary bg-surface-variant px-2 py-0.5 rounded-sm border border-outline-variant">UPK-PRB-031</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="label-md" class="font-label text-label-md">Kerusi Pejabat Ergonomik</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="label-sm" class="font-label text-label-sm px-2.5 py-0.5 rounded-full bg-accent-soft text-primary">Pindah Bilik</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Stor Utama UPK</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Pentadbiran Am</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">—</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">—</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-primary"><span data-design-text-token="label-md" class="font-label text-label-md">12 Unit</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="body-sm" class="font-body text-body-sm">Jessica Roy</span></td>
+              </tr>
+              <tr class="hover:bg-surface-dim transition-colors">
+                <td class="px-4 py-3.5 tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">15 Nov 2026</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary bg-surface-variant px-2 py-0.5 rounded-sm border border-outline-variant">UPK-GNH-019</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="label-md" class="font-label text-label-md">Dakwat Pencetak HP 58A</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="label-sm" class="font-label text-label-sm px-2.5 py-0.5 rounded-full bg-status-active-bg text-on-status-active-bg">Masuk Baharu</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Pembekal Rasmi</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Stor Utama UPK</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-status-active-bg"><span data-design-text-token="label-md" class="font-label text-label-md">+10</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">—</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-primary"><span data-design-text-token="label-md" class="font-label text-label-md">14 Unit</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="body-sm" class="font-body text-body-sm">Awg. Mohd Zaki</span></td>
+              </tr>
+              <tr class="hover:bg-surface-dim transition-colors">
+                <td class="px-4 py-3.5 tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">10 Nov 2026</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary bg-surface-variant px-2 py-0.5 rounded-sm border border-outline-variant">UPK-AST-015</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="label-md" class="font-label text-label-md">Dell Latitude 3420 (Kaunselor)</span></td>
+                <td class="px-4 py-3.5"><span data-design-text-token="label-sm" class="font-label text-label-sm px-2.5 py-0.5 rounded-full bg-status-active-bg text-on-status-active-bg">Masuk Baharu</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Perolehan KPM</span></td>
+                <td class="px-4 py-3.5 text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Bilik Kaunseling</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-status-active-bg"><span data-design-text-token="label-md" class="font-label text-label-md">+1</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-on-surface-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">—</span></td>
+                <td class="px-4 py-3.5 text-right tabular-nums text-primary"><span data-design-text-token="label-md" class="font-label text-label-md">1 Unit</span></td>
+                <td class="px-4 py-3.5 text-on-surface"><span data-design-text-token="body-sm" class="font-body text-body-sm">Cikgu Hjh Nurul</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Bar -->
+        <div class="px-4 py-3 border-t border-outline-variant bg-surface-dim flex flex-wrap items-center justify-between gap-4">
+          <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant tabular-nums">Memaparkan 1–4 daripada 184 rekod transaksi</span>
+          <div class="flex items-center gap-1.5">
+            <button type="button" class="px-3 py-1 rounded border border-outline-variant bg-surface text-on-surface-variant hover:bg-accent-soft"><span data-design-text-token="label-sm" class="font-label text-label-sm">Sebelumnya</span></button>
+            <button type="button" class="w-8 h-8 rounded bg-secondary text-on-secondary flex items-center justify-center"><span data-design-text-token="label-sm" class="font-label text-label-sm tabular-nums">1</span></button>
+            <button type="button" class="w-8 h-8 rounded border border-outline-variant bg-surface text-on-surface flex items-center justify-center"><span data-design-text-token="label-sm" class="font-label text-label-sm tabular-nums">2</span></button>
+            <button type="button" class="w-8 h-8 rounded border border-outline-variant bg-surface text-on-surface flex items-center justify-center"><span data-design-text-token="label-sm" class="font-label text-label-sm tabular-nums">3</span></button>
+            <button type="button" class="px-3 py-1 rounded border border-outline-variant bg-surface text-primary hover:bg-accent-soft"><span data-design-text-token="label-sm" class="font-label text-label-sm">Seterusnya</span></button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+</body></html>

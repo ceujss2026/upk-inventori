@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>e-Inventori UPK — Sistem Pengurusan Aset & Inventori Berasaskan Kod QR</title>
+  
+  <!-- Font Rasmi Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            upk: {
+              navy: '#0F3E5D',
+              cerulean: '#16719A',
+              gold: '#C18C3B',
+              ice: '#E2EEF5',
+              dark: '#0A293E'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons & Chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Html5-QRCode Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900 pb-20 md:pb-8">
+
+  <!-- ========================================================================
+       TIER 1: BILAH ATAS RASMI (TOP NAVY BAR - #0F3E5D)
+  ======================================================================== -->
+  <header class="top-navy-bar text-white sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo & Tajuk Institusi -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="App.navigate('dashboard')">
+          <img src="assets/logo-upk.png" alt="Logo UPK" class="w-10 h-10 object-contain rounded-full bg-white/10 p-0.5 border border-white/20 shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-base tracking-tight leading-none text-white">e-Inventori UPK</span>
+              <span class="bg-amber-500/20 text-amber-300 text-[10px] font-bold px-1.5 py-0.5 rounded border border-amber-400/30">BRUNEI</span>
+            </div>
+            <p class="text-[11px] text-sky-200/80 font-medium leading-tight mt-0.5 hidden sm:block">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</p>
+          </div>
+        </div>
+
+        <!-- Tindakan Bahagian Kanan -->
+        <div class="flex items-center gap-3">
+          <!-- Penapis Pantas Bilik -->
+          <div class="hidden md:flex items-center bg-white/10 rounded-lg px-2.5 py-1 border border-white/15 text-xs text-sky-100">
+            <i class="fa-solid fa-map-location-dot mr-2 text-amber-300"></i>
+            <select id="global-room-select" onchange="App.onGlobalRoomChange(this.value)" class="bg-transparent text-white text-xs font-medium focus:outline-none cursor-pointer">
+              <option value="Semua" class="text-slate-800">Semua Bilik UPK</option>
+            </select>
+          </div>
+
+          <!-- Lonceng Notifikasi Aduan -->
+          <button onclick="App.navigate('aduan')" class="relative p-2 rounded-lg bg-white/10 hover:bg-white/15 text-white transition focus:outline-none" title="Aduan Kerosakan Semasa">
+            <i class="fa-solid fa-bell text-sm"></i>
+            <span id="notif-badge-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-slate-900 shadow">1</span>
+          </button>
+
+          <!-- Widget Profil Pengguna -->
+          <div class="relative" id="user-profile-widget">
+            <button onclick="App.toggleUserDropdown()" class="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 transition text-xs">
+              <div class="w-6 h-6 rounded-full bg-amber-500/30 text-amber-300 font-bold flex items-center justify-center text-[10px] border border-amber-300/40" id="user-avatar-initials">AD</div>
+              <div class="text-left hidden lg:block">
+                <span class="font-semibold block leading-none text-white text-[11px]" id="user-display-name">Pentadbir Inventori</span>
+                <span class="text-[9px] text-sky-200/70 leading-none" id="user-display-role">Admin</span>
+              </div>
+              <i class="fa-solid fa-chevron-down text-[10px] text-sky-200/80"></i>
+            </button>
+
+            <!-- Dropdown Profil -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-slate-800 text-xs">
+              <div class="px-3 py-2 border-b border-slate-100">
+                <p class="font-bold text-slate-800" id="user-menu-name">Pentadbir Inventori</p>
+                <p class="text-slate-500 text-[11px]" id="user-menu-email">admin@moe.gov.bn</p>
+              </div>
+              <a href="#" onclick="App.showSettingsModal(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700">
+                <i class="fa-solid fa-sliders text-sky-600"></i> Tetapan Sistem & Token
+              </a>
+              <a href="#" onclick="App.showMigrationModal(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700">
+                <i class="fa-solid fa-database text-amber-600"></i> Migrasi Pangkalan Data
+              </a>
+              <div class="border-t border-slate-100 my-1"></div>
+              <a href="#" onclick="App.logout(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-red-50 text-red-600 font-semibold">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Keluar
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       TIER 2: BILAH NAVIGASI MENDATAR BERSERTA ZARE MEGA MENU (TANPA SIDEBAR)
+  ======================================================================== -->
+  <nav class="horizontal-navbar relative z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        
+        <!-- Tab Menu Mendatar -->
+        <div class="flex items-center overflow-x-auto no-scrollbar py-0.5" id="nav-tabs-container">
+          <button class="nav-tab-btn active" data-nav="dashboard" onclick="App.navigate('dashboard')">
+            <i class="fa-solid fa-house"></i>
+            <span>Papan Pemuka</span>
+          </button>
+          
+          <button class="nav-tab-btn" data-nav="katalog" onclick="App.toggleMegaMenu('katalog')">
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span>Katalog Aset</span>
+            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
+          </button>
+
+          <button class="nav-tab-btn" data-nav="stockcard" onclick="App.toggleMegaMenu('stockcard')">
+            <i class="fa-solid fa-book-bookmark"></i>
+            <span>Buku Simpanan & Kad Stok</span>
+            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
+          </button>
+
+          <button class="nav-tab-btn" data-nav="aduan" onclick="App.toggleMegaMenu('aduan')">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Imbasan & Aduan</span>
+            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
+          </button>
+
+          <button class="nav-tab-btn" data-nav="pelupusan" onclick="App.toggleMegaMenu('pelupusan')">
+            <i class="fa-solid fa-scale-balanced"></i>
+            <span>Pemeriksaan & Pelupusan</span>
+            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
+          </button>
+
+          <button class="nav-tab-btn" data-nav="tetapan" onclick="App.toggleMegaMenu('tetapan')">
+            <i class="fa-solid fa-gear"></i>
+            <span>Pentadbiran</span>
+            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
+          </button>
+        </div>
+
+        <!-- Butang Cepat Imbas Kod QR -->
+        <div class="hidden sm:flex items-center">
+          <button onclick="App.openScannerModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-upk-cerulean text-white text-xs font-semibold hover:bg-upk-navy shadow-sm transition">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>Imbas Kod QR</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PANEL MEGA MENU TERAPUNG (ZARE MEGA MENU DROPDOWN) -->
+    <div id="mega-menu-panel" class="mega-menu-panel">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          
+          <!-- Lajur 1: Katalog & Pendaftaran -->
+          <div>
+            <div class="mega-menu-col-title">
+              <i class="fa-solid fa-boxes-stacked mr-1"></i> Katalog & Perekodan
+            </div>
+            <div class="space-y-1">
+              <a href="#" onclick="App.navigate('katalog'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-grip text-sky-600 w-4"></i> Paparan Kad Bergambar
+              </a>
+              <a href="#" onclick="App.openDaftarAsetModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-circle-plus text-emerald-600 w-4"></i> Daftar Aset Baharu
+              </a>
+              <a href="#" onclick="App.navigate('cetak-qr'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-print text-slate-600 w-4"></i> Cetak Pelekat Kod QR Pukal
+              </a>
+              <a href="#" onclick="App.filterKatalogBilik('BILIK-01'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-location-dot text-amber-600 w-4"></i> Semakan Penempatan Bilik
+              </a>
+            </div>
+          </div>
+
+          <!-- Lajur 2: Buku Simpanan Rasmi -->
+          <div>
+            <div class="mega-menu-col-title">
+              <i class="fa-solid fa-book-bookmark mr-1"></i> Buku Simpanan Rasmi
+            </div>
+            <div class="space-y-1">
+              <a href="#" onclick="App.filterBukuSimpanan('Perabot Pejabat'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-chair text-amber-700 w-4"></i> Perabot Pejabat
+              </a>
+              <a href="#" onclick="App.filterBukuSimpanan('Peralatan Komputer & IT'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-laptop text-blue-600 w-4"></i> Peralatan Komputer & IT
+              </a>
+              <a href="#" onclick="App.filterBukuSimpanan('Peralatan Elektrik'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-bolt text-yellow-500 w-4"></i> Peralatan Elektrik
+              </a>
+              <a href="#" onclick="App.filterBukuSimpanan('Barang Guna Habis'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-box-open text-purple-600 w-4"></i> Barang Guna Habis (Stok)
+              </a>
+            </div>
+          </div>
+
+          <!-- Lajur 3: Aduan & Pemeriksaan Teknikal -->
+          <div>
+            <div class="mega-menu-col-title">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i> Aduan & Pemeriksaan
+            </div>
+            <div class="space-y-1">
+              <a href="#" onclick="App.openScannerModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-camera text-sky-600 w-4"></i> Pengimbas Kod QR Telefon
+              </a>
+              <a href="#" onclick="App.openAduanModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-bullhorn text-red-500 w-4"></i> Hantar Aduan Kerosakan
+              </a>
+              <a href="#" onclick="App.navigate('aduan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-screwdriver-wrench text-indigo-600 w-4"></i> Semakan Teknikal Side-by-Side
+              </a>
+              <a href="#" onclick="App.navigate('aduan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Senarai Aduan Semasa
+              </a>
+            </div>
+          </div>
+
+          <!-- Lajur 4: Kelulusan & Laporan Rasmi -->
+          <div>
+            <div class="mega-menu-col-title">
+              <i class="fa-solid fa-scale-balanced mr-1"></i> Kelulusan & Laporan
+            </div>
+            <div class="space-y-1">
+              <a href="#" onclick="App.navigate('pelupusan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-check-to-slot text-emerald-600 w-4"></i> Kelulusan Pelupusan Aset
+              </a>
+              <a href="#" onclick="App.navigate('stockcard'); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-file-pdf text-red-600 w-4"></i> Cetak Kad Stok mengikut Bilik
+              </a>
+              <a href="#" onclick="App.eksportExcelData(); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-file-excel text-green-700 w-4"></i> Eksport Data Penuh (CSV)
+              </a>
+              <a href="#" onclick="App.syncCrmKontak(); App.closeMegaMenu(); return false;" class="mega-menu-link">
+                <i class="fa-solid fa-address-book text-sky-700 w-4"></i> Penyelarasan CRM Kontak UPK
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       RUANG KANDUNGAN UTAMA (SPA WORKSPACE - 100% LEBAR PENUH)
+  ======================================================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- VIEW 1: PAPAN PEMUKA (EXECUTIVE DASHBOARD) -->
+    <div id="view-dashboard" class="space-y-6">
+      
+      <!-- Peringatan Stok Guna Habis Rendah (Banner Alert jika ada) -->
+      <div id="low-stock-banner" class="hidden bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg"></i>
+            <div>
+              <p class="font-bold text-amber-900 text-sm">Amaran Baki Stok Minimum!</p>
+              <p class="text-xs text-amber-800" id="low-stock-desc">5 item barang guna habis berada di bawah paras minimum keselamatan.</p>
+            </div>
+          </div>
+          <button onclick="App.filterBukuSimpanan('Barang Guna Habis')" class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg shadow-sm">
+            Lihat Stok
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Kad KPI Statistik Utama -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        
+        <!-- Kad 1: Jumlah Keseluruhan -->
+        <div class="upk-card p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Jumlah Aset</span>
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center text-base">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900" id="stat-total-aset">0</h3>
+            <p class="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
+              <span class="text-emerald-600 font-bold"><i class="fa-solid fa-circle-check"></i> Terdaftar</span> dalam 5 bilik
+            </p>
+          </div>
+        </div>
+
+        <!-- Kad 2: Beroperasi Baik -->
+        <div class="upk-card p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Beroperasi Baik</span>
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-base">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900" id="stat-baik">0</h3>
+            <p class="text-[11px] text-emerald-700 font-semibold mt-1">
+              <span id="stat-baik-pct">94%</span> daripada keseluruhan
+            </p>
+          </div>
+        </div>
+
+        <!-- Kad 3: Penyelenggaraan / Pembaikan -->
+        <div class="upk-card p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Penyelenggaraan</span>
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-base">
+              <i class="fa-solid fa-wrench"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900" id="stat-pembaikan">0</h3>
+            <p class="text-[11px] text-amber-700 mt-1 cursor-pointer font-semibold hover:underline" onclick="App.navigate('aduan')">
+              Lihat senarai aduan <i class="fa-solid fa-arrow-right text-[9px]"></i>
+            </p>
+          </div>
+        </div>
+
+        <!-- Kad 4: Cadangan Pelupusan -->
+        <div class="upk-card p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cadangan Pelupusan</span>
+            <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-base">
+              <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900" id="stat-pelupusan">0</h3>
+            <p class="text-[11px] text-red-700 mt-1 cursor-pointer font-semibold hover:underline" onclick="App.navigate('pelupusan')">
+              Menunggu sokongan <i class="fa-solid fa-arrow-right text-[9px]"></i>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Barisan Visual Analitik & Carta Statistik -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Carta 1: Agihan Aset Mengikut Bilik (66% lebar) -->
+        <div class="upk-card p-5 lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Agihan Penempatan Aset mengikut Bilik UPK</h4>
+              <p class="text-xs text-slate-500">Kiraan unit barang kekal dan inventori semasa</p>
+            </div>
+            <button onclick="App.refreshData()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg">
+              <i class="fa-solid fa-arrows-rotate text-xs"></i>
+            </button>
+          </div>
+          <div class="h-64 relative">
+            <canvas id="chart-bilik"></canvas>
+          </div>
+        </div>
+
+        <!-- Carta 2: Nisbah Status Keseluruhan (33% lebar) -->
+        <div class="upk-card p-5">
+          <div class="mb-4">
+            <h4 class="font-bold text-sm text-slate-900">Nisbah Status Keseluruhan</h4>
+            <p class="text-xs text-slate-500">Pecahan keadaan fizikal aset semasa</p>
+          </div>
+          <div class="h-64 relative flex items-center justify-center">
+            <canvas id="chart-status"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Jadual Aktiviti & Aduan Terkini -->
+      <div class="upk-card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h4 class="font-bold text-sm text-slate-900">Aduan Kerosakan & Pergerakan Terkini</h4>
+            <p class="text-xs text-slate-500">Log tindakan semakan teknikal yang memerlukan perhatian</p>
+          </div>
+          <button onclick="App.navigate('aduan')" class="text-xs font-semibold text-upk-cerulean hover:underline">
+            Lihat Semua Aduan
+          </button>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-600 uppercase font-semibold border-b border-slate-200">
+              <tr>
+                <th class="py-3 px-3">Tarikh</th>
+                <th class="py-3 px-3">ID Aduan / Aset</th>
+                <th class="py-3 px-3">Perihal Barang</th>
+                <th class="py-3 px-3">Lokasi Bilik</th>
+                <th class="py-3 px-3">Pelapor</th>
+                <th class="py-3 px-3">Status</th>
+                <th class="py-3 px-3 text-right">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-recent-table-body" class="divide-y divide-slate-100">
+              <!-- Dimuat secara dinamik -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: KATALOG ASET & INVENTORI (CARD GRID VIEW) -->
+    <div id="view-katalog" class="hidden space-y-6">
+      
+      <!-- Pengepala & Butang Tindakan -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Katalog Aset & Inventori UPK</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Perekodan visual aset alih dan barang guna habis rasmi</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="App.openDaftarAsetModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-upk-cerulean hover:bg-upk-navy text-white text-xs font-bold shadow-sm transition">
+            <i class="fa-solid fa-plus"></i>
+            <span>Daftar Aset Baharu</span>
+          </button>
+          <button onclick="App.navigate('cetak-qr')" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-print"></i>
+            <span>Cetak Pelekat QR</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bar Carian & Tab Kategori Kapsul -->
+      <div class="upk-card p-4 space-y-4">
+        <!-- Carian Teks -->
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+          <input type="text" id="katalog-search-input" onkeyup="App.onKatalogSearch(this.value)" placeholder="Cari nama barang, nombor siri pendaftaran, atau kod aset... (Ctrl + K)" class="w-full pl-10 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-upk-cerulean focus:border-transparent outline-none">
+        </div>
+
+        <!-- Tab Kategori Kapsul (Pill Tabs) -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 text-xs" id="kategori-pill-tabs">
+          <button class="px-3.5 py-1.5 rounded-full font-bold bg-upk-cerulean text-white transition whitespace-nowrap" onclick="App.filterKategori('Semua', this)">
+            Semua Aset (<span id="count-semua">0</span>)
+          </button>
+          <button class="px-3.5 py-1.5 rounded-full font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" onclick="App.filterKategori('Perabot Pejabat', this)">
+            Perabot Pejabat
+          </button>
+          <button class="px-3.5 py-1.5 rounded-full font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" onclick="App.filterKategori('Peralatan Komputer & IT', this)">
+            Peralatan Komputer & IT
+          </button>
+          <button class="px-3.5 py-1.5 rounded-full font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" onclick="App.filterKategori('Peralatan Elektrik', this)">
+            Peralatan Elektrik
+          </button>
+          <button class="px-3.5 py-1.5 rounded-full font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition whitespace-nowrap" onclick="App.filterKategori('Barang Guna Habis', this)">
+            Barang Guna Habis
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid Kad Bergambar (4 Lajur Desktop / 2 Lajur Mobile - Gaya Oakory) -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="katalog-grid-container">
+        <!-- Kad dimuat secara dinamik -->
+      </div>
+
+      <!-- State Kosong jika tiada data -->
+      <div id="katalog-empty-state" class="hidden upk-card p-12 text-center">
+        <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3"></i>
+        <h4 class="font-bold text-slate-700 text-sm">Tiada Aset Dijumpai</h4>
+        <p class="text-xs text-slate-500 mt-1">Cuba laraskan kata kunci carian atau pilihan penapis kategori di atas.</p>
+      </div>
+
+    </div>
+
+    <!-- VIEW 3: BUKU SIMPANAN & KAD STOK (STOCK CARD TABLE VIEW) -->
+    <div id="view-stockcard" class="hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Buku Simpanan & Kad Stok Rasmi</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Lejar rasmi pergerakan stok, perpindahan bilik, dan pengeluaran barang</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="App.eksportExcelData()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-file-excel"></i>
+            <span>Muat Turun CSV</span>
+          </button>
+          <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-print"></i>
+            <span>Cetak Format PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Penapis Kad Stok -->
+      <div class="upk-card p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="font-bold text-slate-600">Pilih Bilik:</span>
+          <select id="stock-bilik-filter" onchange="App.onStockFilterChange()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white text-slate-800">
+            <option value="Semua">Semua Lokasi Bilik</option>
+          </select>
+        </div>
+        <div class="text-slate-500 text-xs">
+          Jumlah Transaksi Terkumpul: <span class="font-bold text-slate-800" id="stock-log-count">0</span>
+        </div>
+      </div>
+
+      <!-- Jadual Lejar Kad Stok -->
+      <div class="upk-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-sky-50 text-slate-700 font-bold uppercase text-[11px] border-b border-sky-100">
+              <tr>
+                <th class="py-3 px-3">Tarikh</th>
+                <th class="py-3 px-3">ID Aset</th>
+                <th class="py-3 px-3">Jenis Transaksi</th>
+                <th class="py-3 px-3">Bilik Asal</th>
+                <th class="py-3 px-3">Bilik Tujuan</th>
+                <th class="py-3 px-3 text-center">Masuk (+Unit)</th>
+                <th class="py-3 px-3 text-center">Keluar (-Unit)</th>
+                <th class="py-3 px-3 text-center">Baki Terkini</th>
+                <th class="py-3 px-3">Pegawai / Catatan</th>
+              </tr>
+            </thead>
+            <tbody id="stock-table-body" class="divide-y divide-slate-100">
+              <!-- Dimuat secara dinamik -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 4: MODUL ADUAN & TINDAKAN TEKNIKAL -->
+    <div id="view-aduan" class="hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Senarai Aduan Kerosakan Barang</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Laporan kerosakan fizikal berserta gambar bukti untuk semakan juruteknik</p>
+        </div>
+        <button onclick="App.openAduanModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-sm transition">
+          <i class="fa-solid fa-bullhorn"></i>
+          <span>Hantar Aduan Baharu</span>
+        </button>
+      </div>
+
+      <!-- Grid Senarai Aduan -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="aduan-cards-container">
+        <!-- Kad aduan dimuat secara dinamik -->
+      </div>
+
+    </div>
+
+    <!-- VIEW 5: PEMERIKSAAN & PELUPUSAN ASET (SIDE-BY-SIDE & 1-CLICK APPROVAL) -->
+    <div id="view-pelupusan" class="hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Permohonan & Sokongan Pelupusan Aset</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Perakuan teknikal dan dokumen rasmi pelupusan aset alih kerajaan</p>
+        </div>
+      </div>
+
+      <!-- Senarai Rekod Permohonan Pelupusan -->
+      <div class="grid grid-cols-1 gap-6" id="pelupusan-list-container">
+        <!-- Dimuat secara dinamik -->
+      </div>
+
+    </div>
+
+    <!-- VIEW 6: SUSUN ATUR CETAKAN PELEKAT KOD QR (PRINTABLE A4 SHEET) -->
+    <div id="view-cetak-qr" class="hidden space-y-6">
+      
+      <div class="no-print flex items-center justify-between upk-card p-4">
+        <div>
+          <h3 class="font-bold text-sm text-slate-900">Lembaran Pelekat Kod QR Sedia Cetak (Format A4)</h3>
+          <p class="text-xs text-slate-500">21 label setiap helai lengkap dengan logo UPK dan notis Hak Milik Kerajaan</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="px-4 py-2 bg-upk-cerulean hover:bg-upk-navy text-white text-xs font-bold rounded-xl shadow-sm transition">
+            <i class="fa-solid fa-print mr-1.5"></i> Cetak Lembaran Ini
+          </button>
+          <button onclick="App.navigate('katalog')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+            Kembali
+          </button>
+        </div>
+      </div>
+
+      <!-- Kawasan Cetak Grid 3x7 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="print-stickers-grid">
+        <!-- Unit pelekat dijana secara dinamik -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================================================
+       BAR NAVIGASI BAWAH UNTUK TELEFON PINTAR (BOTTOM NAVIGATION BAR)
+  ======================================================================== -->
+  <div class="bottom-nav-mobile md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around h-16 px-2 shadow-lg">
+    <button onclick="App.navigate('dashboard')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+      <i class="fa-solid fa-house text-base"></i>
+      <span class="mt-1">Utama</span>
+    </button>
+    
+    <button onclick="App.navigate('katalog')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+      <i class="fa-solid fa-boxes-stacked text-base"></i>
+      <span class="mt-1">Katalog</span>
+    </button>
+
+    <!-- Butang Terapung Imbas QR di Tengah -->
+    <div class="relative -top-5">
+      <button onclick="App.openScannerModal()" class="w-13 h-13 p-3.5 rounded-full bg-upk-cerulean text-white shadow-lg ring-4 ring-white flex items-center justify-center transition active:scale-95" title="Imbas Kod QR">
+        <i class="fa-solid fa-qrcode text-xl"></i>
+      </button>
+    </div>
+
+    <button onclick="App.navigate('aduan')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+      <i class="fa-solid fa-triangle-exclamation text-base"></i>
+      <span class="mt-1">Aduan</span>
+    </button>
+
+    <button onclick="App.navigate('stockcard')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+      <i class="fa-solid fa-book-bookmark text-base"></i>
+      <span class="mt-1">Kad Stok</span>
+    </button>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1: PENGIMBAS KOD QR KAMERA TELEFON (HTML5-QRCODE)
+  ======================================================================== -->
+  <div id="modal-scanner" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl relative">
+      <div class="p-4 bg-upk-navy text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-qrcode text-amber-300"></i>
+          <h3 class="font-bold text-sm">Pengimbas Kod QR Aset UPK</h3>
+        </div>
+        <button onclick="App.closeScannerModal()" class="text-white/80 hover:text-white p-1 text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-5 flex flex-col items-center">
+        <!-- Bekas Pemidang Tilik Kamera -->
+        <div id="qr-reader-container" class="w-full h-64 bg-slate-950 rounded-xl overflow-hidden relative flex items-center justify-center">
+          <div id="qr-reader" class="w-full h-full"></div>
+        </div>
+        <p class="text-xs text-slate-500 text-center mt-3">
+          Halakan kamera tepat pada label Kod QR di atas barang inventori UPK.
+        </p>
+
+        <!-- Keputusan Padanan Segera -->
+        <div id="scanner-match-result" class="hidden mt-4 w-full p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="flex items-center gap-3">
+            <img id="scan-res-img" src="" class="w-12 h-12 object-cover rounded-lg border border-slate-200">
+            <div class="text-left flex-1 min-w-0">
+              <span id="scan-res-badge" class="badge-status badge-baik">Beroperasi Baik</span>
+              <h5 id="scan-res-title" class="font-bold text-xs text-slate-900 truncate mt-1">Nama Barang</h5>
+              <p id="scan-res-desc" class="text-[11px] text-slate-500">Lokasi: Makmal Kerjaya</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-200">
+            <button id="scan-btn-detail" class="px-3 py-1.5 bg-upk-cerulean text-white text-xs font-semibold rounded-lg">
+              Buka Maklumat
+            </button>
+            <button id="scan-btn-aduan" class="px-3 py-1.5 bg-red-600 text-white text-xs font-semibold rounded-lg">
+              Lapor Rosak
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: BORANG DAFTAR ASET BAHARU (MANUAL PHOTO UPLOAD + CANVAS COMPRESSION)
+  ======================================================================== -->
+  <div id="modal-daftar-aset" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full my-8 overflow-hidden shadow-2xl relative">
+      <div class="p-4 bg-upk-navy text-white flex items-center justify-between">
+        <h3 class="font-bold text-sm">Pendaftaran Aset / Inventori Baharu</h3>
+        <button onclick="App.closeDaftarAsetModal()" class="text-white/80 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="form-daftar-aset" onsubmit="App.submitDaftarAset(event)" class="p-6 space-y-4 text-xs">
+        <!-- Nama Barang & Kategori -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Nama Barang / Item *</label>
+          <input type="text" name="Nama_Barang" required placeholder="Cth: Komputer Riba Dell Latitude 3420" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Buku Simpanan *</label>
+            <select name="Buku_Simpanan" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+              <option value="Peralatan Komputer & IT">Peralatan Komputer & IT</option>
+              <option value="Perabot Pejabat">Perabot Pejabat</option>
+              <option value="Peralatan Elektrik">Peralatan Elektrik</option>
+              <option value="Barang Guna Habis">Barang Guna Habis</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Kategori *</label>
+            <select name="Kategori" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+              <option value="Aset Alih">Aset Alih (Kekal)</option>
+              <option value="Barang Guna Habis">Barang Guna Habis (Consumables)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Penempatan Bilik *</label>
+            <select name="Lokasi_Bilik" id="daftar-bilik-select" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+              <!-- Dimuat secara dinamik -->
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">No. Siri / Pendaftaran</label>
+            <input type="text" name="No_Siri_Daftar" placeholder="Cth: BRU/2026/0129" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Kuantiti Awal</label>
+            <input type="number" name="Baki_Stok" value="1" min="1" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Paras Amaran Stok</label>
+            <input type="number" name="Paras_Amaran_Minimum" value="0" min="0" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Harga Asal (BND $)</label>
+            <input type="number" step="0.01" name="Harga_Asal_BND" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+          </div>
+        </div>
+
+        <!-- ZON MUAT NAIK GAMBAR MANUAL (DENGAN PEMAMPATAN CANVAS) -->
+        <div class="pt-2">
+          <label class="block font-bold text-slate-700 mb-1">Gambar Aset (Rujukan Semasa Pendaftaran)</label>
+          <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:bg-slate-50 transition relative">
+            <input type="file" id="daftar-foto-input" accept="image/*" onchange="App.handleFotoUpload(this, 'daftar-foto-preview', 'daftar-foto-base64')" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+            <div id="daftar-foto-placeholder">
+              <i class="fa-solid fa-camera text-2xl text-slate-400 mb-1"></i>
+              <p class="font-semibold text-slate-700">Pilih gambar atau rakam dari kamera telefon</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">Sistem memampatkan imej secara automatik di bawah 600 KB</p>
+            </div>
+            <div id="daftar-foto-preview" class="hidden flex items-center justify-center gap-3">
+              <img src="" class="w-16 h-16 object-cover rounded-lg border border-slate-200">
+              <div class="text-left text-xs">
+                <span class="text-emerald-600 font-bold"><i class="fa-solid fa-check"></i> Gambar Sedia</span>
+                <p class="text-[10px] text-slate-400 mt-0.5">Klik untuk menukar gambar</p>
+              </div>
+            </div>
+            <input type="hidden" id="daftar-foto-base64" name="fotoBase64">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Spesifikasi Teknikal / Catatan</label>
+          <textarea name="Catatan_Spesifikasi" rows="2" placeholder="Cth: Jenama, model cip pemproses, maklumat waranti..." class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean"></textarea>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-200">
+          <button type="button" onclick="App.closeDaftarAsetModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-slate-700 font-semibold hover:bg-slate-50">
+            Batal
+          </button>
+          <button type="submit" id="btn-submit-daftar" class="px-5 py-2 bg-upk-cerulean hover:bg-upk-navy text-white rounded-xl font-bold shadow-sm transition">
+            Simpan & Jana Kod QR
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: BORANG ADUAN KEROSAKAN (DENGAN TANGKAPAN FOTO ROSAK)
+  ======================================================================== -->
+  <div id="modal-aduan" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full my-8 overflow-hidden shadow-2xl relative">
+      <div class="p-4 bg-red-700 text-white flex items-center justify-between">
+        <h3 class="font-bold text-sm">Borang Aduan Kerosakan Barang / Aset</h3>
+        <button onclick="App.closeAduanModal()" class="text-white/80 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="form-hantar-aduan" onsubmit="App.submitAduan(event)" class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Pilih Aset Berkaitan *</label>
+          <select name="ID_Aset" id="aduan-aset-select" required class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500">
+            <!-- Dimuat secara dinamik -->
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nama Pelapor *</label>
+            <input type="text" name="Nama_Pelapor" required placeholder="Nama kakitangan" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">No. Telefon WhatsApp</label>
+            <input type="text" name="No_Tel_Pelapor" placeholder="Cth: 8765432" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Bahagian yang Mengalami Kerosakan *</label>
+            <select name="Bahagian_Rosak" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500">
+              <option value="Skrin / Paparan">Skrin / Paparan</option>
+              <option value="Struktur Fizikal & Kaki">Struktur Fizikal & Kaki</option>
+              <option value="Papan Litar & Kuasa">Papan Litar & Bekalan Kuasa</option>
+              <option value="Papan Kekunci / Tetikus">Papan Kekunci / Tetikus</option>
+              <option value="Lain-lain Kerosakan">Lain-lain Kerosakan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Tahap Impak Kerosakan</label>
+            <select name="Tahap_Impak" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500">
+              <option value="Sederhana">Sederhana (Masih boleh digunakan sebahagian)</option>
+              <option value="Ringan">Ringan (Kecacatan kosmetik kecil)</option>
+              <option value="Kritikal - Tidak Boleh Digunakan">Kritikal - Tidak Selamat Digunakan</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Keterangan Gejala Kerosakan *</label>
+          <textarea name="Keterangan_Kerosakan" rows="3" required placeholder="Terangkan bagaimana kerosakan berlaku dan bahagian mana yang tidak berfungsi..." class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500"></textarea>
+        </div>
+
+        <!-- Zon Muat Naik Bukti Foto Kerosakan -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Foto Bukti Kerosakan Fizikal (Wajib)</label>
+          <div class="border-2 border-dashed border-red-200 bg-red-50/50 rounded-xl p-4 text-center hover:bg-red-50 transition relative">
+            <input type="file" id="aduan-foto-input" accept="image/*" onchange="App.handleFotoUpload(this, 'aduan-foto-preview', 'aduan-foto-base64')" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+            <div id="aduan-foto-placeholder">
+              <i class="fa-solid fa-camera text-2xl text-red-400 mb-1"></i>
+              <p class="font-semibold text-slate-700">Rakam gambar kerosakan sekarang</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">Gambar berwarna yang jelas bagi memperlihatkan bahagian kerosakan</p>
+            </div>
+            <div id="aduan-foto-preview" class="hidden flex items-center justify-center gap-3">
+              <img src="" class="w-16 h-16 object-cover rounded-lg border border-red-300">
+              <div class="text-left text-xs">
+                <span class="text-emerald-600 font-bold"><i class="fa-solid fa-check"></i> Foto Kerosakan Dipilih</span>
+                <p class="text-[10px] text-slate-400 mt-0.5">Klik untuk mengambil semula</p>
+              </div>
+            </div>
+            <input type="hidden" id="aduan-foto-base64" name="fotoBase64">
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-200">
+          <button type="button" onclick="App.closeAduanModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-slate-700 font-semibold hover:bg-slate-50">
+            Batal
+          </button>
+          <button type="submit" id="btn-submit-aduan" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-sm transition">
+            Hantar Laporan Kerosakan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 4: SEMAKAN TEKNIKAL BERSEBELAHAN (SIDE-BY-SIDE INSPECTION)
+  ======================================================================== -->
+  <div id="modal-semakan-teknikal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-4xl w-full my-8 overflow-hidden shadow-2xl relative">
+      <div class="p-4 bg-upk-navy text-white flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-sm">Pemeriksaan Visual Bersebelahan & Perakuan Teknikal</h3>
+          <p class="text-[11px] text-sky-200" id="modal-side-case-id">Kes Aduan: ADU-2026-001</p>
+        </div>
+        <button onclick="App.closeSemakanModal()" class="text-white/80 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6 text-xs">
+        
+        <!-- PANEL PERBANDINGAN VISUAL BERSEBELAHAN (SIDE-BY-SIDE) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Panel Kiri: Gambar Asal Semasa Daftar -->
+          <div class="side-by-side-box">
+            <div class="side-by-side-header bg-sky-50 text-sky-900 border-b border-sky-100 flex items-center justify-between">
+              <span><i class="fa-solid fa-image mr-1.5 text-sky-600"></i> Gambar Asal (Pendaftaran)</span>
+              <span class="badge-status badge-baik">Kondisi 100%</span>
+            </div>
+            <div class="p-3">
+              <img id="side-img-asal" src="" class="img-4-3 rounded-lg border border-slate-200">
+              <div class="mt-2 text-[11px] text-slate-500 space-y-0.5">
+                <p>Nama: <strong class="text-slate-800" id="side-txt-nama">-</strong></p>
+                <p>Lokasi Asal: <span id="side-txt-lokasi">-</span></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel Kanan: Gambar Kerosakan Semasa Aduan -->
+          <div class="side-by-side-box">
+            <div class="side-by-side-header bg-red-50 text-red-900 border-b border-red-100 flex items-center justify-between">
+              <span><i class="fa-solid fa-triangle-exclamation mr-1.5 text-red-600"></i> Gambar Kerosakan Semasa</span>
+              <span class="badge-status badge-pelupusan">Bukti Kerosakan</span>
+            </div>
+            <div class="p-3">
+              <img id="side-img-rosak" src="" class="img-4-3 rounded-lg border border-slate-200">
+              <div class="mt-2 text-[11px] text-slate-500 space-y-0.5">
+                <p>Bahagian Rosak: <strong class="text-red-700" id="side-txt-bahagian">-</strong></p>
+                <p>Gejala: <span id="side-txt-gejala">-</span></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Borang Perakuan Juruteknik -->
+        <form id="form-perakuan-teknikal" onsubmit="App.submitPerakuanTeknikal(event)" class="space-y-4 pt-4 border-t border-slate-200">
+          <input type="hidden" id="perakuan-id-aduan" name="idAduan">
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Laporan Pemeriksaan Fizikal & Teknikal *</label>
+            <textarea name="Ulasan_Teknikal" id="perakuan-ulasan" rows="3" required placeholder="Catatkan komponen yang rosak, punca kerosakan, dan sama ada alat ganti ekonomik untuk diganti..." class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Cadangan Tindakan Teknikal *</label>
+              <select name="Cadangan_Tindakan" id="perakuan-cadangan" required class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+                <option value="Cadangan Pelupusan">Disyorkan untuk Pelupusan Aset Alih</option>
+                <option value="Boleh Dibaiki">Boleh Dibaiki (Penyelenggaraan Dalaman)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Anggaran Kos Pembaikan (BND $)</label>
+              <input type="number" step="0.01" name="Anggaran_Kos_BND" placeholder="0.00" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Nama Pegawai Pemeriksa Teknikal *</label>
+            <input type="text" name="Pegawai_Pemeriksa" id="perakuan-pemeriksa" required placeholder="Nama dan jawatan pemeriksa" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+          </div>
+
+          <div class="pt-3 flex items-center justify-end gap-2 border-t border-slate-200">
+            <button type="button" onclick="App.closeSemakanModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-slate-700 font-semibold hover:bg-slate-50">
+              Tutup
+            </button>
+            <button type="submit" class="px-5 py-2 bg-upk-cerulean hover:bg-upk-navy text-white rounded-xl font-bold shadow-sm transition">
+              Sahkan Perakuan Teknikal
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 5: MODAL BUTIRAN ASET & KOD QR
+  ======================================================================== -->
+  <div id="modal-detail-aset" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-2xl w-full my-8 overflow-hidden shadow-2xl relative">
+      <div class="p-4 bg-upk-navy text-white flex items-center justify-between">
+        <h3 class="font-bold text-sm" id="detail-modal-title">Maklumat Terperinci Aset</h3>
+        <button onclick="App.closeDetailModal()" class="text-white/80 hover:text-white p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          
+          <!-- Kiri: Foto Asal & Kod QR -->
+          <div class="space-y-4">
+            <div class="relative rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+              <img id="detail-foto" src="" class="img-4-3 object-cover">
+              <span id="detail-badge" class="absolute top-2.5 right-2.5 badge-status badge-baik">Beroperasi Baik</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-3">
+              <img id="detail-qr-img" src="" class="w-16 h-16 bg-white p-1 rounded border border-slate-300">
+              <div class="text-left flex-1 min-w-0">
+                <span class="font-bold text-slate-800 block text-xs">Pelekat Kod QR Rasmi</span>
+                <span class="text-[10px] text-slate-500 block" id="detail-qr-id">UPK-AST-001</span>
+                <button onclick="App.cetakLabelTunggal()" class="mt-1 text-[11px] text-upk-cerulean hover:underline font-semibold">
+                  <i class="fa-solid fa-print"></i> Cetak Label Ini
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kanan: Maklumat & Spesifikasi -->
+          <div class="space-y-3">
+            <div class="border-b border-slate-100 pb-2">
+              <span class="text-[10px] font-bold text-upk-cerulean uppercase tracking-wider block" id="detail-buku">Peralatan Komputer</span>
+              <h4 class="font-extrabold text-base text-slate-900" id="detail-nama">Komputer Riba Dell</h4>
+              <p class="text-[11px] font-mono text-slate-500" id="detail-nosiri">S/N: BRU/2024/0014</p>
+            </div>
+
+            <div class="space-y-1.5 text-[11px]">
+              <div class="flex justify-between py-1 border-b border-slate-50">
+                <span class="text-slate-500">Lokasi Penempatan:</span>
+                <strong class="text-slate-800" id="detail-bilik">-</strong>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-50">
+                <span class="text-slate-500">Baki Stok / Kuantiti:</span>
+                <strong class="text-slate-800" id="detail-stok">1 Unit</strong>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-50">
+                <span class="text-slate-500">Harga Pembelian Asal:</span>
+                <strong class="text-slate-800" id="detail-harga">BND $0.00</strong>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-50">
+                <span class="text-slate-500">Tarikh Pendaftaran:</span>
+                <span class="text-slate-700" id="detail-tarikh">-</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-slate-50">
+                <span class="text-slate-500">Pegawai Penanggungjawab:</span>
+                <span class="text-slate-700" id="detail-pegawai">-</span>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-slate-500 text-[11px] block font-semibold mb-0.5">Spesifikasi Teknikal:</span>
+              <p class="p-2.5 bg-slate-50 rounded-lg text-slate-700 text-[11px] border border-slate-200" id="detail-spesifikasi">-</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="pt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-200">
+          <button type="button" onclick="App.bukaPindahBilikModal()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-xs">
+            <i class="fa-solid fa-person-walking-arrow-right mr-1"></i> Pindah Lokasi Bilik
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="App.bukaAduanDariAset()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs shadow-sm">
+              <i class="fa-solid fa-bullhorn mr-1"></i> Lapor Kerosakan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 6: LOG MASUK PENGGUNA
+  ======================================================================== -->
+  <div id="modal-login" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative text-xs">
+      <div class="text-center mb-5">
+        <img src="assets/logo-upk.png" class="w-14 h-14 mx-auto mb-2 object-contain" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
+        <h3 class="font-extrabold text-base text-slate-900">Log Masuk e-Inventori UPK</h3>
+        <p class="text-slate-500 text-[11px] mt-0.5">Kementerian Pendidikan Brunei Darussalam</p>
+      </div>
+
+      <form onsubmit="App.submitLogin(event)" class="space-y-3.5">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Emel Rasmi Kerajaan / Pengguna</label>
+          <input type="text" id="login-email" required placeholder="Cth: nama@moe.gov.bn atau darurat" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Kata Laluan (Khas Akses Darurat)</label>
+          <input type="password" id="login-password" placeholder="Kosongkan jika log masuk biasa" class="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-upk-cerulean">
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-upk-cerulean hover:bg-upk-navy text-white font-bold rounded-xl shadow-sm transition">
+          Log Masuk
+        </button>
+      </form>
+
+      <div class="mt-4 pt-3 border-t border-slate-100 text-center">
+        <button type="button" onclick="App.closeLoginModal()" class="text-slate-400 hover:text-slate-600 text-[11px]">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEKAS NOTIFIKASI TOAST -->
+  <div id="toast-container" class="toast-container fixed top-5 right-5 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- Skrip Utama Aplikasi -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

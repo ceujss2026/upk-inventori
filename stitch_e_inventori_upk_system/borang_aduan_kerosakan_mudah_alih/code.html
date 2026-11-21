@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="ms"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borang Aduan Kerosakan Mudah Alih — e-Inventori UPK</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#0F3E5D',
+        'on-primary': '#FFFFFF',
+        'secondary': '#16719A',
+        'on-secondary': '#FFFFFF',
+        'accent': '#C18C3B',
+        'on-accent': '#291800',
+        'accent-soft': '#E2EEF5',
+        'on-accent-soft': '#0F3E5D',
+        'surface': '#FFFFFF',
+        'on-surface': '#0F172A',
+        'surface-dim': '#F8FAFC',
+        'on-surface-dim': '#0F172A',
+        'surface-variant': '#F1F5F9',
+        'on-surface-variant': '#475569',
+        'outline': '#CBD5E1',
+        'outline-variant': '#E2E8F0',
+        'danger': '#D62828',
+        'on-danger': '#FFFFFF',
+        'status-active-bg': '#DCFCE7',
+        'on-status-active-bg': '#166534',
+        'status-active-border': '#86EFAC',
+        'status-maint-bg': '#FEF9C3',
+        'on-status-maint-bg': '#854D0E',
+        'status-maint-border': '#FDE047',
+        'status-disposal-bg': '#FEE2E2',
+        'on-status-disposal-bg': '#991B1B',
+        'status-disposal-border': '#FCA5A5',
+        'status-archived-bg': '#F1F5F9',
+        'on-status-archived-bg': '#475569',
+        'status-archived-border': '#CBD5E1',
+        'chart-emerald': '#2A9D8F',
+        'chart-amber': '#E9C46A',
+        'chart-crimson': '#D62828',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'DEFAULT': '10px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.72px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '-0.44px', fontWeight: '700' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '-0.27px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.12px', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.55px', fontWeight: '600' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.24px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '220ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body antialiased">
+  <div class="min-h-[884px] flex flex-col pb-24" data-stitch-vh="min-h-[884px]===min-h-screen">
+
+    <!-- MOBILE TASK FLOW HEADER -->
+    <header class="sticky top-0 z-30 bg-primary text-on-primary px-4 py-3.5 flex items-center gap-3 shadow-sm">
+      <a href="../pengimbas-qr/PengimbasKodQRMudahAlih.html" aria-label="Kembali" class="w-9 h-9 rounded-full bg-surface/10 flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+      </a>
+      <div>
+        <h1 data-design-text-token="title-md" class="font-title text-title-md text-on-primary leading-tight">Aduan Kerosakan Barang</h1>
+        <p data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Pelaporan Pantas Lapangan UPK</p>
+      </div>
+    </header>
+
+    <main class="flex-1 px-4 pt-4 flex flex-col gap-4">
+
+      <!-- Asset Auto-Detection Banner -->
+      <section aria-label="Aset Dikesan" class="bg-surface border border-outline-variant rounded-lg p-3.5 shadow-sm flex items-center gap-3">
+        <img src="https://lh3.googleusercontent.com/aida/ALJJyrC4n0SUqMSwCnyaI9VxeP-0tL1w3BwcVhFwnGG9O7HFl-HEs3vY2tfEbcaCDtMQ3tlIUV9KNvti4P0P6zjDnkuFWqgTO6wnJhRzVr93Ci9enRNQmT0zCP-AbJBLY4ECIgdNgJ_RGdQl0avcfpmq93c60q3s4i-DXS4bhRDcUBfQ0uDHc5Izsp88AQ-HnxrIxSlCBijVHcfY8K1Y5wnSZy6Og8CQ7600b7h-kuImHX5gzLwfPT40AMFaSA90AQ" alt="Dell Latitude 3420" class="w-16 h-14 rounded-md object-cover border border-outline-variant shrink-0">
+        <div class="min-w-0 flex-1">
+          <span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-secondary">UPK-AST-014</span>
+          <h2 data-design-text-token="label-lg" class="font-label text-label-lg text-primary truncate">Dell Latitude 3420</h2>
+          <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant truncate">Makmal Kerjaya UPK (Bilik 2)</p>
+        </div>
+      </section>
+
+      <!-- Incident Form Inputs -->
+      <section class="bg-surface border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label for="pelapor" data-design-text-token="label-md" class="font-label text-label-md text-on-surface">Nama Pelapor &amp; Emel Rasmi</label>
+          <input id="pelapor" type="text" value="Cikgu Hjh Nurulain (nurulain@moe.gov.bn)" class="w-full px-3 py-2.5 rounded border border-outline-variant bg-surface-dim font-body text-body-sm text-on-surface">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col gap-1.5">
+            <label for="tarikhRosak" data-design-text-token="label-md" class="font-label text-label-md text-on-surface">Tarikh Disedari</label>
+            <input id="tarikhRosak" type="text" value="18 Nov 2026" class="w-full px-3 py-2.5 rounded border border-outline-variant bg-surface-dim font-body text-body-sm text-on-surface tabular-nums">
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="bahagianRosak" data-design-text-token="label-md" class="font-label text-label-md text-on-surface">Bahagian Rosak</label>
+            <select id="bahagianRosak" class="w-full px-3 py-2.5 rounded border border-outline-variant bg-surface font-body text-body-sm text-on-surface">
+              <option selected>Skrin / Engsel</option>
+              <option>Struktur Fizikal</option>
+              <option>Papan Litar / Kuasa</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Visual Damage Proof Capture -->
+      <section class="bg-surface border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-3">
+        <h2 data-design-text-token="label-lg" class="font-label text-label-lg text-primary">Bukti Gambar Kerosakan Sebenar</h2>
+
+        <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded bg-accent-soft text-primary border border-secondary hover:bg-secondary hover:text-on-secondary transition-colors">
+          <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+          <span data-design-text-token="label-md" class="font-label text-label-md">Rakam Gambar Kerosakan Sekarang</span>
+        </button>
+
+        <div class="relative aspect-[4/3] rounded-md overflow-hidden border border-status-disposal-border">
+          <img src="https://lh3.googleusercontent.com/aida/ALJJyrBQOz4kpmltwu1Gytsgp869QLP4Pgxebw6S_EIftQMyiOkJ-yBpyGnJMDJ0ltHt53PoX8GA3BFzICEsqx37Y_zWbwgyzns75lxjieeJHpYhzdyEPl9aS31YrgyOONjH-7LuxKIyiwZ0sk4N6wE7EczqsT9k7v8dt24WkZekWC-mNztLXipT8Cq0cSDrHhML77ul6ZXVYBQShWXRU-1E8YIXvxuotkARg5IHMlKnr4R95RT4Cwn450XDp7zZxA6jEQ" alt="Bukti kerosakan engsel kanan" class="w-full h-full object-cover">
+          <span class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-status-disposal-bg text-on-status-disposal-bg border border-status-disposal-border">
+            <span data-design-text-token="label-sm" class="font-label text-label-sm">418 KB • Terlampir</span>
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="catatanRosak" data-design-text-token="label-md" class="font-label text-label-md text-on-surface">Keterangan Kerosakan</label>
+          <input id="catatanRosak" type="text" value="Keretakan pada bahagian engsel kanan dan bucu skrin laptop" class="w-full px-3 py-2.5 rounded border border-outline-variant bg-surface-dim font-body text-body-sm text-on-surface">
+        </div>
+      </section>
+
+      <!-- Tahap Kerosakan -->
+      <section class="bg-surface border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-2.5">
+        <span data-design-text-token="label-md" class="font-label text-label-md text-primary">Tahap Kerosakan</span>
+        <div class="flex flex-col gap-2">
+          <label class="px-3.5 py-2.5 rounded border border-outline-variant bg-surface-dim flex items-center gap-2.5">
+            <input type="radio" name="tahap" class="text-secondary">
+            <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Ringan (Masih boleh digunakan)</span>
+          </label>
+          <label class="px-3.5 py-2.5 rounded border border-outline-variant bg-surface-dim flex items-center gap-2.5">
+            <input type="radio" name="tahap" class="text-secondary">
+            <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Sederhana (Perlu penyelenggaraan)</span>
+          </label>
+          <label class="px-3.5 py-2.5 rounded border-2 border-danger bg-status-disposal-bg/40 flex items-center gap-2.5">
+            <input type="radio" name="tahap" checked class="text-danger">
+            <span data-design-text-token="label-md" class="font-label text-label-md text-on-status-disposal-bg">Kritikal — Tidak Selamat Digunakan</span>
+          </label>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Sticky Bottom Submit Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-surface border-t border-outline-variant p-4 z-30 shadow-lg">
+      <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded bg-danger text-on-danger hover:opacity-90 transition-opacity shadow-sm">
+        <span class="material-symbols-outlined text-[20px]">send</span>
+        <span data-design-text-token="label-lg" class="font-label text-label-lg">Hantar Laporan Kerosakan</span>
+      </button>
+    </footer>
+
+  </div>
+
+
+</body></html>

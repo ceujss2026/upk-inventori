@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="ms"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sokongan &amp; Kelulusan Pelupusan Aset — e-Inventori UPK</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#0F3E5D',
+        'on-primary': '#FFFFFF',
+        'secondary': '#16719A',
+        'on-secondary': '#FFFFFF',
+        'accent': '#C18C3B',
+        'on-accent': '#291800',
+        'accent-soft': '#E2EEF5',
+        'on-accent-soft': '#0F3E5D',
+        'surface': '#FFFFFF',
+        'on-surface': '#0F172A',
+        'surface-dim': '#F8FAFC',
+        'on-surface-dim': '#0F172A',
+        'surface-variant': '#F1F5F9',
+        'on-surface-variant': '#475569',
+        'outline': '#CBD5E1',
+        'outline-variant': '#E2E8F0',
+        'danger': '#D62828',
+        'on-danger': '#FFFFFF',
+        'status-active-bg': '#DCFCE7',
+        'on-status-active-bg': '#166534',
+        'status-active-border': '#86EFAC',
+        'status-maint-bg': '#FEF9C3',
+        'on-status-maint-bg': '#854D0E',
+        'status-maint-border': '#FDE047',
+        'status-disposal-bg': '#FEE2E2',
+        'on-status-disposal-bg': '#991B1B',
+        'status-disposal-border': '#FCA5A5',
+        'status-archived-bg': '#F1F5F9',
+        'on-status-archived-bg': '#475569',
+        'status-archived-border': '#CBD5E1',
+        'chart-emerald': '#2A9D8F',
+        'chart-amber': '#E9C46A',
+        'chart-crimson': '#D62828',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'DEFAULT': '10px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '24px',
+      },
+      fontFamily: {
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'title': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'label': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.72px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-lg': ['28px', { lineHeight: '34px', letterSpacing: '-0.56px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '-0.44px', fontWeight: '700' }],
+        'headline-sm': ['18px', { lineHeight: '24px', letterSpacing: '-0.27px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-md': ['14px', { lineHeight: '21px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-sm': ['13px', { lineHeight: '19px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '600' }],
+        'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.12px', fontWeight: '600' }],
+        'label-sm': ['11px', { lineHeight: '16px', letterSpacing: '0.55px', fontWeight: '600' }],
+        'mono-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.24px', fontWeight: '600' }],
+      },
+      transitionDuration: {
+        'state-change': '120ms',
+        'surface-enter': '220ms',
+        'surface-exit': '150ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'surface-enter': '0ms',
+        'surface-exit': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'surface-enter': 'cubic-bezier(0.2, 0, 0, 1)',
+        'surface-exit': 'cubic-bezier(0.3, 0, 1, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body antialiased">
+  <div class="min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+    <!-- TIER 1: TOP INSTITUTIONAL NAVY BAR (SHARED SHELL) -->
+    <header class="bg-primary text-on-primary h-16 w-full px-gutter-lg flex items-center justify-between border-b border-primary z-30">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-md bg-surface/10 border border-accent flex items-center justify-center shrink-0" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.6 12 23C16.6 21.6 20 16.8 20 11.5V5.5L12 2Z" stroke="#C18C3B" stroke-width="1.8" fill="rgba(193,140,59,0.18)"></path>
+            <path d="M8.5 10.5H15.5M8.5 14H13.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span data-design-text-token="title-md" class="font-title text-title-md text-on-primary leading-tight">e-Inventori UPK</span>
+          <span data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button type="button" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/10 hover:bg-surface/20 text-on-primary border border-surface/20 transition-colors">
+          <span class="material-symbols-outlined text-[18px] text-accent">meeting_room</span>
+          <span data-design-text-token="label-md" class="font-label text-label-md">Semua Bilik UPK</span>
+          <span class="material-symbols-outlined text-[18px]">expand_more</span>
+        </button>
+
+        <button type="button" aria-label="Notifikasi aduan kerosakan" class="relative w-10 h-10 rounded-full hover:bg-surface/10 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[22px]">notifications</span>
+          <span aria-hidden="true" class="absolute top-1 right-1 min-w-5 h-5 px-1 rounded-full bg-danger text-on-danger flex items-center justify-center tabular-nums">
+            <span data-design-text-token="label-sm" class="font-label text-label-sm">4</span>
+          </span>
+        </button>
+
+        <button type="button" aria-label="Buletin dan mesej sistem" class="relative w-10 h-10 rounded-full hover:bg-surface/10 flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[22px]">mail</span>
+          <span aria-hidden="true" class="absolute top-1 right-1 min-w-5 h-5 px-1 rounded-full bg-secondary text-on-secondary flex items-center justify-center tabular-nums">
+            <span data-design-text-token="label-sm" class="font-label text-label-sm">5</span>
+          </span>
+        </button>
+
+        <div class="flex items-center gap-2.5 pl-3 border-l border-surface/20">
+          <img src="https://lh3.googleusercontent.com/aida/ALJJyrCV-OyNWGFIbmK12lE0-HCzrWnL84GpJ4gXghy9v_DBXya3GHXVEWRlBelz1LVu3wNTEY5Fd8aYvaj-NFbk4VBLZbD2XwcC8uwwXysPGNQTcIFPPF4HDHFqePO7TCB38l09JHVVovKHNWwkF5VZqVQq9Oye4cRWggmTb_RiAREZgdbZ_EBOZHEk6pHypWHlfogVd7nMdtsImg7e6feN8n_JdrVoa6ETiXhTcQ-lNk3682MuvfjITqY88g" alt="Jessica Roy" class="w-9 h-9 rounded-full object-cover border border-accent">
+          <div class="hidden sm:flex flex-col text-left">
+            <span data-design-text-token="label-md" class="font-label text-label-md text-on-primary leading-tight">Jessica Roy</span>
+            <span data-design-text-token="label-sm" class="font-label text-label-sm text-accent-soft">Ketua Unit / Pengesah</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-accent-soft">expand_more</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- TIER 2: HORIZONTAL NAVBAR (SHARED SHELL) -->
+    <nav aria-label="Navigasi Utama" class="relative bg-surface border-b border-outline-variant w-full px-gutter-lg z-20 shadow-sm">
+      <div class="flex items-center justify-between h-[52px]">
+        <ul class="flex items-center gap-1 overflow-x-auto">
+          <li class="shrink-0">
+            <a href="../papan-pemuka/PapanPemukaPentadbiran.html" class="inline-flex items-center gap-2 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">home</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Papan Pemuka</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <a href="../katalog-aset/KatalogAsetInventori.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Katalog Aset</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <a href="../buku-simpanan/BukuSimpananKadStok.html" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">assignment</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Buku Simpanan &amp; Kad Stok</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <button type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Imbasan &amp; Aduan</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </button>
+          </li>
+          <li class="shrink-0">
+            <a href="#" aria-current="page" class="inline-flex items-center gap-1.5 px-3 py-2 rounded bg-accent-soft text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">balance</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Pemeriksaan &amp; Pelupusan</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </a>
+          </li>
+          <li class="shrink-0">
+            <button type="button" class="inline-flex items-center gap-1.5 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-variant hover:text-primary transition-colors">
+              <span class="material-symbols-outlined text-[20px]">settings</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Pentadbiran Sistem</span>
+              <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="flex-1 w-full px-gutter-lg py-gutter-lg flex flex-col gap-gutter-lg">
+
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 data-design-text-token="headline-lg" class="font-headline text-headline-lg text-primary">Sokongan &amp; Kelulusan Pelupusan Aset</h1>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-surface-variant mt-1">Semakan eksekutif Ketua Unit bagi permohonan pelupusan LPS-2026-004 dengan bukti visual bersebelahan.</p>
+        </div>
+        <span data-design-text-token="mono-sm" class="font-mono text-mono-sm px-3 py-1.5 rounded-full bg-accent-soft text-primary border border-outline-variant">Rujukan: LPS-2026-004</span>
+      </div>
+
+      <!-- SPLIT BOARD: LEFT 60% PDF PREVIEW | RIGHT 40% EXECUTIVE ACTION CARD -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+
+        <!-- Left Panel (7 cols -> ~60%): Interactive Official PDF Preview -->
+        <section aria-label="Pratonton Dokumen PDF Rasmi" class="lg:col-span-7 bg-surface-variant border border-outline-variant rounded-lg p-6">
+          <div class="bg-surface border border-outline rounded shadow-md p-7 flex flex-col gap-5">
+            <!-- PDF Official Crest Header -->
+            <div class="border-b-2 border-primary pb-4 flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded bg-primary flex items-center justify-center shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L4 5.5V11.5C4 16.8 7.4 21.6 12 23C16.6 21.6 20 16.8 20 11.5V5.5L12 2Z" stroke="#C18C3B" stroke-width="1.8" fill="rgba(193,140,59,0.2)"></path>
+                    <path d="M8.5 10.5H15.5M8.5 14H13.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-secondary">KEMENTERIAN PENDIDIKAN BRUNEI DARUSSALAM</p>
+                  <h2 data-design-text-token="title-md" class="font-title text-title-md text-primary">BORANG PERMOHONAN PELUPUSAN ASET ALIH KERAJAAN</h2>
+                  <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant">Unit Pendidikan Kerjaya (UPK), Jabatan Sekolah-Sekolah</p>
+                </div>
+              </div>
+              <span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary">LPS-2026-004</span>
+            </div>
+
+            <!-- Valuation Table -->
+            <table class="w-full text-left border border-outline-variant border-collapse">
+              <thead class="bg-accent-soft">
+                <tr>
+                  <th class="p-2.5 border border-outline-variant"><span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">ID Aset</span></th>
+                  <th class="p-2.5 border border-outline-variant"><span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">Perihal Aset</span></th>
+                  <th class="p-2.5 border border-outline-variant"><span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">Harga Asal</span></th>
+                  <th class="p-2.5 border border-outline-variant"><span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">Nilai Semasa</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-2.5 border border-outline-variant"><span data-design-text-token="mono-sm" class="font-mono text-mono-sm text-primary">UPK-AST-014</span></td>
+                  <td class="p-2.5 border border-outline-variant"><span data-design-text-token="body-sm" class="font-body text-body-sm">Komputer Riba Dell Latitude 3420</span></td>
+                  <td class="p-2.5 border border-outline-variant tabular-nums"><span data-design-text-token="body-sm" class="font-body text-body-sm">BND $1,250.00</span></td>
+                  <td class="p-2.5 border border-outline-variant tabular-nums"><span data-design-text-token="body-sm" class="font-body text-body-sm">BND $220.00</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Embedded Side-by-Side Evidence -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="border border-outline-variant rounded p-2 bg-surface-dim">
+                <p data-design-text-token="label-sm" class="font-label text-label-sm text-primary mb-1.5">1. Foto Asal (14 Jan 2025)</p>
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrC4n0SUqMSwCnyaI9VxeP-0tL1w3BwcVhFwnGG9O7HFl-HEs3vY2tfEbcaCDtMQ3tlIUV9KNvti4P0P6zjDnkuFWqgTO6wnJhRzVr93Ci9enRNQmT0zCP-AbJBLY4ECIgdNgJ_RGdQl0avcfpmq93c60q3s4i-DXS4bhRDcUBfQ0uDHc5Izsp88AQ-HnxrIxSlCBijVHcfY8K1Y5wnSZy6Og8CQ7600b7h-kuImHX5gzLwfPT40AMFaSA90AQ" alt="Foto asal aset" class="w-full h-28 object-cover rounded-sm">
+              </div>
+              <div class="border border-status-disposal-border rounded p-2 bg-status-disposal-bg/30">
+                <p data-design-text-token="label-sm" class="font-label text-label-sm text-on-status-disposal-bg mb-1.5">2. Bukti Kerosakan (18 Nov 2026)</p>
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBQOz4kpmltwu1Gytsgp869QLP4Pgxebw6S_EIftQMyiOkJ-yBpyGnJMDJ0ltHt53PoX8GA3BFzICEsqx37Y_zWbwgyzns75lxjieeJHpYhzdyEPl9aS31YrgyOONjH-7LuxKIyiwZ0sk4N6wE7EczqsT9k7v8dt24WkZekWC-mNztLXipT8Cq0cSDrHhML77ul6ZXVYBQShWXRU-1E8YIXvxuotkARg5IHMlKnr4R95RT4Cwn450XDp7zZxA6jEQ" alt="Foto kerosakan aset" class="w-full h-28 object-cover rounded-sm">
+              </div>
+            </div>
+
+            <!-- Technician Endorsement + Verification QR Footer -->
+            <div class="pt-3 border-t border-outline-variant flex items-center justify-between gap-4">
+              <div class="flex flex-col gap-1">
+                <span data-design-text-token="label-sm" class="font-label text-label-sm uppercase text-primary">Perakuan Juruteknik Pemeriksa</span>
+                <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant">&#34;Rosak teruk pada engsel dan skrin LCD; tidak ekonomik dibaiki.&#34; — Juruteknik Firdaus</p>
+              </div>
+              <div class="p-1.5 border border-outline-variant rounded bg-surface shrink-0">
+                <svg width="52" height="52" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-label="Kod QR Verifikasi Dokumen">
+                  <rect width="29" height="29" fill="#FFFFFF"></rect>
+                  <path fill="#0F172A" d="M1,1 h7v7h-7z M2,2 v5h5v-5z M3,3 h3v3h-3z M21,1 h7v7h-7z M22,2 v5h5v-5z M23,3 h3v3h-3z M1,21 h7v7h-7z M2,22 v5h5v-5z M3,23 h3v3h-3z M11,11 h5v5h-5z M12,12 v3h3v-3z M10,2 h3v3h-3z M15,4 h3v2h-3z M2,11 h3v3h-3z M22,12 h4v3h-4z M12,21 h4v4h-4z M21,21 h5v5h-5z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Panel (5 cols -> ~40%): Executive Action Card -->
+        <aside aria-label="Panel Kelulusan Ketua Unit" class="lg:col-span-5 bg-surface border border-outline-variant rounded-lg p-6 shadow-sm flex flex-col gap-5">
+          <div class="border-b border-outline-variant pb-3">
+            <h2 data-design-text-token="headline-sm" class="font-headline text-headline-sm text-primary">Keputusan Pegawai Pengesah</h2>
+            <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-variant">Sahkan semakan sebelum meluluskan dokumen rasmi.</p>
+          </div>
+
+          <!-- Summary Checklist -->
+          <div class="flex flex-col gap-2.5 bg-surface-dim border border-outline-variant rounded-lg p-4">
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" checked class="rounded text-secondary focus:ring-secondary">
+              <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Gambar kerosakan visual telah disemak</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" checked class="rounded text-secondary focus:ring-secondary">
+              <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Perakuan teknikal memenuhi kriteria pelupusan</span>
+            </label>
+            <label class="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" checked class="rounded text-secondary focus:ring-secondary">
+              <span data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">Rekod penempatan fizikal disahkan</span>
+            </label>
+          </div>
+
+          <!-- Approver Comments -->
+          <div class="flex flex-col gap-1.5">
+            <label for="ulasanKetua" data-design-text-token="label-md" class="font-label text-label-md text-on-surface">Catatan &amp; Ulasan Pegawai Pengesah</label>
+            <textarea id="ulasanKetua" rows="3" placeholder="Masukkan ulasan rasmi kelulusan atau sebab penolakan..." class="w-full rounded border border-outline-variant bg-surface-dim p-3 font-body text-body-md text-on-surface focus:border-secondary focus:ring-2 focus:ring-secondary/20">Disokong untuk pelupusan aset alih kerajaan mengikut laporan teknikal.</textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col gap-2.5">
+            <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded bg-primary text-on-primary hover:bg-secondary transition-colors shadow-sm">
+              <span class="material-symbols-outlined text-[20px]">check_circle</span>
+              <span data-design-text-token="label-lg" class="font-label text-label-lg">Sokong &amp; Luluskan Pelupusan Aset</span>
+            </button>
+            <button type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded bg-surface text-danger border border-danger hover:bg-status-disposal-bg transition-colors">
+              <span class="material-symbols-outlined text-[18px]">cancel</span>
+              <span data-design-text-token="label-md" class="font-label text-label-md">Tolak Permohonan</span>
+            </button>
+          </div>
+
+          <!-- Direct Export -->
+          <div class="pt-4 border-t border-outline-variant grid grid-cols-2 gap-2.5">
+            <button type="button" class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-accent-soft text-primary hover:bg-secondary hover:text-on-secondary transition-colors">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              <span data-design-text-token="label-sm" class="font-label text-label-sm">Muat Turun PDF Ber-QR</span>
+            </button>
+            <button type="button" class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-surface border border-outline-variant text-primary hover:bg-accent-soft transition-colors">
+              <span class="material-symbols-outlined text-[18px]">print</span>
+              <span data-design-text-token="label-sm" class="font-label text-label-sm">Cetak Borang</span>
+            </button>
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
+  </div>
+
+
+</body></html>
