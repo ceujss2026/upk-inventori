@@ -50,7 +50,7 @@
       <div class="flex items-center justify-between h-16">
         
         <!-- Logo & Tajuk Institusi -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="App.navigate('dashboard')">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="App.navigate('landing')">
           <img src="assets/logo-upk.png" alt="Logo UPK" class="w-10 h-10 object-contain rounded-full bg-white/10 p-0.5 border border-white/20 shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
           <div>
             <div class="flex items-center gap-2">
@@ -64,10 +64,10 @@
         <!-- Tindakan Bahagian Kanan -->
         <div class="flex items-center gap-3">
           <!-- Butang Ke Laman Utama Rasmi -->
-          <a href="landing.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold transition" title="Kembali ke Laman Pengenalan Rasmi e-Inventori UPK">
-            <i class="fa-solid fa-arrow-left text-[11px] text-amber-300"></i>
-            <span>Laman Rasmi</span>
-          </a>
+          <button onclick="App.navigate('landing')" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold transition" title="Laman Pengenalan Rasmi e-Inventori UPK">
+            <i class="fa-solid fa-house text-[11px] text-amber-300"></i>
+            <span>Laman Utama</span>
+          </button>
 
           <!-- Penapis Pantas Bilik -->
           <div class="hidden md:flex items-center bg-white/10 rounded-lg px-2.5 py-1 border border-white/15 text-xs text-sky-100">
@@ -130,8 +130,13 @@
         
         <!-- Tab Menu Mendatar -->
         <div class="flex items-center overflow-x-auto no-scrollbar py-0.5" id="nav-tabs-container">
-          <button class="nav-tab-btn active" data-nav="dashboard" onclick="App.navigate('dashboard')">
+          <button class="nav-tab-btn active" data-nav="landing" onclick="App.navigate('landing')">
             <i class="fa-solid fa-house"></i>
+            <span>Laman Utama</span>
+          </button>
+
+          <button class="nav-tab-btn" data-nav="dashboard" onclick="App.navigate('dashboard')">
+            <i class="fa-solid fa-chart-pie"></i>
             <span>Papan Pemuka</span>
           </button>
           
@@ -284,8 +289,215 @@
   ======================================================================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+    <!-- ====================================================================
+         VIEW 0: LAMAN UTAMA (LANDING PAGE RASMI e-INVENTORI UPK)
+    ==================================================================== -->
+    <div id="view-landing" class="space-y-10">
+
+      <!-- HERO SECTION -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center py-2 sm:py-4">
+
+        <!-- Kolum Kiri: Mesej Rasmi & Carian Pantas (7 Kolum) -->
+        <div class="lg:col-span-7 flex flex-col gap-5 sm:gap-6">
+          
+          <!-- Lencana Keselamatan & Piawaian -->
+          <div class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white border border-sky-100 shadow-sm text-xs">
+            <span class="w-5 h-5 rounded-full bg-upk-navy text-amber-400 flex items-center justify-center text-[10px]">
+              <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span class="font-bold uppercase tracking-wider text-upk-navy text-[11px]">Selamat • Masa Nyata • Piawaian KPM</span>
+          </div>
+
+          <!-- Tajuk Utama 3 Baris -->
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <span class="block">Jejak Aset.</span>
+            <span class="block text-upk-cerulean">Audit Pantas.</span>
+            <span class="block text-amber-600">Tanpa Ketirisan.</span>
+          </h1>
+
+          <!-- Keterangan Institusi -->
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
+            Platform pengurusan aset alih dan barang guna habis rasmi untuk <strong class="font-semibold text-slate-900">Unit Pendidikan Kerjaya (UPK)</strong>, Jabatan Sekolah-Sekolah. Menggabungkan pengimbasan Kod QR telefon pintar, Buku Simpanan digital, serta Pelan Lantai 3D interaktif kerajaan Brunei Darussalam.
+          </p>
+
+          <!-- Bilah Carian Pantas Aset & Bilik -->
+          <form onsubmit="App.onLandingSearch(event)" class="bg-white border-2 border-sky-200/80 hover:border-upk-cerulean transition-colors rounded-2xl p-2 sm:p-2.5 shadow-md flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-xl">
+            <div class="flex items-center gap-2 flex-1 px-2">
+              <i class="fa-solid fa-qrcode text-upk-cerulean text-base"></i>
+              <input type="text" id="landing-quick-search" placeholder="Kod Aset (cth: UPK-AST-001)" aria-label="Masukkan Kod Aset" class="w-full border-0 bg-transparent py-1 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none">
+            </div>
+            <div class="hidden sm:block w-px h-6 bg-slate-200"></div>
+            <div class="flex items-center px-2">
+              <i class="fa-solid fa-map-pin text-amber-500 text-xs mr-1.5 sm:hidden"></i>
+              <select id="landing-room-select" aria-label="Pilih Bilik UPK" class="w-full sm:w-auto border-0 bg-transparent py-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer">
+                <option value="Semua">Semua Bilik UPK</option>
+                <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
+                <option value="Bilik Kaunseling">Bilik Kaunseling & Kerjaya C</option>
+                <option value="Bilik Eksekutif">Bilik Eksekutif & Sumber D</option>
+                <option value="Dapur">Dapur & Pantri</option>
+                <option value="Stor">Bilik Stor & Suis</option>
+              </select>
+            </div>
+            <button type="submit" aria-label="Semak aset sekarang" class="bg-upk-cerulean hover:bg-upk-navy text-white font-bold text-xs px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm">
+              <span>Semak</span>
+              <i class="fa-solid fa-arrow-right text-[11px]"></i>
+            </button>
+          </form>
+
+          <!-- Tindakan Pantas (Masuk Sistem / Pelan / Imbas) -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button onclick="App.navigate('dashboard')" class="px-5 py-2.5 rounded-xl bg-upk-navy hover:bg-upk-dark text-white font-bold text-xs flex items-center gap-2 shadow-sm transition">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Buka Papan Pemuka Pentadbiran</span>
+            </button>
+            <button onclick="App.navigate('pelan')" class="px-4 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-upk-cerulean border border-sky-200 font-bold text-xs flex items-center gap-2 transition">
+              <i class="fa-solid fa-map-location-dot text-amber-600"></i>
+              <span>Pelan Lantai 3D Interaktif</span>
+            </button>
+            <button onclick="App.openScannerModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-2 transition">
+              <i class="fa-solid fa-camera"></i>
+              <span>Imbas Kamera Telefon</span>
+            </button>
+          </div>
+
+          <!-- 3 Kaunter Statistik Utama -->
+          <div class="pt-4 grid grid-cols-3 gap-3 sm:gap-6 border-t border-slate-200/80 max-w-lg">
+            <div class="pr-2 sm:pr-4 border-r border-slate-200">
+              <p class="text-2xl sm:text-3xl font-extrabold text-upk-navy tabular-nums" id="landing-stat-total">1,248+</p>
+              <p class="text-xs text-slate-500 mt-0.5">Aset Berdaftar</p>
+            </div>
+            <div class="pr-2 sm:pr-4 border-r border-slate-200">
+              <p class="text-2xl sm:text-3xl font-extrabold text-emerald-600 tabular-nums" id="landing-stat-kondisi">94.5%</p>
+              <p class="text-xs text-slate-500 mt-0.5">Beroperasi Baik</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-extrabold text-upk-cerulean tabular-nums" id="landing-stat-buku">4 Buku</p>
+              <p class="text-xs text-slate-500 mt-0.5">Kad Stok Digital</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kolum Kanan: Visual Isometrik & Banner Audit Masa Nyata (5 Kolum) -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-xl group">
+            <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="w-full h-auto object-cover group-hover:scale-102 transition duration-500" onerror="this.src='assets/floor-plan-3d.png'">
+            
+            <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-xl p-3.5 shadow-md flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-qrcode text-base"></i>
+                </span>
+                <div>
+                  <p class="text-xs font-bold text-slate-900">Audit Bilik Masa Nyata</p>
+                  <p class="text-[11px] text-slate-500">Padanan foto asal &amp; lokasi bilik serta-merta</p>
+                </div>
+              </div>
+              <button onclick="App.navigate('pelan')" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-upk-cerulean shrink-0 transition flex items-center gap-1">
+                <span>Pelan 3D</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- EKOSISTEM 4 MODUL TERAS -->
+      <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Ekosistem Pengurusan Inventori Bersepadu</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Dari pendaftaran foto manual hingga pengeluaran dokumen PDF pelupusan aset kerajaan.</p>
+          </div>
+          <button onclick="App.navigate('dashboard')" class="inline-flex items-center gap-1.5 text-xs font-bold text-upk-cerulean hover:underline">
+            <span>Buka Papan Pemuka Pentadbiran</span>
+            <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <!-- Modul 1: Katalog -->
+          <div onclick="App.navigate('katalog')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
+              <i class="fa-solid fa-boxes-stacked text-lg"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Katalog Visual &amp; Foto Asal</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Pendaftaran aset dengan pemampatan imej automatik di pelayar serta label Kod QR unik.</p>
+            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
+              <span>Buka Katalog</span>
+              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+
+          <!-- Modul 2: Imbasan Telefon -->
+          <div onclick="App.openScannerModal()" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
+              <i class="fa-solid fa-camera text-lg"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Pengimbas Kamera Telefon</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Imbas kod QR terus di bilik kerja untuk sahkan penempatan rasmi tanpa aplikasi tambahan.</p>
+            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
+              <span>Mula Mengimbas</span>
+              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+
+          <!-- Modul 3: Buku Simpanan & Kad Stok -->
+          <div onclick="App.navigate('stockcard')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
+              <i class="fa-solid fa-book-bookmark text-lg"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Buku Simpanan &amp; Kad Stok</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Rekod keluar-masuk dan pindahan bilik yang sedia dieksport ke Excel, CSV, dan PDF.</p>
+            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
+              <span>Lihat Kad Stok</span>
+              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+
+          <!-- Modul 4: Pelupusan Bukti Bersebelahan -->
+          <div onclick="App.navigate('pelupusan')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
+            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
+              <i class="fa-solid fa-scale-balanced text-lg"></i>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900">Pelupusan Bukti Bersebelahan</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Bandingkan foto asal dan bukti kerosakan untuk perakuan juruteknik dan kelulusan Ketua Unit.</p>
+            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
+              <span>Semak Pelupusan</span>
+              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- BANNER PELAN LANTAI 3D TERBARU -->
+      <section class="bg-gradient-to-r from-upk-navy via-upk-cerulean to-sky-700 text-white rounded-2xl p-6 sm:p-8 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-2xl text-amber-300 shrink-0">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <div>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[11px] font-bold uppercase tracking-wider mb-1">
+              Ciri Interaktif Baharu
+            </span>
+            <h3 class="text-lg sm:text-xl font-bold">Pelan Lantai 3D Interaktif UPK</h3>
+            <p class="text-xs sm:text-sm text-sky-100/90 mt-1">
+              Navigasi visual bilik utama (Stor, Dapur, Kaunter, Dewan Mesyuarat, Bilik C, Bilik D) dengan pin koordinat tepat & audit aset masa nyata.
+            </p>
+          </div>
+        </div>
+        <button onclick="App.navigate('pelan')" class="shrink-0 px-5 py-3 rounded-xl bg-white text-upk-navy hover:bg-sky-50 font-bold text-xs flex items-center gap-2 shadow-lg transition">
+          <span>Terokai Pelan 3D Sekarang</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </section>
+
+    </div>
+
     <!-- VIEW 1: PAPAN PEMUKA (EXECUTIVE DASHBOARD) -->
-    <div id="view-dashboard" class="space-y-6">
+    <div id="view-dashboard" class="space-y-6 hidden">
       
       <!-- Peringatan Stok Guna Habis Rendah (Banner Alert jika ada) -->
       <div id="low-stock-banner" class="hidden bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl shadow-sm">

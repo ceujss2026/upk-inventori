@@ -143,12 +143,12 @@ const App = (function () {
   function parseHashAndNavigate() {
     const rawHash = window.location.hash.replace(/^#/, '');
     if (!rawHash) {
-      navigate('dashboard');
+      navigate('landing');
       return;
     }
 
     const [routePart, queryPart] = rawHash.split('?');
-    const validRoutes = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
+    const validRoutes = ['landing', 'home', 'dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
 
     if (routePart === 'scan') {
       navigate('katalog');
@@ -156,10 +156,15 @@ const App = (function () {
       return;
     }
 
+    if (routePart === 'landing' || routePart === 'home') {
+      navigate('landing');
+      return;
+    }
+
     if (validRoutes.includes(routePart)) {
       navigate(routePart);
     } else {
-      navigate('dashboard');
+      navigate('landing');
     }
 
     if (queryPart) {
@@ -190,7 +195,7 @@ const App = (function () {
     closeMegaMenu();
 
     // Sembunyikan semua views
-    const views = ['dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
+    const views = ['landing', 'dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
     views.forEach(v => {
       const el = document.getElementById('view-' + v);
       if (el) el.classList.add('hidden');
@@ -210,6 +215,7 @@ const App = (function () {
     });
 
     // Panggil pemuat data spesifik
+    if (viewId === 'landing') updateLandingStats();
     if (viewId === 'dashboard') loadDashboardData();
     if (viewId === 'katalog') loadKatalogData();
     if (viewId === 'stockcard') loadStockCardData();
@@ -219,6 +225,49 @@ const App = (function () {
     if (viewId === 'pelan') loadPelanData();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function onLandingSearch(e) {
+    if (e) e.preventDefault();
+    const query = (document.getElementById('landing-quick-search')?.value || '').trim();
+    const bilik = document.getElementById('landing-room-select')?.value || 'Semua';
+    if (bilik && bilik !== 'Semua') {
+      _currentBilik = bilik;
+      const globalRoom = document.getElementById('global-room-select');
+      if (globalRoom) globalRoom.value = bilik;
+    }
+    if (query) {
+      _searchQuery = query.toLowerCase();
+      const searchInput = document.getElementById('katalog-search-input');
+      if (searchInput) searchInput.value = query;
+    }
+    navigate('katalog');
+    if (_katalogData.length > 0) {
+      renderKatalogGrid(filterKatalogList(_katalogData));
+    }
+  }
+
+  async function updateLandingStats() {
+    try {
+      if (!_statsData) {
+        const res = await API.call('getDashboardStats');
+        if (res && res.success && res.data) {
+          _statsData = res.data;
+        }
+      }
+      if (_statsData) {
+        const statTotal = document.getElementById('landing-stat-total');
+        const statKondisi = document.getElementById('landing-stat-kondisi');
+        if (statTotal && _statsData.totalAset) {
+          statTotal.innerText = _statsData.totalAset.toLocaleString() + '+';
+        }
+        if (statKondisi && _statsData.kadarOperasi) {
+          statKondisi.innerText = _statsData.kadarOperasi + '%';
+        }
+      }
+    } catch (e) {
+      console.warn('Ralat kemaskini statistik laman utama:', e);
+    }
   }
 
   function toggleMegaMenu(menuType) {
@@ -2026,6 +2075,7 @@ const App = (function () {
 
   return {
     navigate,
+    onLandingSearch,
     toggleMegaMenu,
     closeMegaMenu,
     toggleUserDropdown,
