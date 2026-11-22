@@ -720,7 +720,7 @@
             <!-- MOD 1: PELAN 3D ISOMETRIK (RENDER MEWAH DENGAN PENANDA INTERAKTIF) -->
             <div id="pelan-3d-viewport" class="overflow-hidden p-2 sm:p-4">
               <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-900 group">
-                <img id="img-3d-floor-plan" src="assets/floor-plan-3d.jpg" alt="Pelan 3D Isometrik UPK" class="w-full h-auto block select-none">
+                <img id="img-3d-floor-plan" src="assets/floor-plan-3d.png" alt="Pelan 3D Isometrik UPK" class="w-full h-auto block select-none">
                 
                 <!-- Lapisan SVG Interaktif Di Atas Pelan 3D (viewBox: 0 0 1024 683) -->
                 <svg id="svg-3d-overlay" viewBox="0 0 1024 683" class="absolute inset-0 w-full h-full pointer-events-auto">
@@ -731,8 +731,11 @@
                   <!-- 2. Dapur & Pantri (Kitchen - Middle-Left y:210..315) -->
                   <rect x="180" y="210" width="175" height="105" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
                   
-                  <!-- 3. Dewan Mesyuarat Utama (Meeting Room - Keseluruhan Karpet Hijau y:315..630) -->
-                  <path d="M 175 315 L 355 315 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                  <!-- 3a. Ruang Kaunter Khidmat Pelanggan & Resepsi (y:315..440) -->
+                  <rect x="180" y="315" width="175" height="125" rx="4" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+
+                  <!-- 3b. Dewan Mesyuarat / Bilik Persidangan Utama (y:442..630) -->
+                  <path d="M 175 442 L 355 442 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
                   
                   <!-- 4. Tandas Sayap Utara (Top Toilet) -->
                   <rect x="360" y="25" width="65" height="85" rx="3" class="svg-room" fill="#0284C7" data-room-id="TANDAS-NORTH" onclick="App.selectMapRoom('TANDAS-NORTH')" />

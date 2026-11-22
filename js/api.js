@@ -134,7 +134,7 @@ const API = (function () {
 
     // Dapatkan data setempat dari localStorage atau data awal
     let mockAset = JSON.parse(localStorage.getItem('upk_mock_aset') || 'null');
-    if (!mockAset || !mockAset[0]?.map3d_calibrated_v3) {
+    if (!mockAset || !mockAset[0]?.map3d_calibrated_v4) {
       mockAset = [
         {
           ID_Aset: 'UPK-AST-001',
@@ -148,7 +148,7 @@ const API = (function () {
           map_y: 390,
           map3d_x: 525,
           map3d_y: 350,
-          map3d_calibrated_v3: true,
+          map3d_calibrated_v4: true,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
@@ -235,8 +235,8 @@ const API = (function () {
           map_bilik_id: 'BILIK-MEETING',
           map_x: 210,
           map_y: 520,
-          map3d_x: 272,
-          map3d_y: 441,
+          map3d_x: 280,
+          map3d_y: 535,
           Baki_Stok: 1,
           Paras_Amaran_Minimum: 0,
           Status_Aset: 'Beroperasi Baik',
