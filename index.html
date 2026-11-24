@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>e-Inventori UPK — Sistem Pengurusan Aset & Inventori Berasaskan Kod QR</title>
   
-  <!-- Font Rasmi Plus Jakarta Sans -->
+  <!-- Font Rasmi: Playfair Display (Serif Editorial) & Plus Jakarta Sans (Sans Modern) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,13 +17,39 @@
       theme: {
         extend: {
           colors: {
+            terracotta: {
+              DEFAULT: '#DF826C',
+              hover: '#C86A4B',
+              soft: '#FCEEE9',
+              dark: '#A64B32'
+            },
+            warm: {
+              bg: '#FAF7F2',
+              card: '#FFFFFF',
+              surface: '#F5F0E8',
+              border: '#EAE4D9',
+              dark: '#1C1917',
+              charcoal: '#181C20',
+              muted: '#78716C'
+            },
             upk: {
-              navy: '#0F3E5D',
-              cerulean: '#16719A',
+              navy: '#1A2E3D',
+              cerulean: '#235D7A',
+              terracotta: '#DF826C',
               gold: '#C18C3B',
-              ice: '#E2EEF5',
-              dark: '#0A293E'
+              ice: '#EBF2F7',
+              canvas: '#FAF7F2'
             }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'soft': '0 20px 40px -15px rgba(28, 25, 23, 0.05)',
+            'float': '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
+            'card': '0 4px 20px -2px rgba(28, 25, 23, 0.04)'
           }
         }
       }
@@ -40,77 +66,77 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900 pb-20 md:pb-8">
+<body class="bg-[#FAF7F2] text-stone-800 antialiased selection:bg-[#FCEEE9] selection:text-[#DF826C] pb-20 md:pb-8">
 
   <!-- ========================================================================
-       TIER 1: BILAH ATAS RASMI (TOP NAVY BAR - #0F3E5D)
+       BILAH ATAS UTAMA (EDITORIAL ARCHITECTURAL HEADER)
   ======================================================================== -->
-  <header class="top-navy-bar text-white sticky top-0 z-40">
+  <header class="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#EAE4D9] sticky top-0 z-40 transition-all text-stone-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         
-        <!-- Logo & Tajuk Institusi -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="App.navigate('landing')">
-          <img src="assets/logo-upk.png" alt="Logo UPK" class="w-10 h-10 object-contain rounded-full bg-white/10 p-0.5 border border-white/20 shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
+        <!-- Logo & Tajuk Institusi Bersifat Editorial -->
+        <div class="flex items-center gap-3.5 cursor-pointer" onclick="App.navigate('landing')">
+          <img src="assets/logo-upk.png" alt="Logo UPK" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-[#EAE4D9] shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=DF826C&color=fff'">
           <div>
             <div class="flex items-center gap-2">
-              <span class="font-extrabold text-base tracking-tight leading-none text-white">e-Inventori UPK</span>
-              <span class="bg-amber-500/20 text-amber-300 text-[10px] font-bold px-1.5 py-0.5 rounded border border-amber-400/30">BRUNEI</span>
+              <span class="font-serif font-bold text-lg tracking-tight leading-none text-stone-900">e-Inventori UPK</span>
+              <span class="bg-[#FCEEE9] text-[#DF826C] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#DF826C]/30">BRUNEI</span>
             </div>
-            <p class="text-[11px] text-sky-200/80 font-medium leading-tight mt-0.5 hidden sm:block">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</p>
+            <p class="text-[11px] text-stone-500 font-normal leading-tight mt-0.5 hidden sm:block">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</p>
           </div>
         </div>
 
         <!-- Tindakan Bahagian Kanan -->
         <div class="flex items-center gap-3">
-          <!-- Butang Ke Laman Utama Rasmi -->
-          <button onclick="App.navigate('landing')" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold transition" title="Laman Pengenalan Rasmi e-Inventori UPK">
-            <i class="fa-solid fa-house text-[11px] text-amber-300"></i>
-            <span>Laman Utama</span>
-          </button>
-
-          <!-- Penapis Pantas Bilik -->
-          <div class="hidden md:flex items-center bg-white/10 rounded-lg px-2.5 py-1 border border-white/15 text-xs text-sky-100">
-            <i class="fa-solid fa-map-location-dot mr-2 text-amber-300"></i>
-            <select id="global-room-select" onchange="App.onGlobalRoomChange(this.value)" class="bg-transparent text-white text-xs font-medium focus:outline-none cursor-pointer">
-              <option value="Semua" class="text-slate-800">Semua Bilik UPK</option>
+          
+          <!-- Penapis Pantas Bilik (Pill Elegan) -->
+          <div class="hidden md:flex items-center bg-white rounded-full px-3 py-1.5 border border-[#EAE4D9] text-xs text-stone-700 shadow-sm">
+            <i class="fa-solid fa-map-location-dot mr-2 text-[#DF826C]"></i>
+            <select id="global-room-select" onchange="App.onGlobalRoomChange(this.value)" class="bg-transparent text-stone-800 text-xs font-medium focus:outline-none cursor-pointer">
+              <option value="Semua">Semua Bilik UPK</option>
             </select>
           </div>
 
+          <!-- Butang Imbas Kamera Telefon (Pill Terracotta) -->
+          <button onclick="App.openScannerModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+            <i class="fa-solid fa-camera text-[11px]"></i>
+            <span class="hidden sm:inline">Imbas QR</span>
+          </button>
+
           <!-- Lonceng Notifikasi Aduan -->
-          <button onclick="App.navigate('aduan')" class="relative p-2 rounded-lg bg-white/10 hover:bg-white/15 text-white transition focus:outline-none" title="Aduan Kerosakan Semasa">
-            <i class="fa-solid fa-bell text-sm"></i>
-            <span id="notif-badge-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-slate-900 shadow">1</span>
+          <button onclick="App.navigate('aduan')" class="relative p-2 rounded-full bg-white hover:bg-stone-100 text-stone-700 border border-[#EAE4D9] transition focus:outline-none shadow-sm" title="Aduan Kerosakan Semasa">
+            <i class="fa-solid fa-bell text-xs"></i>
+            <span id="notif-badge-count" class="absolute -top-1 -right-1 bg-[#DF826C] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">1</span>
           </button>
 
           <!-- Widget Profil Pengguna -->
           <div class="relative" id="user-profile-widget">
-            <button onclick="App.toggleUserDropdown()" class="flex items-center gap-2 pl-2 pr-1.5 py-1 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 transition text-xs">
-              <div class="w-6 h-6 rounded-full bg-amber-500/30 text-amber-300 font-bold flex items-center justify-center text-[10px] border border-amber-300/40" id="user-avatar-initials">AD</div>
+            <button onclick="App.toggleUserDropdown()" class="flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-[#EAE4D9] transition text-xs shadow-sm">
+              <div class="w-6 h-6 rounded-full bg-[#FCEEE9] text-[#DF826C] font-bold flex items-center justify-center text-[10px]" id="user-avatar-initials">AD</div>
               <div class="text-left hidden lg:block">
-                <span class="font-semibold block leading-none text-white text-[11px]" id="user-display-name">Pentadbir Inventori</span>
-                <span class="text-[9px] text-sky-200/70 leading-none" id="user-display-role">Admin</span>
+                <span class="font-semibold block leading-none text-stone-800 text-[11px]" id="user-display-name">Pentadbir</span>
               </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-sky-200/80"></i>
+              <i class="fa-solid fa-chevron-down text-[10px] text-stone-400"></i>
             </button>
 
             <!-- Dropdown Profil -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-slate-800 text-xs">
-              <div class="px-3 py-2 border-b border-slate-100">
-                <p class="font-bold text-slate-800" id="user-menu-name">Pentadbir Inventori</p>
-                <p class="text-slate-500 text-[11px]" id="user-menu-email">admin@moe.gov.bn</p>
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-[#EAE4D9] py-2 z-50 text-stone-800 text-xs">
+              <div class="px-3.5 py-2 border-b border-[#EAE4D9]">
+                <p class="font-bold text-stone-900" id="user-menu-name">Pentadbir Inventori</p>
+                <p class="text-stone-500 text-[11px]" id="user-menu-email">admin@moe.gov.bn</p>
               </div>
-              <a href="landing.html" class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700">
-                <i class="fa-solid fa-globe text-sky-600"></i> Laman Utama Rasmi
+              <a href="landing.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
+                <i class="fa-solid fa-globe text-[#DF826C]"></i> Laman Utama Rasmi
               </a>
-              <a href="#" onclick="App.showSettingsModal(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700">
-                <i class="fa-solid fa-sliders text-sky-600"></i> Tetapan Sistem & Token
+              <a href="#" onclick="App.showSettingsModal(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
+                <i class="fa-solid fa-sliders text-[#DF826C]"></i> Tetapan Sistem & Token
               </a>
-              <a href="#" onclick="App.showMigrationModal(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-slate-50 text-slate-700">
+              <a href="#" onclick="App.showMigrationModal(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
                 <i class="fa-solid fa-database text-amber-600"></i> Migrasi Pangkalan Data
               </a>
-              <div class="border-t border-slate-100 my-1"></div>
-              <a href="#" onclick="App.logout(); return false;" class="flex items-center gap-2 px-3 py-2 hover:bg-red-50 text-red-600 font-semibold">
+              <div class="border-t border-[#EAE4D9] my-1"></div>
+              <a href="#" onclick="App.logout(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-red-50 text-red-600 font-semibold">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Keluar
               </a>
             </div>
@@ -290,208 +316,405 @@
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     <!-- ====================================================================
-         VIEW 0: LAMAN UTAMA (LANDING PAGE RASMI e-INVENTORI UPK)
+         VIEW 0: LAMAN UTAMA (EDITORIAL ARCHITECTURAL LANDING)
     ==================================================================== -->
-    <div id="view-landing" class="space-y-10">
+    <div id="view-landing" class="space-y-14">
 
-      <!-- HERO SECTION -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center py-2 sm:py-4">
+      <!-- ==================================================================
+           HERO SECTION: INSPIRASI EDITORIAL ARCHITECTURAL (IMAGE 1 & 2)
+      ================================================================== -->
+      <section class="relative rounded-3xl overflow-hidden shadow-2xl min-h-[580px] lg:min-h-[620px] flex items-center bg-[#181C20] border border-[#EAE4D9]/20">
+        
+        <!-- Latar Belakang Foto Isometrik Berseni Bina -->
+        <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="absolute inset-0 w-full h-full object-cover object-center opacity-75 scale-102 hover:scale-105 transition-transform duration-1000" onerror="this.src='assets/floor-plan-3d.png'">
+        
+        <!-- Lapisan Vignette & Pencahayaan Lembut -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#181C20]/95 via-[#181C20]/75 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#181C20]/80 via-transparent to-transparent"></div>
 
-        <!-- Kolum Kiri: Mesej Rasmi & Carian Pantas (7 Kolum) -->
-        <div class="lg:col-span-7 flex flex-col gap-5 sm:gap-6">
+        <!-- Kad Gelap Asimetrik Bertingkap Kaca (Exact Image 1 Style) -->
+        <div class="relative z-10 max-w-xl bg-[#181C20]/88 backdrop-blur-md p-7 sm:p-10 rounded-3xl border border-white/10 shadow-2xl text-white ml-4 sm:ml-8 lg:ml-12 my-8 mr-4">
           
-          <!-- Lencana Keselamatan & Piawaian -->
-          <div class="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white border border-sky-100 shadow-sm text-xs">
-            <span class="w-5 h-5 rounded-full bg-upk-navy text-amber-400 flex items-center justify-center text-[10px]">
-              <i class="fa-solid fa-shield-halved"></i>
-            </span>
-            <span class="font-bold uppercase tracking-wider text-upk-navy text-[11px]">Selamat • Masa Nyata • Piawaian KPM</span>
+          <!-- Lencana Rasmi Beretika Tinggi -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono tracking-widest text-amber-300 uppercase font-semibold mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#DF826C] animate-pulse"></span>
+            <span>Unit Pendidikan Kerjaya • Jabatan Sekolah-Sekolah</span>
           </div>
 
-          <!-- Tajuk Utama 3 Baris -->
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            <span class="block">Jejak Aset.</span>
-            <span class="block text-upk-cerulean">Audit Pantas.</span>
-            <span class="block text-amber-600">Tanpa Ketirisan.</span>
+          <!-- Tajuk Utama Gaya Editorial Serif (Exact Image 2 Style) -->
+          <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white leading-tight mb-4">
+            Pengurusan Aset &amp; Ruang Bersepadu.
           </h1>
 
-          <!-- Keterangan Institusi -->
-          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
-            Platform pengurusan aset alih dan barang guna habis rasmi untuk <strong class="font-semibold text-slate-900">Unit Pendidikan Kerjaya (UPK)</strong>, Jabatan Sekolah-Sekolah. Menggabungkan pengimbasan Kod QR telefon pintar, Buku Simpanan digital, serta Pelan Lantai 3D interaktif kerajaan Brunei Darussalam.
+          <!-- Keterangan Bertaraf Eksekutif -->
+          <p class="text-xs sm:text-sm text-stone-300 font-light leading-relaxed mb-6">
+            Piawaian moden pengurusan aset alih kerajaan Brunei Darussalam. Menggabungkan pengimbasan kod QR kamera telefon pintar, buku simpanan stok digital, serta visualisasi pelan lantai 3D interaktif berketepatan tinggi.
           </p>
 
-          <!-- Bilah Carian Pantas Aset & Bilik -->
-          <form onsubmit="App.onLandingSearch(event)" class="bg-white border-2 border-sky-200/80 hover:border-upk-cerulean transition-colors rounded-2xl p-2 sm:p-2.5 shadow-md flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-xl">
-            <div class="flex items-center gap-2 flex-1 px-2">
-              <i class="fa-solid fa-qrcode text-upk-cerulean text-base"></i>
-              <input type="text" id="landing-quick-search" placeholder="Kod Aset (cth: UPK-AST-001)" aria-label="Masukkan Kod Aset" class="w-full border-0 bg-transparent py-1 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none">
-            </div>
-            <div class="hidden sm:block w-px h-6 bg-slate-200"></div>
-            <div class="flex items-center px-2">
-              <i class="fa-solid fa-map-pin text-amber-500 text-xs mr-1.5 sm:hidden"></i>
-              <select id="landing-room-select" aria-label="Pilih Bilik UPK" class="w-full sm:w-auto border-0 bg-transparent py-1 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer">
-                <option value="Semua">Semua Bilik UPK</option>
-                <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
-                <option value="Bilik Kaunseling">Bilik Kaunseling & Kerjaya C</option>
-                <option value="Bilik Eksekutif">Bilik Eksekutif & Sumber D</option>
-                <option value="Dapur">Dapur & Pantri</option>
-                <option value="Stor">Bilik Stor & Suis</option>
-              </select>
-            </div>
-            <button type="submit" aria-label="Semak aset sekarang" class="bg-upk-cerulean hover:bg-upk-navy text-white font-bold text-xs px-5 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm">
-              <span>Semak</span>
-              <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          <!-- Bilah Carian Pantas Bersifat Pill Elegan -->
+          <form onsubmit="App.onLandingSearch(event)" class="bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-1.5 pl-4 shadow-inner flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-qrcode text-[#DF826C] text-sm shrink-0"></i>
+            <input type="text" id="landing-quick-search" placeholder="Cari kod aset (cth: UPK-AST-001)..." aria-label="Masukkan Kod Aset" class="flex-1 min-w-0 bg-transparent py-1 text-xs text-white placeholder:text-stone-400 focus:outline-none">
+            <select id="landing-room-select" aria-label="Pilih Bilik UPK" class="hidden sm:block bg-transparent py-1 px-2 text-[11px] font-medium text-stone-300 border-l border-white/15 focus:outline-none cursor-pointer">
+              <option value="Semua" class="text-stone-900">Semua Bilik</option>
+              <option value="Bilik Mesyuarat Utama" class="text-stone-900">Bilik Mesyuarat</option>
+              <option value="Bilik Kaunseling" class="text-stone-900">Bilik Kaunseling C</option>
+              <option value="Bilik Eksekutif" class="text-stone-900">Bilik Eksekutif D</option>
+              <option value="Dapur" class="text-stone-900">Dapur &amp; Pantri</option>
+              <option value="Stor" class="text-stone-900">Bilik Stor &amp; Suis</option>
+            </select>
+            <button type="submit" aria-label="Semak aset" class="px-4 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow">
+              <span>Cari</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </button>
           </form>
 
-          <!-- Tindakan Pantas (Masuk Sistem / Pelan / Imbas) -->
-          <div class="flex flex-wrap items-center gap-3 pt-1">
-            <button onclick="App.navigate('dashboard')" class="px-5 py-2.5 rounded-xl bg-upk-navy hover:bg-upk-dark text-white font-bold text-xs flex items-center gap-2 shadow-sm transition">
-              <i class="fa-solid fa-chart-pie"></i>
-              <span>Buka Papan Pemuka Pentadbiran</span>
+          <!-- Barisan Butang Tindakan Pill Terracotta -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="App.navigate('pelan')" class="px-6 py-2.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs tracking-wide shadow-lg transition-all flex items-center gap-2">
+              <span>Terokai Pelan Lantai 3D</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </button>
-            <button onclick="App.navigate('pelan')" class="px-4 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-upk-cerulean border border-sky-200 font-bold text-xs flex items-center gap-2 transition">
-              <i class="fa-solid fa-map-location-dot text-amber-600"></i>
-              <span>Pelan Lantai 3D Interaktif</span>
-            </button>
-            <button onclick="App.openScannerModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-2 transition">
-              <i class="fa-solid fa-camera"></i>
-              <span>Imbas Kamera Telefon</span>
+            <button onclick="App.navigate('dashboard')" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium text-xs transition-all">
+              Buka Papan Pemuka
             </button>
           </div>
 
-          <!-- 3 Kaunter Statistik Utama -->
-          <div class="pt-4 grid grid-cols-3 gap-3 sm:gap-6 border-t border-slate-200/80 max-w-lg">
-            <div class="pr-2 sm:pr-4 border-r border-slate-200">
-              <p class="text-2xl sm:text-3xl font-extrabold text-upk-navy tabular-nums" id="landing-stat-total">1,248+</p>
-              <p class="text-xs text-slate-500 mt-0.5">Aset Berdaftar</p>
-            </div>
-            <div class="pr-2 sm:pr-4 border-r border-slate-200">
-              <p class="text-2xl sm:text-3xl font-extrabold text-emerald-600 tabular-nums" id="landing-stat-kondisi">94.5%</p>
-              <p class="text-xs text-slate-500 mt-0.5">Beroperasi Baik</p>
+          <!-- Metrik Ringkas Kaki Kad -->
+          <div class="pt-6 mt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-left">
+            <div>
+              <p class="font-serif text-lg sm:text-xl font-bold text-white tabular-nums" id="landing-stat-total">1,248+</p>
+              <p class="text-[10px] text-stone-400 font-light mt-0.5">Unit Terdaftar</p>
             </div>
             <div>
-              <p class="text-2xl sm:text-3xl font-extrabold text-upk-cerulean tabular-nums" id="landing-stat-buku">4 Buku</p>
-              <p class="text-xs text-slate-500 mt-0.5">Kad Stok Digital</p>
+              <p class="font-serif text-lg sm:text-xl font-bold text-emerald-400 tabular-nums" id="landing-stat-kondisi">94.5%</p>
+              <p class="text-[10px] text-stone-400 font-light mt-0.5">Beroperasi Baik</p>
+            </div>
+            <div>
+              <p class="font-serif text-lg sm:text-xl font-bold text-amber-300 tabular-nums" id="landing-stat-buku">4 Buku</p>
+              <p class="text-[10px] text-stone-400 font-light mt-0.5">Kad Stok Digital</p>
             </div>
           </div>
-        </div>
 
-        <!-- Kolum Kanan: Visual Isometrik & Banner Audit Masa Nyata (5 Kolum) -->
-        <div class="lg:col-span-5">
-          <div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-xl group">
-            <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="w-full h-auto object-cover group-hover:scale-102 transition duration-500" onerror="this.src='assets/floor-plan-3d.png'">
-            
-            <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-xl p-3.5 shadow-md flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <span class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                  <i class="fa-solid fa-qrcode text-base"></i>
-                </span>
-                <div>
-                  <p class="text-xs font-bold text-slate-900">Audit Bilik Masa Nyata</p>
-                  <p class="text-[11px] text-slate-500">Padanan foto asal &amp; lokasi bilik serta-merta</p>
-                </div>
-              </div>
-              <button onclick="App.navigate('pelan')" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-upk-cerulean shrink-0 transition flex items-center gap-1">
-                <span>Pelan 3D</span>
-                <i class="fa-solid fa-arrow-right text-[10px]"></i>
-              </button>
-            </div>
-          </div>
         </div>
 
       </section>
 
-      <!-- EKOSISTEM 4 MODUL TERAS -->
-      <section class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+      <!-- ==================================================================
+           3 KAD TERAPUNG PUTIH KACA FROSTED (EXACT IMAGE 2 STYLE)
+           "Timeless Design • Relaxed Comfort • Curated Decor" -> 3 Modul Teras
+      ================================================================== -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-6 sm:-mt-10 relative z-20">
+        
+        <!-- Kad 1: Pelan Lantai 3D Interaktif -->
+        <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
           <div>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Ekosistem Pengurusan Inventori Bersepadu</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-1">Dari pendaftaran foto manual hingga pengeluaran dokumen PDF pelupusan aset kerajaan.</p>
+            <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Pelan Lantai 3D Interaktif</h3>
+            <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+              Visualisasi ruang 5 zon bilik fizikal UPK dengan penandaan koordinat aset alih dan status operasi masa nyata.
+            </p>
           </div>
-          <button onclick="App.navigate('dashboard')" class="inline-flex items-center gap-1.5 text-xs font-bold text-upk-cerulean hover:underline">
-            <span>Buka Papan Pemuka Pentadbiran</span>
+          <button onclick="App.navigate('pelan')" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+            Lihat Pelan
+          </button>
+        </div>
+
+        <!-- Kad 2: Pengimbas Kamera Telefon -->
+        <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+              <i class="fa-solid fa-camera"></i>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Audit &amp; Imbasan Telefon</h3>
+            <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+              Imbas label kod QR pada perabot atau peralatan secara terus melalui kamera telefon tanpa aplikasi tambahan.
+            </p>
+          </div>
+          <button onclick="App.openScannerModal()" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+            Mula Imbas
+          </button>
+        </div>
+
+        <!-- Kad 3: Kad Stok & Simpanan Digital -->
+        <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Buku Simpanan &amp; Kad Stok</h3>
+            <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+              Buku rekod digital alir keluar-masuk barang guna habis yang sedia dieksport mengikut format rasmi Kew.PA.
+            </p>
+          </div>
+          <button onclick="App.navigate('stockcard')" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+            Buka Kad Stok
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ==================================================================
+           SEKSYEN: TEROKAI RUANG & BILIK UPK (EXACT IMAGE 2 "EXPLORE OUR COLLECTIONS")
+      ================================================================== -->
+      <section class="space-y-6 pt-4">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAE4D9] pb-4">
+          <div>
+            <span class="text-[11px] font-mono tracking-widest text-[#DF826C] uppercase font-bold">Zon Operasi &amp; Lokasi Fizikal</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-normal text-stone-900 mt-1">Terokai Ruang &amp; Bilik UPK</h2>
+            <p class="text-xs sm:text-sm text-stone-500 font-light mt-1 max-w-xl">
+              Pemeriksaan inventori dan penempatan aset alih mengikut fungsi bilik fizikal dan rekod audit berkala.
+            </p>
+          </div>
+          <button onclick="App.navigate('pelan')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#DF826C] hover:text-[#C86A4B] transition">
+            <span>Buka Pelan Lantai 3D Penuh</span>
             <i class="fa-solid fa-arrow-right text-[11px]"></i>
           </button>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           
-          <!-- Modul 1: Katalog -->
-          <div onclick="App.navigate('katalog')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
-              <i class="fa-solid fa-boxes-stacked text-lg"></i>
+          <!-- Bilik 1: Bilik Mesyuarat Utama -->
+          <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+              <img src="assets/rooms/meeting-room.jpg" alt="Bilik Mesyuarat Utama" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+              <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+                Dewan Persidangan
+              </div>
             </div>
-            <h3 class="text-sm font-bold text-slate-900">Katalog Visual &amp; Foto Asal</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Pendaftaran aset dengan pemampatan imej automatik di pelayar serta label Kod QR unik.</p>
-            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
-              <span>Buka Katalog</span>
-              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-            </div>
-          </div>
-
-          <!-- Modul 2: Imbasan Telefon -->
-          <div onclick="App.openScannerModal()" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
-              <i class="fa-solid fa-camera text-lg"></i>
-            </div>
-            <h3 class="text-sm font-bold text-slate-900">Pengimbas Kamera Telefon</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Imbas kod QR terus di bilik kerja untuk sahkan penempatan rasmi tanpa aplikasi tambahan.</p>
-            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
-              <span>Mula Mengimbas</span>
-              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+              <div>
+                <h3 class="font-serif text-base font-bold text-stone-900">Bilik Mesyuarat Utama</h3>
+                <p class="text-[11px] text-stone-500 font-light mt-1">Dewan Persidangan &amp; Kaunter Resepsi Rasmi UPK</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+                <span class="text-xs font-mono font-medium text-stone-600">42 Aset</span>
+                <button onclick="App.filterByRoomLanding('Bilik Mesyuarat Utama')" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                  Terokai Bilik
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Modul 3: Buku Simpanan & Kad Stok -->
-          <div onclick="App.navigate('stockcard')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
-              <i class="fa-solid fa-book-bookmark text-lg"></i>
+          <!-- Bilik 2: Bilik Eksekutif D -->
+          <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+              <img src="assets/rooms/room-d.jpg" alt="Bilik Eksekutif & Sumber D" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+              <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+                Ruang Pegawai
+              </div>
             </div>
-            <h3 class="text-sm font-bold text-slate-900">Buku Simpanan &amp; Kad Stok</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Rekod keluar-masuk dan pindahan bilik yang sedia dieksport ke Excel, CSV, dan PDF.</p>
-            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
-              <span>Lihat Kad Stok</span>
-              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+              <div>
+                <h3 class="font-serif text-base font-bold text-stone-900">Bilik Eksekutif &amp; Sumber D</h3>
+                <p class="text-[11px] text-stone-500 font-light mt-1">Ruang Pegawai Eksekutif &amp; Dokumentasi</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+                <span class="text-xs font-mono font-medium text-stone-600">38 Aset</span>
+                <button onclick="App.filterByRoomLanding('Bilik Eksekutif')" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                  Terokai Bilik
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Modul 4: Pelupusan Bukti Bersebelahan -->
-          <div onclick="App.navigate('pelupusan')" class="cursor-pointer bg-slate-50 hover:bg-sky-50/50 border border-slate-200 hover:border-upk-cerulean rounded-xl p-5 hover:shadow-md transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-sky-100 text-upk-cerulean flex items-center justify-center group-hover:bg-upk-cerulean group-hover:text-white transition">
-              <i class="fa-solid fa-scale-balanced text-lg"></i>
+          <!-- Bilik 3: Bilik Kaunseling C -->
+          <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+              <img src="assets/rooms/room-c.jpg" alt="Bilik Kaunseling C" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+              <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+                Bimbingan Kerjaya
+              </div>
             </div>
-            <h3 class="text-sm font-bold text-slate-900">Pelupusan Bukti Bersebelahan</h3>
-            <p class="text-xs text-slate-500 leading-relaxed">Bandingkan foto asal dan bukti kerosakan untuk perakuan juruteknik dan kelulusan Ketua Unit.</p>
-            <div class="mt-auto pt-2 text-xs font-semibold text-upk-cerulean flex items-center gap-1">
-              <span>Semak Pelupusan</span>
-              <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+            <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+              <div>
+                <h3 class="font-serif text-base font-bold text-stone-900">Bilik Kaunseling C</h3>
+                <p class="text-[11px] text-stone-500 font-light mt-1">Sesi Bimbingan Kaunseling &amp; Kerjaya Murid</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+                <span class="text-xs font-mono font-medium text-stone-600">24 Aset</span>
+                <button onclick="App.filterByRoomLanding('Bilik Kaunseling')" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                  Terokai Bilik
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bilik 4: Dapur & Pantri -->
+          <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+            <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+              <img src="assets/rooms/kitchen.jpg" alt="Dapur & Pantri" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+              <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+                Utiliti Domestik
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+              <div>
+                <h3 class="font-serif text-base font-bold text-stone-900">Dapur &amp; Pantri Rasmi</h3>
+                <p class="text-[11px] text-stone-500 font-light mt-1">Peralatan Elektrik, Pantri &amp; Ruang Bersih</p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+                <span class="text-xs font-mono font-medium text-stone-600">18 Aset</span>
+                <button onclick="App.filterByRoomLanding('Dapur')" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                  Terokai Bilik
+                </button>
+              </div>
             </div>
           </div>
 
         </div>
       </section>
 
-      <!-- BANNER PELAN LANTAI 3D TERBARU -->
-      <section class="bg-gradient-to-r from-upk-navy via-upk-cerulean to-sky-700 text-white rounded-2xl p-6 sm:p-8 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-2xl text-amber-300 shrink-0">
+      <!-- ==================================================================
+           SEKSYEN: INVENTORI & ASET UTAMA (EXACT IMAGE 1 & 2 "FEATURED PRODUCTS")
+      ================================================================== -->
+      <section class="space-y-6 pt-4">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAE4D9] pb-4">
+          <div>
+            <span class="text-[11px] font-mono tracking-widest text-[#DF826C] uppercase font-bold">Koleksi Terpilih</span>
+            <h2 class="font-serif text-2xl sm:text-3xl font-normal text-stone-900 mt-1">Inventori &amp; Peralatan Utama</h2>
+            <p class="text-xs sm:text-sm text-stone-500 font-light mt-1">
+              Aset alih bernilai tinggi yang dipantau dengan status integriti dan rekod penyenggaraan terkini.
+            </p>
+          </div>
+          <button onclick="App.navigate('katalog')" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#DF826C] hover:text-[#C86A4B] transition">
+            <span>Buka Seluruh Katalog Aset</span>
+            <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Aset 1 -->
+          <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+              <img src="assets/rooms/meeting-room.jpg" alt="Meja Mesyuarat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                Beroperasi Baik
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+                <span>UPK-AST-001</span>
+                <span>Bilik Mesyuarat</span>
+              </div>
+              <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Meja Persidangan Kayu Jati</h3>
+              <p class="text-xs text-stone-500 font-light mt-1">Kapasiti 10 orang berserta salur kabel kuasa elektrik</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-[#DF826C]">Aset Alih</span>
+              <button onclick="App.navigate('katalog')" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+                Perincian
+              </button>
+            </div>
+          </div>
+
+          <!-- Aset 2 -->
+          <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+              <img src="assets/rooms/room-d.jpg" alt="Komputer Riba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                Beroperasi Baik
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+                <span>UPK-AST-014</span>
+                <span>Bilik Eksekutif</span>
+              </div>
+              <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Komputer Riba Dell Latitude</h3>
+              <p class="text-xs text-stone-500 font-light mt-1">Perkakasan pejabat pegawai pentadbiran UPK</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-[#DF826C]">Teknologi ICT</span>
+              <button onclick="App.navigate('katalog')" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+                Perincian
+              </button>
+            </div>
+          </div>
+
+          <!-- Aset 3 -->
+          <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+              <img src="assets/rooms/kitchen.jpg" alt="Peti Sejuk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                Beroperasi Baik
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+                <span>UPK-AST-032</span>
+                <span>Dapur &amp; Pantri</span>
+              </div>
+              <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Peti Sejuk Sharp 2 Pintu</h3>
+              <p class="text-xs text-stone-500 font-light mt-1">Penyejuk simpanan bahan guna habis pantri UPK</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-[#DF826C]">Elektrik</span>
+              <button onclick="App.navigate('katalog')" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+                Perincian
+              </button>
+            </div>
+          </div>
+
+          <!-- Aset 4 -->
+          <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+            <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+              <img src="assets/rooms/store.jpg" alt="Pencetak Canon" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <span class="absolute top-2.5 right-2.5 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                Penyelenggaraan
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+                <span>UPK-AST-008</span>
+                <span>Bilik Stor &amp; Suis</span>
+              </div>
+              <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Pencetak Warna Multifungsi</h3>
+              <p class="text-xs text-stone-500 font-light mt-1">Sedia servis toner &amp; penjajaran optik berkala</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-[#DF826C]">Mesin Pejabat</span>
+              <button onclick="App.navigate('katalog')" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+                Perincian
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           BANNER ARKITEKTUR PELAN LANTAI 3D INTERAKTIF
+      ================================================================== -->
+      <section class="bg-[#181C20] text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <!-- Kesan Cahaya & Tekstur Lembut -->
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[#DF826C]/20 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-xl flex items-start gap-5">
+          <div class="w-14 h-14 rounded-2xl bg-[#DF826C]/20 border border-[#DF826C]/30 flex items-center justify-center text-2xl text-[#DF826C] shrink-0">
             <i class="fa-solid fa-map-location-dot"></i>
           </div>
           <div>
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[11px] font-bold uppercase tracking-wider mb-1">
-              Ciri Interaktif Baharu
+            <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-amber-300 text-[10px] font-mono tracking-wider uppercase font-semibold mb-2">
+              Visualisasi Ruang 3D
             </span>
-            <h3 class="text-lg sm:text-xl font-bold">Pelan Lantai 3D Interaktif UPK</h3>
-            <p class="text-xs sm:text-sm text-sky-100/90 mt-1">
-              Navigasi visual bilik utama (Stor, Dapur, Kaunter, Dewan Mesyuarat, Bilik C, Bilik D) dengan pin koordinat tepat & audit aset masa nyata.
+            <h3 class="font-serif text-2xl sm:text-3xl font-normal text-white">Pelan Lantai 3D Interaktif UPK</h3>
+            <p class="text-xs sm:text-sm text-stone-300 font-light leading-relaxed mt-2">
+              Jejak koordinat fizikal aset secara langsung di atas peta seni bina 3D berkalibrasi. Memaparkan Stor, Dapur, Kaunter, Dewan Mesyuarat, serta Bilik Kaunseling dan Eksekutif.
             </p>
           </div>
         </div>
-        <button onclick="App.navigate('pelan')" class="shrink-0 px-5 py-3 rounded-xl bg-white text-upk-navy hover:bg-sky-50 font-bold text-xs flex items-center gap-2 shadow-lg transition">
-          <span>Terokai Pelan 3D Sekarang</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
+
+        <div class="relative z-10 shrink-0 flex flex-col sm:flex-row gap-3">
+          <button onclick="App.navigate('pelan')" class="px-6 py-3 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs shadow-lg transition flex items-center justify-center gap-2">
+            <span>Terokai Pelan 3D Sekarang</span>
+            <i class="fa-solid fa-arrow-right text-[11px]"></i>
+          </button>
+        </div>
       </section>
 
     </div>
@@ -1274,30 +1497,30 @@
   <!-- ========================================================================
        BAR NAVIGASI BAWAH UNTUK TELEFON PINTAR (BOTTOM NAVIGATION BAR)
   ======================================================================== -->
-  <div class="bottom-nav-mobile md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 flex items-center justify-around h-16 px-2 shadow-lg">
-    <button onclick="App.navigate('dashboard')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+  <div class="bottom-nav-mobile md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-[#EAE4D9] z-40 flex items-center justify-around h-16 px-2 shadow-lg">
+    <button onclick="App.navigate('landing')" class="flex flex-col items-center justify-center text-stone-500 text-[10px] w-12 hover:text-[#DF826C]">
       <i class="fa-solid fa-house text-base"></i>
-      <span class="mt-1">Utama</span>
+      <span class="mt-1">Laman</span>
     </button>
-    
-    <button onclick="App.navigate('katalog')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
-      <i class="fa-solid fa-boxes-stacked text-base"></i>
-      <span class="mt-1">Katalog</span>
+
+    <button onclick="App.navigate('pelan')" class="flex flex-col items-center justify-center text-stone-500 text-[10px] w-12 hover:text-[#DF826C]">
+      <i class="fa-solid fa-map-location-dot text-base"></i>
+      <span class="mt-1">Pelan 3D</span>
     </button>
 
     <!-- Butang Terapung Imbas QR di Tengah -->
     <div class="relative -top-5">
-      <button onclick="App.openScannerModal()" class="w-13 h-13 p-3.5 rounded-full bg-upk-cerulean text-white shadow-lg ring-4 ring-white flex items-center justify-center transition active:scale-95" title="Imbas Kod QR">
+      <button onclick="App.openScannerModal()" class="w-13 h-13 p-3.5 rounded-full bg-[#DF826C] text-white shadow-lg ring-4 ring-[#FAF7F2] flex items-center justify-center transition active:scale-95" title="Imbas Kod QR">
         <i class="fa-solid fa-qrcode text-xl"></i>
       </button>
     </div>
 
-    <button onclick="App.navigate('aduan')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
-      <i class="fa-solid fa-triangle-exclamation text-base"></i>
-      <span class="mt-1">Aduan</span>
+    <button onclick="App.navigate('katalog')" class="flex flex-col items-center justify-center text-stone-500 text-[10px] w-12 hover:text-[#DF826C]">
+      <i class="fa-solid fa-boxes-stacked text-base"></i>
+      <span class="mt-1">Katalog</span>
     </button>
 
-    <button onclick="App.navigate('stockcard')" class="flex flex-col items-center justify-center text-slate-500 text-[10px] w-14">
+    <button onclick="App.navigate('stockcard')" class="flex flex-col items-center justify-center text-stone-500 text-[10px] w-12 hover:text-[#DF826C]">
       <i class="fa-solid fa-book-bookmark text-base"></i>
       <span class="mt-1">Kad Stok</span>
     </button>

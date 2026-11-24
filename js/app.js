@@ -247,6 +247,20 @@ const App = (function () {
     }
   }
 
+  function filterByRoomLanding(roomName) {
+    if (roomName && roomName !== 'Semua') {
+      _currentBilik = roomName;
+      const globalRoom = document.getElementById('global-room-select');
+      if (globalRoom) globalRoom.value = roomName;
+      const mapRoomSelect = document.getElementById('map-room-select');
+      if (mapRoomSelect) mapRoomSelect.value = roomName;
+    }
+    navigate('pelan');
+    setTimeout(() => {
+      selectMapRoom(roomName);
+    }, 200);
+  }
+
   async function updateLandingStats() {
     try {
       if (!_statsData) {
@@ -2076,6 +2090,7 @@ const App = (function () {
   return {
     navigate,
     onLandingSearch,
+    filterByRoomLanding,
     toggleMegaMenu,
     closeMegaMenu,
     toggleUserDropdown,

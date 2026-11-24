@@ -5,275 +5,505 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>e-Inventori UPK — Sistem Pengurusan Aset &amp; Inventori Rasmi</title>
   
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
+  <!-- Font Rasmi: Playfair Display (Serif Editorial) & Plus Jakarta Sans (Sans Modern) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            'primary': '#0F3E5D',
-            'on-primary': '#FFFFFF',
-            'secondary': '#16719A',
-            'on-secondary': '#FFFFFF',
-            'accent': '#C18C3B',
-            'on-accent': '#291800',
-            'accent-soft': '#E2EEF5',
-            'on-accent-soft': '#0F3E5D',
-            'surface': '#FFFFFF',
-            'on-surface': '#0F172A',
-            'surface-dim': '#F8FAFC',
-            'on-surface-dim': '#0F172A',
-            'surface-variant': '#F1F5F9',
-            'on-surface-variant': '#475569',
-            'outline': '#CBD5E1',
-            'outline-variant': '#E2E8F0',
-            'danger': '#D62828',
-            'on-danger': '#FFFFFF',
-            'status-active-bg': '#DCFCE7',
-            'on-status-active-bg': '#166534',
-            'status-active-border': '#86EFAC',
-            'status-maint-bg': '#FEF9C3',
-            'on-status-maint-bg': '#854D0E',
-            'status-maint-border': '#FDE047',
-            'status-disposal-bg': '#FEE2E2',
-            'on-status-disposal-bg': '#991B1B',
-            'status-disposal-border': '#FCA5A5',
-            'status-archived-bg': '#F1F5F9',
-            'on-status-archived-bg': '#475569',
-            'status-archived-border': '#CBD5E1',
-            'chart-emerald': '#2A9D8F',
-            'chart-amber': '#E9C46A',
-            'chart-crimson': '#D62828',
-          },
-          borderRadius: {
-            'sm': '6px',
-            'DEFAULT': '10px',
-            'md': '12px',
-            'lg': '16px',
-            'xl': '20px',
-            'full': '9999px',
+            terracotta: {
+              DEFAULT: '#DF826C',
+              hover: '#C86A4B',
+              soft: '#FCEEE9',
+              dark: '#A64B32'
+            },
+            warm: {
+              bg: '#FAF7F2',
+              card: '#FFFFFF',
+              surface: '#F5F0E8',
+              border: '#EAE4D9',
+              dark: '#1C1917',
+              charcoal: '#181C20',
+              muted: '#78716C'
+            }
           },
           fontFamily: {
-            'display': ['"Plus Jakarta Sans"', 'sans-serif'],
-            'headline': ['"Plus Jakarta Sans"', 'sans-serif'],
-            'title': ['"Plus Jakarta Sans"', 'sans-serif'],
-            'body': ['"Plus Jakarta Sans"', 'sans-serif'],
-            'label': ['"Plus Jakarta Sans"', 'sans-serif'],
-            'mono': ['"Source Code Pro"', 'monospace'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
           }
         }
       }
     };
   </script>
   
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Code+Pro:wght@500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    .material-symbols-outlined {
-      display: inline-block;
-      width: 1em;
-      height: 1em;
-      line-height: 1 !important;
-      box-sizing: content-box;
-      overflow: hidden;
-      white-space: nowrap;
-      direction: ltr;
-      vertical-align: middle;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-surface-dim text-on-surface font-body antialiased flex flex-col min-h-screen">
+<body class="bg-[#FAF7F2] text-stone-800 antialiased selection:bg-[#FCEEE9] selection:text-[#DF826C] min-h-screen flex flex-col">
 
-  <!-- FLOATING PILL TOP NAVBAR -->
-  <header class="w-full px-4 sm:px-6 lg:px-8 pt-5 z-30">
-    <div class="max-w-7xl mx-auto bg-surface border border-outline-variant rounded-full px-5 py-2.5 shadow-sm flex items-center justify-between gap-4">
+  <!-- FLOATING MINIMALIST TOP NAVBAR (EXACT IMAGE 1 & 2 STYLE) -->
+  <header class="w-full px-4 sm:px-6 lg:px-8 pt-5 sticky top-0 z-40 transition-all">
+    <div class="max-w-7xl mx-auto bg-white/90 backdrop-blur-md border border-[#EAE4D9] rounded-full px-6 py-3 shadow-[0_4px_20px_rgba(28,25,23,0.03)] flex items-center justify-between gap-4">
       
-      <!-- Brand Mark -->
-      <a href="landing.html" class="flex items-center gap-2.5 shrink-0">
-        <img src="assets/logo-upk.png" alt="Logo UPK" class="w-9 h-9 rounded-full object-contain bg-white p-0.5 border border-accent/40 shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=16719A&color=fff'">
+      <!-- Brand Logo & Title -->
+      <a href="landing.html" class="flex items-center gap-3 shrink-0">
+        <img src="assets/logo-upk.png" alt="Logo UPK" class="w-9 h-9 rounded-full object-contain bg-white p-0.5 border border-[#EAE4D9] shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=DF826C&color=fff'">
         <div class="flex flex-col">
-          <span class="font-title text-base font-bold text-primary leading-none">e-Inventori UPK</span>
-          <span class="font-label text-[11px] text-on-surface-variant">Jabatan Sekolah-Sekolah</span>
+          <div class="flex items-center gap-2">
+            <span class="font-serif text-base font-bold text-stone-900 leading-none">e-Inventori UPK</span>
+            <span class="bg-[#FCEEE9] text-[#DF826C] text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-[#DF826C]/30">BRUNEI</span>
+          </div>
+          <span class="text-[10px] text-stone-500 font-light mt-0.5">Jabatan Sekolah-Sekolah</span>
         </div>
       </a>
 
-      <!-- Center Pill Links -->
-      <nav aria-label="Navigasi Laman Utama" class="hidden md:flex items-center gap-6 text-xs font-semibold">
-        <a href="#modul" class="text-on-surface-variant hover:text-primary transition-colors">Modul Teras</a>
-        <a href="index.html#pelan" class="text-primary font-bold hover:text-secondary transition-colors flex items-center gap-1">
-          <span class="material-symbols-outlined text-[16px] text-accent">map</span>
-          <span>Pelan Lantai</span>
+      <!-- Center Links -->
+      <nav aria-label="Navigasi Laman Utama" class="hidden md:flex items-center gap-7 text-xs font-medium text-stone-600">
+        <a href="landing.html" class="text-[#DF826C] font-semibold">Laman Utama</a>
+        <a href="index.html#pelan" class="hover:text-[#DF826C] transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-map-location-dot text-[#DF826C] text-xs"></i>
+          <span>Pelan Lantai 3D</span>
         </a>
-        <a href="index.html#katalog" class="text-on-surface-variant hover:text-primary transition-colors">Katalog Aset</a>
-        <a href="index.html#stockcard" class="text-on-surface-variant hover:text-primary transition-colors">Kad Stok Rasmi</a>
-        <a href="index.html#pelupusan" class="text-on-surface-variant hover:text-primary transition-colors">Pelupusan Aset</a>
+        <a href="index.html#katalog" class="hover:text-[#DF826C] transition-colors">Katalog Aset</a>
+        <a href="index.html#stockcard" class="hover:text-[#DF826C] transition-colors">Kad Stok</a>
+        <a href="index.html#pelupusan" class="hover:text-[#DF826C] transition-colors">Pelupusan</a>
       </nav>
 
       <!-- Right Pill Actions -->
-      <div class="flex items-center gap-2.5 shrink-0">
-        <a href="index.html#scan" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-variant text-primary hover:bg-accent-soft transition-colors text-xs font-bold">
-          <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="index.html#scan" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FAF7F2] hover:bg-[#FCEEE9] text-stone-700 hover:text-[#DF826C] border border-[#EAE4D9] transition-all text-xs font-semibold">
+          <i class="fa-solid fa-camera text-[11px]"></i>
           <span>Imbas QR</span>
         </a>
-        <a href="index.html#dashboard" class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-on-primary hover:bg-secondary transition-colors shadow-sm text-xs font-bold">
+        <a href="index.html#dashboard" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-md transition-all">
           <span>Masuk Sistem</span>
-          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <main class="flex-1 w-full">
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+  <!-- MAIN BODY -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 w-full">
 
-      <!-- Left Hero Copy (6 cols) -->
-      <div class="lg:col-span-6 flex flex-col gap-6">
-        <!-- Trust Pill -->
-        <div class="inline-flex items-center gap-2.5 self-start px-3.5 py-1.5 rounded-full bg-surface border border-outline-variant shadow-sm">
-          <span class="w-6 h-6 rounded-full bg-primary text-accent flex items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-[14px]">verified_user</span>
-          </span>
-          <span class="font-label text-[11px] font-bold uppercase text-primary tracking-wider">Selamat • Masa Nyata • Piawaian KPM</span>
+    <!-- ==================================================================
+         HERO SECTION: INSPIRASI EDITORIAL ARCHITECTURAL (IMAGE 1 & 2)
+    ================================================================== -->
+    <section class="relative rounded-3xl overflow-hidden shadow-2xl min-h-[580px] lg:min-h-[620px] flex items-center bg-[#181C20] border border-[#EAE4D9]/20">
+      
+      <!-- Latar Belakang Foto Isometrik Berseni Bina -->
+      <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="absolute inset-0 w-full h-full object-cover object-center opacity-75 scale-102 hover:scale-105 transition-transform duration-1000" onerror="this.src='assets/floor-plan-3d.png'">
+      
+      <!-- Lapisan Vignette & Pencahayaan Lembut -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#181C20]/95 via-[#181C20]/75 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#181C20]/80 via-transparent to-transparent"></div>
+
+      <!-- Kad Gelap Asimetrik Bertingkap Kaca (Exact Image 1 Style) -->
+      <div class="relative z-10 max-w-xl bg-[#181C20]/88 backdrop-blur-md p-7 sm:p-10 rounded-3xl border border-white/10 shadow-2xl text-white ml-4 sm:ml-8 lg:ml-12 my-8 mr-4">
+        
+        <!-- Lencana Rasmi -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono tracking-widest text-amber-300 uppercase font-semibold mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#DF826C] animate-pulse"></span>
+          <span>Unit Pendidikan Kerjaya • Jabatan Sekolah-Sekolah</span>
         </div>
 
-        <!-- 3-Line Display Headline -->
-        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary tracking-tight leading-tight">
-          <span class="block">Jejak Aset.</span>
-          <span class="block">Audit Pantas.</span>
-          <span class="block text-secondary">Tanpa Ketirisan.</span>
+        <!-- Tajuk Utama Gaya Editorial Serif (Exact Image 2 Style) -->
+        <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white leading-tight mb-4">
+          Pengurusan Aset &amp; Ruang Bersepadu.
         </h1>
 
-        <p class="font-body text-sm sm:text-base text-on-surface-variant max-w-prose leading-relaxed">
-          Platform pengurusan aset alih dan barang guna habis rasmi untuk <strong class="font-semibold text-primary">Unit Pendidikan Kerjaya (UPK)</strong>, Jabatan Sekolah-Sekolah. Menggabungkan pengimbasan Kod QR telefon pintar, Buku Simpanan digital, serta perbandingan visual pelupusan kerajaan Brunei Darussalam.
+        <!-- Keterangan Eksekutif -->
+        <p class="text-xs sm:text-sm text-stone-300 font-light leading-relaxed mb-6">
+          Piawaian moden pengurusan aset alih kerajaan Brunei Darussalam. Menggabungkan pengimbasan kod QR kamera telefon pintar, buku simpanan stok digital, serta visualisasi pelan lantai 3D interaktif berketepatan tinggi.
         </p>
 
-        <!-- Pill Quick-Lookup Bar -->
-        <form onsubmit="handleQuickLookup(event)" class="bg-surface border border-outline-variant rounded-full p-2 pl-4 shadow-md flex items-center gap-2 max-w-xl">
-          <span class="material-symbols-outlined text-[20px] text-secondary shrink-0">qr_code_2</span>
-          <input type="text" id="quick-kod-aset" placeholder="Kod Aset (cth: UPK-AST-001)" aria-label="Masukkan Kod Aset" class="flex-1 min-w-0 border-0 bg-transparent p-1.5 font-body text-sm text-on-surface placeholder:text-on-surface-variant focus:ring-0 outline-none">
-          <span class="hidden sm:inline-block w-px h-6 bg-outline-variant shrink-0"></span>
-          <select id="quick-bilik-select" aria-label="Pilih Bilik UPK" class="hidden sm:block border-0 bg-transparent py-1.5 pl-2 pr-7 font-label text-xs text-on-surface-variant focus:ring-0 outline-none cursor-pointer">
-            <option value="Semua">Semua Bilik UPK</option>
-            <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
-            <option value="Bilik Kaunseling">Bilik Kaunseling & Kerjaya C</option>
-            <option value="Bilik Eksekutif">Bilik Eksekutif & Sumber D</option>
-            <option value="Dapur">Dapur & Pantri</option>
-            <option value="Stor">Bilik Stor & Suis</option>
+        <!-- Bilah Carian Pantas Bersifat Pill Elegan -->
+        <form onsubmit="handleQuickLookup(event)" class="bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-1.5 pl-4 shadow-inner flex items-center gap-2 mb-6">
+          <i class="fa-solid fa-qrcode text-[#DF826C] text-sm shrink-0"></i>
+          <input type="text" id="quick-kod-aset" placeholder="Cari kod aset (cth: UPK-AST-001)..." aria-label="Masukkan Kod Aset" class="flex-1 min-w-0 bg-transparent py-1 text-xs text-white placeholder:text-stone-400 focus:outline-none">
+          <select id="quick-bilik-select" aria-label="Pilih Bilik UPK" class="hidden sm:block bg-transparent py-1 px-2 text-[11px] font-medium text-stone-300 border-l border-white/15 focus:outline-none cursor-pointer">
+            <option value="Semua" class="text-stone-900">Semua Bilik</option>
+            <option value="Bilik Mesyuarat Utama" class="text-stone-900">Bilik Mesyuarat</option>
+            <option value="Bilik Kaunseling" class="text-stone-900">Bilik Kaunseling C</option>
+            <option value="Bilik Eksekutif" class="text-stone-900">Bilik Eksekutif D</option>
+            <option value="Dapur" class="text-stone-900">Dapur &amp; Pantri</option>
+            <option value="Stor" class="text-stone-900">Bilik Stor &amp; Suis</option>
           </select>
-          <button type="submit" aria-label="Semak aset sekarang" class="w-11 h-11 rounded-full bg-secondary hover:bg-primary text-on-secondary flex items-center justify-center shrink-0 transition-colors shadow">
-            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          <button type="submit" aria-label="Semak aset" class="px-4 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow">
+            <span>Cari</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </button>
         </form>
 
-        <!-- 3 Stat Counters -->
-        <div class="pt-2 grid grid-cols-3 gap-4 max-w-lg">
-          <div class="pr-4 border-r border-outline-variant">
-            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">1,248+</p>
-            <p class="font-body text-xs text-on-surface-variant mt-0.5">Unit Aset Berdaftar</p>
-          </div>
-          <div class="pr-4 border-r border-outline-variant">
-            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">94.5%</p>
-            <p class="font-body text-xs text-on-surface-variant mt-0.5">Beroperasi Baik</p>
+        <!-- Barisan Butang Tindakan Pill Terracotta -->
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="index.html#pelan" class="px-6 py-2.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs tracking-wide shadow-lg transition-all flex items-center gap-2">
+            <span>Terokai Pelan Lantai 3D</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+          <a href="index.html#dashboard" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium text-xs transition-all">
+            Buka Papan Pemuka
+          </a>
+        </div>
+
+        <!-- Metrik Ringkas Kaki Kad -->
+        <div class="pt-6 mt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-left">
+          <div>
+            <p class="font-serif text-lg sm:text-xl font-bold text-white tabular-nums">1,248+</p>
+            <p class="text-[10px] text-stone-400 font-light mt-0.5">Unit Terdaftar</p>
           </div>
           <div>
-            <p class="font-headline text-2xl lg:text-3xl font-extrabold text-primary tabular-nums">4 Buku</p>
-            <p class="font-body text-xs text-on-surface-variant mt-0.5">Kad Stok Digital</p>
+            <p class="font-serif text-lg sm:text-xl font-bold text-emerald-400 tabular-nums">94.5%</p>
+            <p class="text-[10px] text-stone-400 font-light mt-0.5">Beroperasi Baik</p>
+          </div>
+          <div>
+            <p class="font-serif text-lg sm:text-xl font-bold text-amber-300 tabular-nums">4 Buku</p>
+            <p class="text-[10px] text-stone-400 font-light mt-0.5">Kad Stok Digital</p>
           </div>
         </div>
+
       </div>
 
-      <!-- Right Hero 3D Isometric Visual (6 cols) -->
-      <div class="lg:col-span-6">
-        <div class="relative rounded-2xl overflow-hidden border border-outline-variant bg-surface shadow-xl group">
-          <img src="assets/hero-isometric.png" alt="Paparan Sistem e-Inventori UPK" class="w-full h-auto object-cover group-hover:scale-102 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=800&q=80'">
-          
-          <div class="absolute bottom-4 left-4 right-4 bg-surface/95 backdrop-blur-md border border-outline-variant rounded-xl p-3.5 shadow-md flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-              <span class="w-9 h-9 rounded-lg bg-status-active-bg text-on-status-active-bg flex items-center justify-center shrink-0">
-                <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-              </span>
-              <div>
-                <p class="font-label text-xs font-bold text-primary">Audit Bilik Masa Nyata</p>
-                <p class="font-body text-[11px] text-on-surface-variant">Padanan foto asal &amp; lokasi bilik serta-merta</p>
-              </div>
+    </section>
+
+    <!-- ==================================================================
+         3 KAD TERAPUNG PUTIH KACA FROSTED (EXACT IMAGE 2 STYLE)
+    ================================================================== -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-6 sm:-mt-10 relative z-20">
+      
+      <!-- Kad 1: Pelan Lantai 3D Interaktif -->
+      <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Pelan Lantai 3D Interaktif</h3>
+          <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+            Visualisasi ruang 5 zon bilik fizikal UPK dengan penandaan koordinat aset alih dan status operasi masa nyata.
+          </p>
+        </div>
+        <a href="index.html#pelan" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+          Lihat Pelan
+        </a>
+      </div>
+
+      <!-- Kad 2: Pengimbas Kamera Telefon -->
+      <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Audit &amp; Imbasan Telefon</h3>
+          <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+            Imbas label kod QR pada perabot atau peralatan secara terus melalui kamera telefon tanpa aplikasi tambahan.
+          </p>
+        </div>
+        <a href="index.html#scan" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+          Mula Imbas
+        </a>
+      </div>
+
+      <!-- Kad 3: Kad Stok & Simpanan Digital -->
+      <div class="bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-3xl p-7 shadow-[0_15px_35px_rgba(28,25,23,0.05)] hover:shadow-xl hover:border-[#DF826C]/40 transition-all duration-300 flex flex-col justify-between group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-[#FCEEE9] text-[#DF826C] flex items-center justify-center text-lg mb-5 group-hover:bg-[#DF826C] group-hover:text-white transition-colors">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">Buku Simpanan &amp; Kad Stok</h3>
+          <p class="text-xs text-stone-500 font-light leading-relaxed mb-6">
+            Buku rekod digital alir keluar-masuk barang guna habis yang sedia dieksport mengikut format rasmi Kew.PA.
+          </p>
+        </div>
+        <a href="index.html#stockcard" class="self-start px-5 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
+          Buka Kad Stok
+        </a>
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         SEKSYEN: TEROKAI RUANG & BILIK UPK (EXACT IMAGE 2 "EXPLORE OUR COLLECTIONS")
+    ================================================================== -->
+    <section class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAE4D9] pb-4">
+        <div>
+          <span class="text-[11px] font-mono tracking-widest text-[#DF826C] uppercase font-bold">Zon Operasi &amp; Lokasi Fizikal</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-normal text-stone-900 mt-1">Terokai Ruang &amp; Bilik UPK</h2>
+          <p class="text-xs sm:text-sm text-stone-500 font-light mt-1 max-w-xl">
+            Pemeriksaan inventori dan penempatan aset alih mengikut fungsi bilik fizikal dan rekod audit berkala.
+          </p>
+        </div>
+        <a href="index.html#pelan" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#DF826C] hover:text-[#C86A4B] transition">
+          <span>Buka Pelan Lantai 3D Penuh</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Bilik 1: Bilik Mesyuarat Utama -->
+        <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+            <img src="assets/rooms/meeting-room.jpg" alt="Bilik Mesyuarat Utama" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+            <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+              Dewan Persidangan
             </div>
-            <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-accent-soft text-primary shrink-0 border border-outline-variant">
-              UPK-AST-014
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+            <div>
+              <h3 class="font-serif text-base font-bold text-stone-900">Bilik Mesyuarat Utama</h3>
+              <p class="text-[11px] text-stone-500 font-light mt-1">Dewan Persidangan &amp; Kaunter Resepsi Rasmi UPK</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-medium text-stone-600">42 Aset</span>
+              <a href="index.html#pelan?bilik=Bilik+Mesyuarat+Utama" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                Terokai Bilik
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bilik 2: Bilik Eksekutif D -->
+        <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+            <img src="assets/rooms/room-d.jpg" alt="Bilik Eksekutif & Sumber D" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+            <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+              Ruang Pegawai
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+            <div>
+              <h3 class="font-serif text-base font-bold text-stone-900">Bilik Eksekutif &amp; Sumber D</h3>
+              <p class="text-[11px] text-stone-500 font-light mt-1">Ruang Pegawai Eksekutif &amp; Dokumentasi</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-medium text-stone-600">38 Aset</span>
+              <a href="index.html#pelan?bilik=Bilik+Eksekutif" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                Terokai Bilik
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bilik 3: Bilik Kaunseling C -->
+        <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+            <img src="assets/rooms/room-c.jpg" alt="Bilik Kaunseling C" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+            <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+              Bimbingan Kerjaya
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+            <div>
+              <h3 class="font-serif text-base font-bold text-stone-900">Bilik Kaunseling C</h3>
+              <p class="text-[11px] text-stone-500 font-light mt-1">Sesi Bimbingan Kaunseling &amp; Kerjaya Murid</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-medium text-stone-600">24 Aset</span>
+              <a href="index.html#pelan?bilik=Bilik+Kaunseling" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                Terokai Bilik
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bilik 4: Dapur & Pantri -->
+        <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#EAE4D9] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+          <div class="aspect-[4/3] overflow-hidden bg-stone-100 relative">
+            <img src="assets/rooms/kitchen.jpg" alt="Dapur & Pantri" class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" onerror="this.src='assets/hero-isometric.png'">
+            <div class="absolute top-3 left-3 bg-[#181C20]/80 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-mono">
+              Utiliti Domestik
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+            <div>
+              <h3 class="font-serif text-base font-bold text-stone-900">Dapur &amp; Pantri Rasmi</h3>
+              <p class="text-[11px] text-stone-500 font-light mt-1">Peralatan Elektrik, Pantri &amp; Ruang Bersih</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+              <span class="text-xs font-mono font-medium text-stone-600">18 Aset</span>
+              <a href="index.html#pelan?bilik=Dapur" class="px-3.5 py-1.5 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-[11px] font-semibold transition">
+                Terokai Bilik
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SEKSYEN: INVENTORI & ASET UTAMA (EXACT IMAGE 1 & 2 "FEATURED PRODUCTS")
+    ================================================================== -->
+    <section class="space-y-6 pt-4">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAE4D9] pb-4">
+        <div>
+          <span class="text-[11px] font-mono tracking-widest text-[#DF826C] uppercase font-bold">Koleksi Terpilih</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-normal text-stone-900 mt-1">Inventori &amp; Peralatan Utama</h2>
+          <p class="text-xs sm:text-sm text-stone-500 font-light mt-1">
+            Aset alih bernilai tinggi yang dipantau dengan status integriti dan rekod penyenggaraan terkini.
+          </p>
+        </div>
+        <a href="index.html#katalog" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#DF826C] hover:text-[#C86A4B] transition">
+          <span>Buka Seluruh Katalog Aset</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Aset 1 -->
+        <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+            <img src="assets/rooms/meeting-room.jpg" alt="Meja Mesyuarat" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              Beroperasi Baik
             </span>
           </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- CORE CAPABILITIES STRIP (4 MODULES) -->
-    <section id="modul" class="bg-surface border-t border-outline-variant py-14 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto flex flex-col gap-8">
-        <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 class="font-headline text-xl sm:text-2xl font-extrabold text-primary">Ekosistem Pengurusan Inventori Bersepadu</h2>
-            <p class="font-body text-xs sm:text-sm text-on-surface-variant mt-1">Dari pendaftaran foto manual hingga pengeluaran dokumen PDF pelupusan aset kerajaan.</p>
+            <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+              <span>UPK-AST-001</span>
+              <span>Bilik Mesyuarat</span>
+            </div>
+            <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Meja Persidangan Kayu Jati</h3>
+            <p class="text-xs text-stone-500 font-light mt-1">Kapasiti 10 orang berserta salur kabel kuasa elektrik</p>
           </div>
-          <a href="index.html#dashboard" class="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:underline">
-            <span>Buka Papan Pemuka Pentadbiran</span>
-            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-          </a>
+          <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-[#DF826C]">Aset Alih</span>
+            <a href="index.html#katalog?q=UPK-AST-001" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+              Perincian
+            </a>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-          
-          <!-- Modul 1 -->
-          <a href="index.html#katalog" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
-              <span class="material-symbols-outlined text-[22px]">grid_view</span>
+        <!-- Aset 2 -->
+        <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+            <img src="assets/rooms/room-d.jpg" alt="Komputer Riba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              Beroperasi Baik
+            </span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+              <span>UPK-AST-014</span>
+              <span>Bilik Eksekutif</span>
             </div>
-            <h3 class="font-title text-sm font-bold text-primary">Katalog Visual &amp; Foto Asal</h3>
-            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Pendaftaran aset dengan pemampatan imej automatik di pelayar serta label Kod QR unik.</p>
-          </a>
-
-          <!-- Modul 2 -->
-          <a href="index.html#scan" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
-              <span class="material-symbols-outlined text-[22px]">qr_code_scanner</span>
-            </div>
-            <h3 class="font-title text-sm font-bold text-primary">Pengimbas Kamera Telefon</h3>
-            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Imbas kod QR terus di bilik kerja untuk sahkan penempatan rasmi tanpa aplikasi tambahan.</p>
-          </a>
-
-          <!-- Modul 3 -->
-          <a href="index.html#stockcard" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
-              <span class="material-symbols-outlined text-[22px]">assignment</span>
-            </div>
-            <h3 class="font-title text-sm font-bold text-primary">Buku Simpanan &amp; Kad Stok</h3>
-            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Rekod keluar-masuk dan pindahan bilik yang sedia dieksport ke Excel, CSV, dan PDF.</p>
-          </a>
-
-          <!-- Modul 4 -->
-          <a href="index.html#pelupusan" class="h-full bg-surface-dim border border-outline-variant rounded-2xl p-5 hover:border-secondary hover:shadow-lg transition-all flex flex-col gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-accent-soft text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition">
-              <span class="material-symbols-outlined text-[22px]">balance</span>
-            </div>
-            <h3 class="font-title text-sm font-bold text-primary">Pelupusan Bukti Bersebelahan</h3>
-            <p class="font-body text-xs text-on-surface-variant leading-relaxed">Bandingkan foto asal dan bukti kerosakan untuk perakuan juruteknik dan kelulusan Ketua Unit.</p>
-          </a>
-
+            <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Komputer Riba Dell Latitude</h3>
+            <p class="text-xs text-stone-500 font-light mt-1">Perkakasan pejabat pegawai pentadbiran UPK</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-[#DF826C]">Teknologi ICT</span>
+            <a href="index.html#katalog?q=UPK-AST-014" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+              Perincian
+            </a>
+          </div>
         </div>
+
+        <!-- Aset 3 -->
+        <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+            <img src="assets/rooms/kitchen.jpg" alt="Peti Sejuk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2.5 right-2.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              Beroperasi Baik
+            </span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+              <span>UPK-AST-032</span>
+              <span>Dapur &amp; Pantri</span>
+            </div>
+            <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Peti Sejuk Sharp 2 Pintu</h3>
+            <p class="text-xs text-stone-500 font-light mt-1">Penyejuk simpanan bahan guna habis pantri UPK</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-[#DF826C]">Elektrik</span>
+            <a href="index.html#katalog?q=UPK-AST-032" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+              Perincian
+            </a>
+          </div>
+        </div>
+
+        <!-- Aset 4 -->
+        <div class="bg-white border border-[#EAE4D9] rounded-3xl p-4 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+          <div class="aspect-square rounded-2xl overflow-hidden bg-stone-50 border border-[#EAE4D9]/60 relative mb-4">
+            <img src="assets/rooms/store.jpg" alt="Pencetak Canon" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2.5 right-2.5 bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+              Penyelenggaraan
+            </span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-stone-400 mb-1">
+              <span>UPK-AST-008</span>
+              <span>Bilik Stor &amp; Suis</span>
+            </div>
+            <h3 class="font-serif text-sm font-bold text-stone-900 line-clamp-1">Pencetak Warna Multifungsi</h3>
+            <p class="text-xs text-stone-500 font-light mt-1">Sedia servis toner &amp; penjajaran optik berkala</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EAE4D9]/60 flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-[#DF826C]">Mesin Pejabat</span>
+            <a href="index.html#katalog?q=UPK-AST-008" class="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] hover:bg-[#DF826C] hover:text-white border border-[#EAE4D9] text-stone-700 text-[11px] font-semibold transition">
+              Perincian
+            </a>
+          </div>
+        </div>
+
       </div>
     </section>
+
+    <!-- ==================================================================
+         BANNER ARKITEKTUR PELAN LANTAI 3D INTERAKTIF
+    ================================================================== -->
+    <section class="bg-[#181C20] text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
+      
+      <!-- Kesan Cahaya & Tekstur Lembut -->
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[#DF826C]/20 blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-xl flex items-start gap-5">
+        <div class="w-14 h-14 rounded-2xl bg-[#DF826C]/20 border border-[#DF826C]/30 flex items-center justify-center text-2xl text-[#DF826C] shrink-0">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-amber-300 text-[10px] font-mono tracking-wider uppercase font-semibold mb-2">
+            Visualisasi Ruang 3D
+          </span>
+          <h3 class="font-serif text-2xl sm:text-3xl font-normal text-white">Pelan Lantai 3D Interaktif UPK</h3>
+          <p class="text-xs sm:text-sm text-stone-300 font-light leading-relaxed mt-2">
+            Jejak koordinat fizikal aset secara langsung di atas peta seni bina 3D berkalibrasi. Memaparkan Stor, Dapur, Kaunter, Dewan Mesyuarat, serta Bilik Kaunseling dan Eksekutif.
+          </p>
+        </div>
+      </div>
+
+      <div class="relative z-10 shrink-0 flex flex-col sm:flex-row gap-3">
+        <a href="index.html#pelan" class="px-6 py-3 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs shadow-lg transition flex items-center justify-center gap-2">
+          <span>Terokai Pelan 3D Sekarang</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </a>
+      </div>
+    </section>
+
   </main>
 
-  <!-- INSTITUTIONAL FOOTER -->
-  <footer class="bg-primary text-on-primary py-6 px-4 sm:px-6 lg:px-8 border-t border-primary/20">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs">
-      <p class="font-body text-accent-soft">
-        &copy; 2026 Unit Pendidikan Kerjaya (UPK), Jabatan Sekolah-Sekolah, Kementerian Pendidikan Brunei Darussalam.
-      </p>
-      <span class="font-label font-semibold text-on-primary">Sistem Pengurusan Aset Alih &amp; Inventori Kerajaan</span>
+  <!-- INSTITUTIONAL MINIMAL FOOTER -->
+  <footer class="bg-white border-t border-[#EAE4D9] py-8 px-4 sm:px-6 lg:px-8 mt-12 text-stone-500 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <img src="assets/logo-upk.png" alt="Logo UPK" class="w-6 h-6 rounded-full object-contain">
+        <p class="font-light">
+          &copy; 2026 Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah. Kementerian Pendidikan Brunei Darussalam.
+        </p>
+      </div>
+      <div class="flex items-center gap-6 font-medium text-stone-600">
+        <a href="index.html#pelan" class="hover:text-[#DF826C] transition">Pelan Lantai 3D</a>
+        <a href="index.html#katalog" class="hover:text-[#DF826C] transition">Katalog Aset</a>
+        <a href="index.html#dashboard" class="hover:text-[#DF826C] transition">Papan Pemuka</a>
+      </div>
     </div>
   </footer>
 

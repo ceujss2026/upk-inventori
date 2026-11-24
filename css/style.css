@@ -5,74 +5,85 @@
    ========================================================================== */
 
 :root {
-  --upk-navy: #0F3E5D;
-  --upk-navy-dark: #0A293E;
-  --upk-cerulean: #16719A;
-  --upk-cerulean-light: #1D8ABB;
-  --upk-gold: #C18C3B;
-  --upk-gold-light: #D4A359;
-  --upk-ice-blue: #E2EEF5;
-  --upk-ice-light: #F0F7FB;
-  --upk-canvas: #F8FAFC;
-  --upk-text-primary: #0F172A;
-  --upk-text-secondary: #475569;
-  --upk-border: #E2E8F0;
+  --upk-canvas: #FAF7F2;
+  --upk-surface: #FFFFFF;
+  --upk-charcoal: #181C20;
+  --upk-stone: #292524;
+  --upk-muted: #78716C;
+  --upk-border: #EAE4D9;
+  --upk-border-subtle: #F3EFE8;
   
-  --status-green-bg: #DCFCE7;
-  --status-green-txt: #166534;
-  --status-amber-bg: #FEF9C3;
-  --status-amber-txt: #854D0E;
-  --status-red-bg: #FEE2E2;
-  --status-red-txt: #991B1B;
+  --upk-terracotta: #DF826C;
+  --upk-terracotta-hover: #C86A4B;
+  --upk-terracotta-soft: #FCEEE9;
+  
+  --upk-navy: #1A2E3D;
+  --upk-cerulean: #235D7A;
+  --upk-gold: #C18C3B;
+  
+  --status-green-bg: #EAF7EE;
+  --status-green-txt: #1E6B37;
+  --status-amber-bg: #FEF7E6;
+  --status-amber-txt: #8C5808;
+  --status-red-bg: #FDF0ED;
+  --status-red-txt: #A8331E;
 }
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--upk-canvas);
-  color: var(--upk-text-primary);
+  color: var(--upk-stone);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
 
 /* --------------------------------------------------------------------------
-   ZARE MEGA MENU & DUAL-TIER HEADER
+   EDITORIAL TYPOGRAPHY
+-------------------------------------------------------------------------- */
+.font-serif-editorial {
+  font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* --------------------------------------------------------------------------
+   BILAH NAVIGASI MENDATAR BERSERTA MEGA MENU
 -------------------------------------------------------------------------- */
 .top-navy-bar {
-  background-color: var(--upk-navy);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #FAF7F2;
+  border-bottom: 1px solid var(--upk-border);
 }
 
 .horizontal-navbar {
-  background-color: #FFFFFF;
+  background-color: #FAF7F2;
   border-bottom: 1px solid var(--upk-border);
-  box-shadow: 0 1px 3px rgba(15, 62, 93, 0.04);
 }
 
 .nav-tab-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.85rem 1rem;
-  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: var(--upk-text-secondary);
+  color: var(--upk-muted);
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   background: transparent;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-radius: 6px 6px 0 0;
 }
 
-.nav-tab-btn:hover,
-.nav-tab-btn.active {
-  color: var(--upk-cerulean);
-  border-bottom-color: var(--upk-cerulean);
+.nav-tab-btn:hover {
+  color: var(--upk-terracotta);
+  background-color: rgba(223, 130, 108, 0.05);
 }
 
 .nav-tab-btn.active {
+  color: var(--upk-terracotta);
+  border-bottom-color: var(--upk-terracotta);
   font-weight: 600;
 }
 
@@ -84,13 +95,13 @@ body {
   right: 0;
   width: 100%;
   background: #FFFFFF;
-  box-shadow: 0 20px 40px -10px rgba(15, 62, 93, 0.18);
+  box-shadow: 0 25px 50px -12px rgba(24, 28, 32, 0.12);
   border-top: 1px solid var(--upk-border);
-  border-bottom: 2px solid var(--upk-cerulean);
+  border-bottom: 2px solid var(--upk-terracotta);
   z-index: 50;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -105,10 +116,10 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--upk-cerulean);
+  color: var(--upk-terracotta);
   margin-bottom: 0.75rem;
   padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--upk-ice-blue);
+  border-bottom: 1px solid var(--upk-border);
 }
 
 .mega-menu-link {
@@ -117,34 +128,34 @@ body {
   gap: 0.75rem;
   padding: 0.55rem 0.75rem;
   border-radius: 8px;
-  color: var(--upk-text-primary);
+  color: var(--upk-stone);
   font-size: 0.85rem;
   text-decoration: none;
   transition: all 0.15s ease;
 }
 
 .mega-menu-link:hover {
-  background-color: var(--upk-ice-light);
-  color: var(--upk-cerulean);
+  background-color: var(--upk-terracotta-soft);
+  color: var(--upk-terracotta);
   transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------------------
-   KAD ELEVASI & GAYA OAKORY
+   KAD ELEVASI & GAYA SENI BINA KONTEMPORARI
 -------------------------------------------------------------------------- */
 .upk-card {
   background: #FFFFFF;
   border: 1px solid var(--upk-border);
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(15, 62, 93, 0.04), 0 4px 12px rgba(15, 62, 93, 0.02);
-  transition: all 0.25s ease;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
 .upk-card:hover {
-  box-shadow: 0 10px 25px -4px rgba(15, 62, 93, 0.10);
-  transform: translateY(-2px);
-  border-color: #CBDCE7;
+  box-shadow: 0 20px 40px -10px rgba(28, 25, 23, 0.08);
+  transform: translateY(-3px);
+  border-color: rgba(223, 130, 108, 0.35);
 }
 
 .img-4-3 {
