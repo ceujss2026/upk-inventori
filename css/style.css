@@ -1,4 +1,4 @@
-/* ==========================================================================
+
    e-Inventori UPK — Frontend: css/style.css
    Gaya Reka Bentuk Korporat UPK, ZARE Mega Menu, Kad Oakory & Cetakan A4
    Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah, Brunei Darussalam
@@ -58,7 +58,21 @@ body {
   border-bottom: 1px solid var(--upk-border);
 }
 
-/* ==========================================================================
+
+/* Navigation bar two‑line layout */
+#nav-menu-bar {
+  flex-wrap: wrap;               /* Allow items to wrap onto a second line */
+  overflow-x: visible;           /* Disable horizontal scrolling */
+  max-height: none;              /* Remove any height limit that forces scrolling */
+}
+
+/* Ensure navigation items stay on a single line within each row */
+#nav-menu-bar .nav-menu-trigger,
+#nav-menu-bar .nav-home-pill {
+  flex-shrink: 0;               /* Prevent shrinking that could cause wrapping inside a row */
+  white-space: nowrap;          /* Keep text on one line */
+}
+
    BILAH NAVIGASI MENDATAR FLOATING & SMALL DROPDOWN DIRECTORY
    ========================================================================== */
 .nav-small-dropdown {
