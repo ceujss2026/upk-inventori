@@ -58,22 +58,123 @@ body {
   border-bottom: 1px solid var(--upk-border);
 }
 
+/* ==========================================================================
+   BILAH NAVIGASI MENDATAR FLOATING & SMALL DROPDOWN DIRECTORY
+   ========================================================================== */
+.nav-small-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  background: #FFFFFF;
+  box-shadow: 0 15px 35px -5px rgba(28, 25, 23, 0.12), 0 5px 15px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--upk-border);
+  border-radius: 18px;
+  z-index: 50;
+  min-width: 240px;
+  padding: 0.5rem 0.4rem;
+  animation: navDropdownPop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes navDropdownPop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nav-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #334155;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-menu-trigger:hover,
+.nav-menu-trigger.active {
+  color: #6355A4;
+  background-color: #F5F3FF;
+}
+
+.nav-menu-trigger.active .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.nav-dropdown-item:hover {
+  background-color: #F8FAFC;
+  color: #6355A4;
+  padding-left: 1.05rem;
+}
+
+/* Single-line Navigation Pill for Laman Utama */
+.nav-home-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: none;
+}
+
+.nav-home-pill.active {
+  background-color: #6355A4;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(99, 85, 164, 0.25);
+}
+
+.nav-home-pill:not(.active) {
+  background-color: transparent;
+  color: #475569;
+}
+
+.nav-home-pill:not(.active):hover {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
 .nav-tab-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--upk-muted);
-  border-bottom: 2px solid transparent;
+  border-radius: 9999px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   background: transparent;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-radius: 6px 6px 0 0;
+  border: none;
 }
 
 .nav-tab-btn:hover {
@@ -82,62 +183,9 @@ body {
 }
 
 .nav-tab-btn.active {
-  color: var(--upk-terracotta);
-  border-bottom-color: var(--upk-terracotta);
+  color: #FFFFFF;
+  background-color: #6355A4;
   font-weight: 600;
-}
-
-/* Floating Mega Menu Dropdown Container */
-.mega-menu-panel {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: #FFFFFF;
-  box-shadow: 0 25px 50px -12px rgba(24, 28, 32, 0.12);
-  border-top: 1px solid var(--upk-border);
-  border-bottom: 2px solid var(--upk-terracotta);
-  z-index: 50;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mega-menu-panel.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.mega-menu-col-title {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--upk-terracotta);
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--upk-border);
-}
-
-.mega-menu-link {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.55rem 0.75rem;
-  border-radius: 8px;
-  color: var(--upk-stone);
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: all 0.15s ease;
-}
-
-.mega-menu-link:hover {
-  background-color: var(--upk-terracotta-soft);
-  color: var(--upk-terracotta);
-  transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------------------

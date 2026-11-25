@@ -69,246 +69,195 @@
 <body class="bg-[#FAF7F2] text-stone-800 antialiased selection:bg-[#FCEEE9] selection:text-[#DF826C] pb-20 md:pb-8">
 
   <!-- ========================================================================
-       BILAH ATAS UTAMA (EDITORIAL ARCHITECTURAL HEADER)
+       BILAH ATAS UTAMA: SINGLE-LINE FLOATING NAVIGATION BAR DENGAN DROPDOWN KECIL
   ======================================================================== -->
-  <header class="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#EAE4D9] sticky top-0 z-40 transition-all text-stone-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+  <header class="w-full px-3 sm:px-6 lg:px-8 pt-3 pb-2 sticky top-0 z-40 transition-all">
+    <div class="max-w-[1440px] mx-auto bg-white/95 backdrop-blur-md border border-[#EAE4D9] rounded-2xl md:rounded-full px-3.5 sm:px-5 py-2 shadow-[0_4px_25px_rgba(28,25,23,0.06)] flex items-center justify-between gap-2 lg:gap-4">
+      
+      <!-- Logo & Tajuk UPK (Kiri) -->
+      <div class="flex items-center gap-3 shrink-0 cursor-pointer" onclick="App.navigate('landing')">
+        <img src="assets/logo-upk.png" alt="Logo UPK" class="w-9 h-9 object-contain rounded-full bg-white p-0.5 border border-[#EAE4D9] shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=6355A4&color=fff'">
+        <div class="hidden sm:block">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-stone-900 leading-tight">e-Inventori UPK</span>
+          </div>
+          <p class="text-[10px] text-stone-500 font-normal leading-tight mt-0.5">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</p>
+        </div>
+      </div>
+
+      <!-- Pemisah Menegak -->
+      <div class="h-6 w-px bg-stone-200 hidden xl:block mx-1"></div>
+
+      <!-- Bilah Navigasi Sebaris Sahaja (Tengah) -->
+      <nav aria-label="Navigasi Utama" class="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="nav-menu-bar">
         
-        <!-- Logo & Tajuk Institusi Bersifat Editorial -->
-        <div class="flex items-center gap-3.5 cursor-pointer" onclick="App.navigate('landing')">
-          <img src="assets/logo-upk.png" alt="Logo UPK" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 border border-[#EAE4D9] shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=UPK&background=DF826C&color=fff'">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-serif font-bold text-lg tracking-tight leading-none text-stone-900">e-Inventori UPK</span>
-              <span class="bg-[#FCEEE9] text-[#DF826C] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#DF826C]/30">BRUNEI</span>
-            </div>
-            <p class="text-[11px] text-stone-500 font-normal leading-tight mt-0.5 hidden sm:block">Unit Pendidikan Kerjaya, Jabatan Sekolah-Sekolah</p>
-          </div>
-        </div>
+        <!-- 1. Laman Utama (Pill Ungu Aktif) -->
+        <button id="nav-btn-landing" onclick="App.navigate('landing')" class="nav-home-pill active shrink-0" data-nav="landing">
+          <i class="fa-solid fa-house text-xs"></i>
+          <span>Laman Utama</span>
+        </button>
 
-        <!-- Tindakan Bahagian Kanan -->
-        <div class="flex items-center gap-3">
+        <!-- 2. Katalog & Perekodan -->
+        <div class="relative nav-dropdown-wrapper shrink-0">
+          <button id="nav-btn-katalog" onclick="App.toggleNavDropdown('katalog', event)" class="nav-menu-trigger" data-nav="katalog">
+            <i class="fa-solid fa-boxes-stacked text-[#6355A4] text-xs"></i>
+            <span>Katalog & Perekodan</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-stone-400 transition-transform"></i>
+          </button>
           
-          <!-- Penapis Pantas Bilik (Pill Elegan) -->
-          <div class="hidden md:flex items-center bg-white rounded-full px-3 py-1.5 border border-[#EAE4D9] text-xs text-stone-700 shadow-sm">
-            <i class="fa-solid fa-map-location-dot mr-2 text-[#DF826C]"></i>
-            <select id="global-room-select" onchange="App.onGlobalRoomChange(this.value)" class="bg-transparent text-stone-800 text-xs font-medium focus:outline-none cursor-pointer">
-              <option value="Semua">Semua Bilik UPK</option>
-            </select>
-          </div>
-
-          <!-- Butang Imbas Kamera Telefon (Pill Terracotta) -->
-          <button onclick="App.openScannerModal()" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white text-xs font-semibold shadow-sm transition">
-            <i class="fa-solid fa-camera text-[11px]"></i>
-            <span class="hidden sm:inline">Imbas QR</span>
-          </button>
-
-          <!-- Lonceng Notifikasi Aduan -->
-          <button onclick="App.navigate('aduan')" class="relative p-2 rounded-full bg-white hover:bg-stone-100 text-stone-700 border border-[#EAE4D9] transition focus:outline-none shadow-sm" title="Aduan Kerosakan Semasa">
-            <i class="fa-solid fa-bell text-xs"></i>
-            <span id="notif-badge-count" class="absolute -top-1 -right-1 bg-[#DF826C] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">1</span>
-          </button>
-
-          <!-- Widget Profil Pengguna -->
-          <div class="relative" id="user-profile-widget">
-            <button onclick="App.toggleUserDropdown()" class="flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-[#EAE4D9] transition text-xs shadow-sm">
-              <div class="w-6 h-6 rounded-full bg-[#FCEEE9] text-[#DF826C] font-bold flex items-center justify-center text-[10px]" id="user-avatar-initials">AD</div>
-              <div class="text-left hidden lg:block">
-                <span class="font-semibold block leading-none text-stone-800 text-[11px]" id="user-display-name">Pentadbir</span>
-              </div>
-              <i class="fa-solid fa-chevron-down text-[10px] text-stone-400"></i>
-            </button>
-
-            <!-- Dropdown Profil -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-[#EAE4D9] py-2 z-50 text-stone-800 text-xs">
-              <div class="px-3.5 py-2 border-b border-[#EAE4D9]">
-                <p class="font-bold text-stone-900" id="user-menu-name">Pentadbir Inventori</p>
-                <p class="text-stone-500 text-[11px]" id="user-menu-email">admin@moe.gov.bn</p>
-              </div>
-              <a href="landing.html" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
-                <i class="fa-solid fa-globe text-[#DF826C]"></i> Laman Utama Rasmi
-              </a>
-              <a href="#" onclick="App.showSettingsModal(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
-                <i class="fa-solid fa-sliders text-[#DF826C]"></i> Tetapan Sistem & Token
-              </a>
-              <a href="#" onclick="App.showMigrationModal(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-[#FAF7F2] text-stone-700">
-                <i class="fa-solid fa-database text-amber-600"></i> Migrasi Pangkalan Data
-              </a>
-              <div class="border-t border-[#EAE4D9] my-1"></div>
-              <a href="#" onclick="App.logout(); return false;" class="flex items-center gap-2 px-3.5 py-2 hover:bg-red-50 text-red-600 font-semibold">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Keluar
-              </a>
-            </div>
+          <!-- Small Dropdown Langsung di Bawah Menu -->
+          <div id="nav-dropdown-katalog" class="nav-small-dropdown hidden left-0 mt-2 w-64">
+            <a href="#" onclick="App.navigate('katalog'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-grip text-sky-600 w-4"></i> Paparan Kad Bergambar
+            </a>
+            <a href="#" onclick="App.openDaftarAsetModal(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-circle-plus text-emerald-600 w-4"></i> Daftar Aset Baharu
+            </a>
+            <a href="#" onclick="App.navigate('cetak-qr'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-print text-slate-600 w-4"></i> Cetak Pelekat Kod QR Pukal
+            </a>
+            <a href="#" onclick="App.navigate('pelan'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item font-semibold text-[#6355A4]">
+              <i class="fa-solid fa-map-location-dot text-amber-500 w-4"></i> Pelan Lantai Interaktif
+            </a>
+            <a href="#" onclick="App.filterKatalogBilik('BILIK-MEETING'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-location-dot text-amber-600 w-4"></i> Semakan Penempatan Bilik
+            </a>
           </div>
         </div>
+
+        <!-- 3. Buku Simpanan Rasmi -->
+        <div class="relative nav-dropdown-wrapper shrink-0">
+          <button id="nav-btn-stockcard" onclick="App.toggleNavDropdown('stockcard', event)" class="nav-menu-trigger" data-nav="stockcard">
+            <i class="fa-solid fa-layer-group text-[#6355A4] text-xs"></i>
+            <span>Buku Simpanan Rasmi</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-stone-400 transition-transform"></i>
+          </button>
+          
+          <!-- Small Dropdown Langsung di Bawah Menu -->
+          <div id="nav-dropdown-stockcard" class="nav-small-dropdown hidden left-0 mt-2 w-64">
+            <a href="#" onclick="App.filterBukuSimpanan('Perabot Pejabat'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-chair text-amber-700 w-4"></i> Perabot Pejabat
+            </a>
+            <a href="#" onclick="App.filterBukuSimpanan('Peralatan Komputer & IT'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-laptop text-blue-600 w-4"></i> Peralatan Komputer & IT
+            </a>
+            <a href="#" onclick="App.filterBukuSimpanan('Peralatan Elektrik'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-bolt text-yellow-500 w-4"></i> Peralatan Elektrik
+            </a>
+            <a href="#" onclick="App.filterBukuSimpanan('Barang Guna Habis'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-box-open text-purple-600 w-4"></i> Barang Guna Habis (Stok)
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. Aduan & Pemeriksaan -->
+        <div class="relative nav-dropdown-wrapper shrink-0">
+          <button id="nav-btn-aduan" onclick="App.toggleNavDropdown('aduan', event)" class="nav-menu-trigger" data-nav="aduan">
+            <i class="fa-solid fa-clipboard-list text-[#6355A4] text-xs"></i>
+            <span>Aduan & Pemeriksaan</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-stone-400 transition-transform"></i>
+          </button>
+          
+          <!-- Small Dropdown Langsung di Bawah Menu -->
+          <div id="nav-dropdown-aduan" class="nav-small-dropdown hidden left-0 mt-2 w-64">
+            <a href="#" onclick="App.openScannerModal(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-camera text-sky-600 w-4"></i> Pengimbas Kod QR Telefon
+            </a>
+            <a href="#" onclick="App.openAduanModal(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-bullhorn text-red-500 w-4"></i> Hantar Aduan Kerosakan
+            </a>
+            <a href="#" onclick="App.navigate('aduan'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-screwdriver-wrench text-indigo-600 w-4"></i> Semakan Teknikal Side-by-Side
+            </a>
+            <a href="#" onclick="App.navigate('aduan'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Senarai Aduan Semasa
+            </a>
+          </div>
+        </div>
+
+        <!-- 5. Kelulusan & Laporan -->
+        <div class="relative nav-dropdown-wrapper shrink-0">
+          <button id="nav-btn-pelupusan" onclick="App.toggleNavDropdown('pelupusan', event)" class="nav-menu-trigger" data-nav="pelupusan">
+            <i class="fa-solid fa-chart-column text-[#6355A4] text-xs"></i>
+            <span>Kelulusan & Laporan</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-stone-400 transition-transform"></i>
+          </button>
+          
+          <!-- Small Dropdown Langsung di Bawah Menu -->
+          <div id="nav-dropdown-pelupusan" class="nav-small-dropdown hidden right-0 sm:left-0 mt-2 w-64">
+            <a href="#" onclick="App.navigate('pelupusan'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-check-to-slot text-emerald-600 w-4"></i> Kelulusan Pelupusan Aset
+            </a>
+            <a href="#" onclick="App.navigate('stockcard'); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-file-pdf text-red-600 w-4"></i> Cetak Kad Stok mengikut Bilik
+            </a>
+            <a href="#" onclick="App.eksportExcelData(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-file-excel text-green-700 w-4"></i> Eksport Data Penuh (CSV)
+            </a>
+            <a href="#" onclick="App.syncCrmKontak(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-address-book text-sky-700 w-4"></i> Penyelarasan CRM Kontak UPK
+            </a>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Tindakan Kanan: Pemisah, Butang Carian, Notifikasi, Widget Profil (Kanan) -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        
+        <!-- Pemisah Menegak -->
+        <div class="h-6 w-px bg-stone-200 hidden sm:block"></div>
+
+        <!-- Butang Carian Pantas -->
+        <button onclick="App.navigate('katalog'); setTimeout(() => document.getElementById('katalog-search-input')?.focus(), 200);" class="w-8 h-8 flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-full transition" title="Carian Pantas (Ctrl+K)">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
+        </button>
+
+        <!-- Lonceng Notifikasi Aduan -->
+        <button onclick="App.navigate('aduan')" class="relative w-8 h-8 flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-full transition" title="Aduan Kerosakan Semasa">
+          <i class="fa-solid fa-bell text-xs"></i>
+          <span id="notif-badge-count" class="absolute top-0 right-0 bg-[#6355A4] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">1</span>
+        </button>
+
+        <!-- Widget Profil Pengguna (Kakitangan UPK) -->
+        <div class="relative" id="user-profile-widget">
+          <button onclick="App.toggleUserDropdown(event)" class="flex items-center gap-1.5 pl-1 pr-2 py-1 rounded-full hover:bg-stone-100 border border-transparent hover:border-[#EAE4D9] transition text-xs">
+            <div class="w-7 h-7 rounded-full bg-[#EDE9FE] text-[#6355A4] font-bold flex items-center justify-center text-[10px]" id="user-avatar-initials">KU</div>
+            <span class="font-medium text-stone-800 text-xs hidden md:inline" id="user-display-name">Kakitangan UPK</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-stone-400"></i>
+          </button>
+
+          <!-- Dropdown Profil Langsung di Bawah Profil -->
+          <div id="user-dropdown-menu" class="nav-small-dropdown hidden right-0 mt-2 w-56 text-stone-800 text-xs">
+            <div class="px-3.5 py-2 border-b border-[#EAE4D9]">
+              <p class="font-bold text-stone-900" id="user-menu-name">Kakitangan UPK</p>
+              <p class="text-stone-500 text-[11px]" id="user-menu-email">admin@moe.gov.bn</p>
+            </div>
+            <a href="landing.html" class="nav-dropdown-item">
+              <i class="fa-solid fa-globe text-[#6355A4] w-4"></i> Laman Utama Rasmi
+            </a>
+            <a href="#" onclick="App.showSettingsModal(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-sliders text-[#6355A4] w-4"></i> Tetapan Sistem & Token
+            </a>
+            <a href="#" onclick="App.showMigrationModal(); App.closeAllNavDropdowns(); return false;" class="nav-dropdown-item">
+              <i class="fa-solid fa-database text-amber-600 w-4"></i> Migrasi Pangkalan Data
+            </a>
+            <div class="border-t border-[#EAE4D9] my-1"></div>
+            <a href="#" onclick="App.logout(); return false;" class="nav-dropdown-item text-red-600 hover:bg-red-50 font-semibold">
+              <i class="fa-solid fa-arrow-right-from-bracket w-4"></i> Log Keluar
+            </a>
+          </div>
+        </div>
+
+        <!-- Pilihan Bilik Global Tersembunyi (Keserasian JS) -->
+        <select id="global-room-select" onchange="App.onGlobalRoomChange(this.value)" class="hidden">
+          <option value="Semua">Semua Bilik UPK</option>
+        </select>
 
       </div>
+
     </div>
   </header>
-
-  <!-- ========================================================================
-       TIER 2: BILAH NAVIGASI MENDATAR BERSERTA ZARE MEGA MENU (TANPA SIDEBAR)
-  ======================================================================== -->
-  <nav class="horizontal-navbar relative z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between">
-        
-        <!-- Tab Menu Mendatar -->
-        <div class="flex items-center overflow-x-auto no-scrollbar py-0.5" id="nav-tabs-container">
-          <button class="nav-tab-btn active" data-nav="landing" onclick="App.navigate('landing')">
-            <i class="fa-solid fa-house"></i>
-            <span>Laman Utama</span>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="dashboard" onclick="App.navigate('dashboard')">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span>Papan Pemuka</span>
-          </button>
-          
-          <button class="nav-tab-btn" data-nav="katalog" onclick="App.toggleMegaMenu('katalog')">
-            <i class="fa-solid fa-boxes-stacked"></i>
-            <span>Katalog Aset</span>
-            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="stockcard" onclick="App.toggleMegaMenu('stockcard')">
-            <i class="fa-solid fa-book-bookmark"></i>
-            <span>Buku Simpanan & Kad Stok</span>
-            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="pelan" onclick="App.navigate('pelan')">
-            <i class="fa-solid fa-map-location-dot"></i>
-            <span>Pelan Lantai</span>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="aduan" onclick="App.toggleMegaMenu('aduan')">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span>Imbasan & Aduan</span>
-            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="pelupusan" onclick="App.toggleMegaMenu('pelupusan')">
-            <i class="fa-solid fa-scale-balanced"></i>
-            <span>Pemeriksaan & Pelupusan</span>
-            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
-          </button>
-
-          <button class="nav-tab-btn" data-nav="tetapan" onclick="App.toggleMegaMenu('tetapan')">
-            <i class="fa-solid fa-gear"></i>
-            <span>Pentadbiran</span>
-            <i class="fa-solid fa-chevron-down text-[10px] ml-0.5 opacity-70"></i>
-          </button>
-        </div>
-
-        <!-- Butang Cepat Imbas Kod QR -->
-        <div class="hidden sm:flex items-center">
-          <button onclick="App.openScannerModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-upk-cerulean text-white text-xs font-semibold hover:bg-upk-navy shadow-sm transition">
-            <i class="fa-solid fa-qrcode"></i>
-            <span>Imbas Kod QR</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- PANEL MEGA MENU TERAPUNG (ZARE MEGA MENU DROPDOWN) -->
-    <div id="mega-menu-panel" class="mega-menu-panel">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          
-          <!-- Lajur 1: Katalog & Pendaftaran -->
-          <div>
-            <div class="mega-menu-col-title">
-              <i class="fa-solid fa-boxes-stacked mr-1"></i> Katalog & Perekodan
-            </div>
-            <div class="space-y-1">
-              <a href="#" onclick="App.navigate('katalog'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-grip text-sky-600 w-4"></i> Paparan Kad Bergambar
-              </a>
-              <a href="#" onclick="App.openDaftarAsetModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-circle-plus text-emerald-600 w-4"></i> Daftar Aset Baharu
-              </a>
-              <a href="#" onclick="App.navigate('cetak-qr'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-print text-slate-600 w-4"></i> Cetak Pelekat Kod QR Pukal
-              </a>
-              <a href="#" onclick="App.navigate('pelan'); App.closeMegaMenu(); return false;" class="mega-menu-link font-semibold text-upk-navy">
-                <i class="fa-solid fa-map-location-dot text-amber-500 w-4"></i> Pelan Lantai Interaktif
-              </a>
-              <a href="#" onclick="App.filterKatalogBilik('BILIK-MEETING'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-location-dot text-amber-600 w-4"></i> Semakan Penempatan Bilik
-              </a>
-            </div>
-          </div>
-
-          <!-- Lajur 2: Buku Simpanan Rasmi -->
-          <div>
-            <div class="mega-menu-col-title">
-              <i class="fa-solid fa-book-bookmark mr-1"></i> Buku Simpanan Rasmi
-            </div>
-            <div class="space-y-1">
-              <a href="#" onclick="App.filterBukuSimpanan('Perabot Pejabat'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-chair text-amber-700 w-4"></i> Perabot Pejabat
-              </a>
-              <a href="#" onclick="App.filterBukuSimpanan('Peralatan Komputer & IT'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-laptop text-blue-600 w-4"></i> Peralatan Komputer & IT
-              </a>
-              <a href="#" onclick="App.filterBukuSimpanan('Peralatan Elektrik'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-bolt text-yellow-500 w-4"></i> Peralatan Elektrik
-              </a>
-              <a href="#" onclick="App.filterBukuSimpanan('Barang Guna Habis'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-box-open text-purple-600 w-4"></i> Barang Guna Habis (Stok)
-              </a>
-            </div>
-          </div>
-
-          <!-- Lajur 3: Aduan & Pemeriksaan Teknikal -->
-          <div>
-            <div class="mega-menu-col-title">
-              <i class="fa-solid fa-triangle-exclamation mr-1"></i> Aduan & Pemeriksaan
-            </div>
-            <div class="space-y-1">
-              <a href="#" onclick="App.openScannerModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-camera text-sky-600 w-4"></i> Pengimbas Kod QR Telefon
-              </a>
-              <a href="#" onclick="App.openAduanModal(); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-bullhorn text-red-500 w-4"></i> Hantar Aduan Kerosakan
-              </a>
-              <a href="#" onclick="App.navigate('aduan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-screwdriver-wrench text-indigo-600 w-4"></i> Semakan Teknikal Side-by-Side
-              </a>
-              <a href="#" onclick="App.navigate('aduan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Senarai Aduan Semasa
-              </a>
-            </div>
-          </div>
-
-          <!-- Lajur 4: Kelulusan & Laporan Rasmi -->
-          <div>
-            <div class="mega-menu-col-title">
-              <i class="fa-solid fa-scale-balanced mr-1"></i> Kelulusan & Laporan
-            </div>
-            <div class="space-y-1">
-              <a href="#" onclick="App.navigate('pelupusan'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-check-to-slot text-emerald-600 w-4"></i> Kelulusan Pelupusan Aset
-              </a>
-              <a href="#" onclick="App.navigate('stockcard'); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-file-pdf text-red-600 w-4"></i> Cetak Kad Stok mengikut Bilik
-              </a>
-              <a href="#" onclick="App.eksportExcelData(); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-file-excel text-green-700 w-4"></i> Eksport Data Penuh (CSV)
-              </a>
-              <a href="#" onclick="App.syncCrmKontak(); App.closeMegaMenu(); return false;" class="mega-menu-link">
-                <i class="fa-solid fa-address-book text-sky-700 w-4"></i> Penyelarasan CRM Kontak UPK
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </nav>
 
   <!-- ========================================================================
        RUANG KANDUNGAN UTAMA (SPA WORKSPACE - 100% LEBAR PENUH)

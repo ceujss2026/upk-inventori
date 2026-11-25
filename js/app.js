@@ -114,18 +114,12 @@ const App = (function () {
     // Navigasi URL hash (cth: #katalog?q=... atau #scan dari laman utama)
     window.addEventListener('hashchange', parseHashAndNavigate);
 
-    // Tutup mega menu jika klik luar
+    // Tutup dropdown jika klik di luar kawasan menu navigasi
     document.addEventListener('click', function (e) {
-      const panel = document.getElementById('mega-menu-panel');
-      const tabs = document.getElementById('nav-tabs-container');
-      if (panel && !panel.contains(e.target) && tabs && !tabs.contains(e.target)) {
-        closeMegaMenu();
-      }
-
-      const userWidget = document.getElementById('user-profile-widget');
-      const userDropdown = document.getElementById('user-dropdown-menu');
-      if (userDropdown && userWidget && !userWidget.contains(e.target)) {
-        userDropdown.classList.add('hidden');
+      const isInsideNavDropdown = e.target.closest('.nav-dropdown-wrapper');
+      const isInsideUserWidget = e.target.closest('#user-profile-widget');
+      if (!isInsideNavDropdown && !isInsideUserWidget) {
+        closeAllNavDropdowns();
       }
     });
 
@@ -192,7 +186,7 @@ const App = (function () {
   // ==========================================================================
   function navigate(viewId) {
     _currentView = viewId;
-    closeMegaMenu();
+    closeAllNavDropdowns();
 
     // Sembunyikan semua views
     const views = ['landing', 'dashboard', 'katalog', 'stockcard', 'aduan', 'pelupusan', 'cetak-qr', 'pelan'];
@@ -206,7 +200,7 @@ const App = (function () {
     if (activeEl) activeEl.classList.remove('hidden');
 
     // Kemas kini tab aktif di bilah navigasi atas
-    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    document.querySelectorAll('.nav-tab-btn, .nav-home-pill').forEach(btn => {
       if (btn.getAttribute('data-nav') === viewId) {
         btn.classList.add('active');
       } else {
@@ -284,27 +278,68 @@ const App = (function () {
     }
   }
 
-  function toggleMegaMenu(menuType) {
-    const panel = document.getElementById('mega-menu-panel');
-    if (!panel) return;
+  let _activeNavDropdown = null;
 
-    if (_megaMenuOpen) {
-      closeMegaMenu();
-    } else {
-      panel.classList.add('open');
-      _megaMenuOpen = true;
+  function toggleNavDropdown(menuKey, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const dropdown = document.getElementById('nav-dropdown-' + menuKey);
+    const trigger = document.getElementById('nav-btn-' + menuKey);
+    
+    // Klik kali kedua pada menu yang sama: Tutup dropdown (On another click: Close the dropdown)
+    if (_activeNavDropdown === menuKey) {
+      closeAllNavDropdowns();
+      return;
+    }
+
+    // Tutup sebarang dropdown lain terlebih dahulu
+    closeAllNavDropdowns();
+
+    // Buka dropdown kecil khusus langsung di bawah tajuk menu berkenaan
+    if (dropdown) {
+      dropdown.classList.remove('hidden');
+      if (trigger) trigger.classList.add('active');
+      _activeNavDropdown = menuKey;
     }
   }
 
-  function closeMegaMenu() {
-    const panel = document.getElementById('mega-menu-panel');
-    if (panel) panel.classList.remove('open');
+  function closeAllNavDropdowns() {
+    document.querySelectorAll('.nav-small-dropdown').forEach(dd => {
+      dd.classList.add('hidden');
+    });
+    document.querySelectorAll('.nav-menu-trigger').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    const userDD = document.getElementById('user-dropdown-menu');
+    if (userDD) userDD.classList.add('hidden');
+    _activeNavDropdown = null;
     _megaMenuOpen = false;
   }
 
-  function toggleUserDropdown() {
+  function toggleUserDropdown(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const dd = document.getElementById('user-dropdown-menu');
-    if (dd) dd.classList.toggle('hidden');
+    if (!dd) return;
+    const isHidden = dd.classList.contains('hidden');
+    closeAllNavDropdowns();
+    if (isHidden) {
+      dd.classList.remove('hidden');
+      _activeNavDropdown = 'user';
+    }
+  }
+
+  // Alias untuk keserasian fungsi sedia ada
+  function toggleMegaMenu(menuType, e) {
+    toggleNavDropdown(menuType, e);
+  }
+
+  function closeMegaMenu() {
+    closeAllNavDropdowns();
   }
 
   // ==========================================================================
@@ -2091,6 +2126,8 @@ const App = (function () {
     navigate,
     onLandingSearch,
     filterByRoomLanding,
+    toggleNavDropdown,
+    closeAllNavDropdowns,
     toggleMegaMenu,
     closeMegaMenu,
     toggleUserDropdown,
