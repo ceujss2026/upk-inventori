@@ -1513,66 +1513,9 @@ const App = (function () {
   function renderMapMarkers(filterKeyword = '') {
     const container2D = document.getElementById('map-asset-markers');
     const container3D = document.getElementById('map3d-asset-markers');
-
-    const kw = (filterKeyword || '').toLowerCase().trim();
-    let items = _katalogData.filter(item => (item.map_x && item.map_y) || (item.map3d_x && item.map3d_y));
-
-    if (kw) {
-      items = items.filter(item => 
-        (item.Nama_Barang || '').toLowerCase().includes(kw) ||
-        (item.ID_Aset || '').toLowerCase().includes(kw) ||
-        (item.Buku_Simpanan || '').toLowerCase().includes(kw) ||
-        (item.Lokasi_Bilik || '').toLowerCase().includes(kw)
-      );
-    }
-
-    // Render penanda pada 2D SVG Blueprint
-    if (container2D) {
-      container2D.innerHTML = items.filter(item => item.map_x && item.map_y).map(item => {
-        let color = '#10B981'; // Baik
-        if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
-        if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
-        const isActive = _selectedMapAsset === item.ID_Aset;
-
-        return `
-          <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
-             id="marker-${item.ID_Aset}" 
-             data-asset-id="${item.ID_Aset}"
-             transform="translate(${item.map_x}, ${item.map_y})" 
-             onclick="App.onMarkerClick('${item.ID_Aset}', event)">
-            <circle class="radar-pulse" r="10" stroke="${color}" stroke-width="2" fill="${color}" fill-opacity="0.25" />
-            <circle r="12" fill="${color}" stroke="#FFFFFF" stroke-width="2.5" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.25))" />
-            <rect x="-24" y="-22" width="48" height="12" rx="3" fill="#0F172A" fill-opacity="0.85" />
-            <text x="0" y="-13" text-anchor="middle" font-size="7" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
-          </g>
-        `;
-      }).join('');
-    }
-
-    // Render penanda pada Pelan 3D Isometrik
-    if (container3D) {
-      container3D.innerHTML = items.map(item => {
-        const x3d = item.map3d_x || (item.map_x ? (item.map_x * 1024 / 850) : 512);
-        const y3d = item.map3d_y || (item.map_y ? (item.map_y * 683 / 720) : 341);
-        let color = '#10B981';
-        if (item.Status_Aset === 'Dalam Penyelenggaraan') color = '#F59E0B';
-        if (item.Status_Aset === 'Cadangan Pelupusan' || item.Status_Aset === 'Dilupuskan') color = '#EF4444';
-        const isActive = _selectedMapAsset === item.ID_Aset;
-
-        return `
-          <g class="asset-marker ${isActive ? 'marker-active' : ''}" 
-             id="marker3d-${item.ID_Aset}" 
-             data-asset-id="${item.ID_Aset}"
-             transform="translate(${x3d}, ${y3d})" 
-             onclick="App.onMarkerClick('${item.ID_Aset}', event)">
-            <circle class="radar-pulse" r="12" stroke="${color}" stroke-width="2.5" fill="${color}" fill-opacity="0.3" />
-            <circle r="13" fill="${color}" stroke="#FFFFFF" stroke-width="3" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))" />
-            <rect x="-26" y="-24" width="52" height="13" rx="3" fill="#0F172A" fill-opacity="0.9" />
-            <text x="0" y="-14" text-anchor="middle" font-size="7.5" font-weight="700" fill="#FFFFFF" font-family="monospace">${item.ID_Aset}</text>
-          </g>
-        `;
-      }).join('');
-    }
+    // Penanda titik hijau dimatikan mengikut arahan: fokus visual pada sorotan bilik sahaja
+    if (container2D) container2D.innerHTML = '';
+    if (container3D) container3D.innerHTML = '';
   }
 
   function selectMapRoom(roomId) {
@@ -1693,99 +1636,38 @@ const App = (function () {
     }
   }
 
+  function resolveRoomIdFromLokasi(lokasi) {
+    if (!lokasi) return null;
+    const bStr = lokasi.toLowerCase();
+    if (bStr.includes('mesyuarat') || bStr.includes('meeting')) return 'BILIK-MEETING';
+    if (bStr.includes('kaunter') || bStr.includes('counter')) return 'BILIK-COUNTER';
+    if (bStr.includes('stor koridor') || bStr.includes('store corridor')) return 'STORE-KORIDOR';
+    if (bStr.includes('suis') || bStr.includes('storeroom')) return 'BILIK-STORE';
+    if (bStr.includes('dapur') || bStr.includes('kitchen')) return 'BILIK-KITCHEN';
+    if (bStr.includes('ruang terbuka') || bStr.includes('outdoor')) return 'BILIK-OUTDOOR';
+    if (bStr.includes('bilik e') || bStr.includes('room e')) return 'BILIK-ROOM-TOP';
+    if (bStr.includes('bilik a') || bStr.includes('room a')) return 'BILIK-ROOM-A';
+    if (bStr.includes('bilik b') || bStr.includes('room b')) return 'BILIK-ROOM-B';
+    if (bStr.includes('bilik c') || bStr.includes('room c')) return 'BILIK-ROOM-C';
+    if (bStr.includes('bilik d') || bStr.includes('room d')) return 'BILIK-ROOM-D';
+    if (bStr.includes('koridor') || bStr.includes('walkway')) return 'BILIK-WALKWAY';
+    return null;
+  }
+
   function onMarkerClick(assetId, event) {
     if (event) event.stopPropagation();
-    _selectedMapAsset = assetId;
-    const item = _katalogData.find(a => a.ID_Aset === assetId);
-    if (!item) return;
-
-    if (item.map_bilik_id) {
-      selectMapRoom(item.map_bilik_id);
-    }
-
-    renderMapMarkers();
-    showAssetPopover(item, event);
+    locateAssetOnMap(assetId);
   }
 
   function showAssetPopover(item, event) {
-    const popover = document.getElementById('map-asset-popover');
-    if (!popover) return;
-
-    const container = document.querySelector('.floor-map-container');
-    if (container) {
-      const rect = container.getBoundingClientRect();
-      let left = 0;
-      let top = 0;
-
-      // Cari elemen penanda fizikal di skrin untuk kedudukan pixel-sempurna
-      const markerEl = (event && event.currentTarget) || document.getElementById(`marker3d-${item.ID_Aset}`) || document.getElementById(`marker-${item.ID_Aset}`);
-      if (markerEl && typeof markerEl.getBoundingClientRect === 'function') {
-        const mRect = markerEl.getBoundingClientRect();
-        left = (mRect.left - rect.left) + (mRect.width / 2) - 140;
-        top = (mRect.bottom - rect.top) + 10;
-        if (top + 260 > container.offsetHeight) {
-          top = (mRect.top - rect.top) - 265;
-        }
-      } else if (_pelanMode === '3d' && item.map3d_x && item.map3d_y) {
-        const scaleX = rect.width / 1024;
-        const scaleY = (rect.width * (683 / 1024)) / 683;
-        left = (item.map3d_x * scaleX) - 140;
-        top = (item.map3d_y * scaleY) + 20;
-      } else if (item.map_x && item.map_y) {
-        const scaleX = rect.width / 850;
-        const scaleY = (rect.width * (720 / 850)) / 720;
-        left = (item.map_x * scaleX) - 140;
-        top = (item.map_y * scaleY) + 20;
-      }
-
-      if (left < 10) left = 10;
-      if (left + 290 > rect.width) left = Math.max(10, rect.width - 295);
-      if (top < 10) top = 10;
-
-      popover.style.left = left + 'px';
-      popover.style.top = top + 'px';
-    }
-
-    popover.innerHTML = `
-      <div class="relative">
-        <button onclick="App.closeAssetPopover()" class="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xs z-10">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-
-        <div class="flex gap-3">
-          <img src="${item.URL_Foto_Asal || 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=300&q=80'}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 shrink-0 bg-slate-50">
-          <div class="min-w-0 flex-1">
-            <span class="${getStatusBadgeClass(item.Status_Aset)} !text-[9px] !py-0.5 !px-1.5 mb-1 inline-block">${item.Status_Aset}</span>
-            <h4 class="font-bold text-xs text-slate-900 leading-tight truncate">${item.Nama_Barang}</h4>
-            <p class="font-mono text-[10px] text-slate-500 mt-0.5">${item.ID_Aset}</p>
-            <p class="text-[10px] text-slate-600 mt-1 flex items-center gap-1 truncate">
-              <i class="fa-solid fa-map-pin text-amber-500 text-[9px]"></i> ${item.Lokasi_Bilik}
-            </p>
-          </div>
-        </div>
-
-        <div class="mt-3 pt-2.5 border-t border-slate-100 grid grid-cols-3 gap-1.5 text-center">
-          <button onclick="App.openDetailModal('${item.ID_Aset}')" class="py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold transition">
-            Butiran
-          </button>
-          <button onclick="App.openAduanModalWithAsset('${item.ID_Aset}')" class="py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] font-semibold transition border border-amber-200">
-            Aduan
-          </button>
-          <button onclick="App.openPindahBilikModalWithAsset('${item.ID_Aset}')" class="py-1 rounded-lg bg-upk-navy hover:bg-upk-cerulean text-white text-[10px] font-semibold transition">
-            Pindah
-          </button>
-        </div>
-      </div>
-    `;
-
-    popover.classList.remove('hidden');
+    // Popover koordinat titik dimatikan mengikut arahan: fokus visual pada sorotan bilik sahaja
+    closeAssetPopover();
   }
 
   function closeAssetPopover() {
     const popover = document.getElementById('map-asset-popover');
     if (popover) popover.classList.add('hidden');
     _selectedMapAsset = null;
-    renderMapMarkers();
   }
 
   function locateAssetOnMap(assetId) {
@@ -1793,16 +1675,11 @@ const App = (function () {
     const item = _katalogData.find(a => a.ID_Aset === assetId);
     if (!item) return;
 
-    if (item.map_bilik_id) {
-      selectMapRoom(item.map_bilik_id);
+    // Sorot bilik penempatan aset sahaja (tiada koordinat titik)
+    let targetRoomId = item.map_bilik_id || resolveRoomIdFromLokasi(item.Lokasi_Bilik);
+    if (targetRoomId) {
+      selectMapRoom(targetRoomId);
     }
-
-    _selectedMapAsset = assetId;
-    renderMapMarkers();
-
-    setTimeout(() => {
-      showAssetPopover(item);
-    }, 200);
   }
 
   function locateAssetFromDetailModal() {
@@ -1877,13 +1754,15 @@ const App = (function () {
   }
 
   function onPelanSearch(kw) {
-    renderMapMarkers(kw);
+    const q = (kw || '').toLowerCase().trim();
+    if (!q) return;
     const matched = _katalogData.filter(a => 
-      (a.Nama_Barang || '').toLowerCase().includes(kw.toLowerCase()) ||
-      (a.ID_Aset || '').toLowerCase().includes(kw.toLowerCase())
+      (a.Nama_Barang || '').toLowerCase().includes(q) ||
+      (a.ID_Aset || '').toLowerCase().includes(q) ||
+      (a.Lokasi_Bilik || '').toLowerCase().includes(q)
     );
-    if (matched.length === 1 && matched[0].map_bilik_id) {
-      selectMapRoom(matched[0].map_bilik_id);
+    if (matched.length === 1) {
+      locateAssetOnMap(matched[0].ID_Aset);
     }
   }
 

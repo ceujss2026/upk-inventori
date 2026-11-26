@@ -1119,16 +1119,11 @@
               <button onclick="App.resetMapZoom()" class="px-2 h-7 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-700 font-medium" title="Tetapkan Semula">
                 Semula
               </button>
-              <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
-              <button id="btn-toggle-coord-inspector" onclick="App.toggleCoordinateInspector()" class="px-2.5 h-7 rounded-lg hover:bg-amber-50 text-slate-700 flex items-center gap-1.5 font-medium transition-all" title="Buka / Tutup Pemeriksa Koordinat (Crosshair HUD)">
-                <i class="fa-solid fa-crosshairs text-amber-600"></i>
-                <span class="hidden sm:inline text-[11px]">Semak Koordinat</span>
-              </button>
             </div>
 
             <div class="absolute top-3 right-3 z-20 hidden sm:flex items-center gap-1.5 bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-xl px-2.5 py-1 shadow-sm text-[11px] text-slate-600">
               <i class="fa-solid fa-circle-info text-sky-600"></i>
-              <span>Klik mana-mana bilik atau titik item</span>
+              <span>Klik mana-mana bilik untuk melihat senarai aset</span>
             </div>
 
             <!-- MOD 1: PELAN 3D ISOMETRIK (RENDER MEWAH DENGAN PENANDA INTERAKTIF) -->
@@ -1151,9 +1146,12 @@
                   <!-- 3b. Dewan Mesyuarat / Bilik Persidangan Utama (y:442..630) -->
                   <path d="M 175 442 L 355 442 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
                   
-                  <!-- 4. Tandas Sayap Utara (Kawasan Bukan Interaktif / Tiada Klik) -->
+                  <!-- 4a. Tandas Sayap Utara (Kawasan Bukan Interaktif / Tiada Klik) -->
                   
-                  <!-- 5. Bilik Arkib & Rekod (Room Top / Office) -->
+                  <!-- 4b. Stor Koridor (Zone 01 - Store Corridor) -->
+                  <rect x="360" y="110" width="65" height="110" rx="3" class="svg-room" fill="#FEF3C7" data-room-id="STORE-KORIDOR" onclick="App.selectMapRoom('STORE-KORIDOR')" />
+
+                  <!-- 5. Bilik E (Room E / Office) -->
                   <rect x="425" y="25" width="165" height="195" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
                   
                   <!-- 6. Ruang Terbuka / Laman Tengah (Outdoor) -->
@@ -1167,8 +1165,7 @@
                   <!-- 9. Bilik Pegawai B (Room B - Baris Tengah Meja Biru) -->
                   <rect x="575" y="310" width="105" height="85" rx="4" class="svg-room" fill="#0284C7" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
                   
-                  <!-- 10. Tandas Kanan & Almari Utiliti (Right Utilities) -->
-                  <rect x="680" y="310" width="125" height="110" rx="4" class="svg-room" fill="#D97706" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
+                  <!-- 10. Tandas Kanan & Almari Utiliti (Kawasan Bukan Interaktif / Tiada Klik) -->
 
                   <!-- 11. Laluan Tengah (Central Walkway) -->
                   <polygon points="360,395 730,395 730,430 600,430 600,460 360,460" class="svg-room" fill="#94A3B8" data-room-id="BILIK-WALKWAY" onclick="App.selectMapRoom('BILIK-WALKWAY')" />
@@ -1183,7 +1180,7 @@
                   
                   <!-- Kumpulan Penanda Aset Dinamik Pada Pelan 3D -->
                   <g id="map3d-asset-markers">
-                    <!-- Dijana secara dinamik oleh App.render3DMapMarkers() -->
+                    <!-- Dikosongkan mengikut arahan pengguna (fokus bilik sahaja) -->
                   </g>
 
                   <!-- Sasaran Pemeriksa Koordinat 3D -->
@@ -1226,9 +1223,10 @@
                 <rect id="svg-room-toilet-north" x="320" y="40" width="80" height="80" rx="2" class="room-toilet" pointer-events="none" />
                 <text x="360" y="85" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                <!-- Laluan Utara (Walkway) -->
-                <rect id="svg-room-walkway-north" x="320" y="120" width="80" height="90" class="svg-room room-walkway" data-room-id="LALUAN-NORTH" onclick="App.selectMapRoom('LALUAN-NORTH')" />
-                <text x="360" y="170" text-anchor="middle" font-size="10" fill="#64748B" pointer-events="none">Walkway</text>
+                <!-- Stor Koridor (Zone 01 - Store Corridor) -->
+                <rect id="svg-room-store-corridor" x="320" y="120" width="80" height="90" class="svg-room room-store" data-room-id="STORE-KORIDOR" onclick="App.selectMapRoom('STORE-KORIDOR')" />
+                <text x="360" y="160" text-anchor="middle" font-weight="700" font-size="11" fill="#92400E" pointer-events="none">Store Corridor</text>
+                <text x="360" y="176" text-anchor="middle" font-size="9" fill="#B45309" pointer-events="none">Stor Koridor</text>
 
                 <!-- Bilik Atas / Arkib (Room Top) -->
                 <rect id="svg-room-top" x="400" y="40" width="80" height="170" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
