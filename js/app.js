@@ -1392,7 +1392,7 @@ const App = (function () {
   let _selectedMapAsset = null;
   let _mapZoom = 1;
 
-    const ROOM_DIRECTORY = {
+      const ROOM_DIRECTORY = {
     'BILIK-MEETING': {
       nama: 'Bilik Mesyuarat',
       kod: 'BILIK-MEETING',
@@ -1462,8 +1462,16 @@ const App = (function () {
       kod: 'BILIK-ROOM-A',
       kategori: 'Zone 03 - Office Room A',
       kapasiti: '4 Orang',
-      foto: 'assets/rooms/room-a.jpg',
+      foto: 'assets/rooms/room-b.jpg',
       pegawai: 'Pegawai Kerjaya A'
+    },
+    'BILIK-ROOM-B': {
+      nama: 'Bilik B (Room B)',
+      kod: 'BILIK-ROOM-B',
+      kategori: 'Zone 03 - Office Room B',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-a.jpg',
+      pegawai: 'Pegawai Kerjaya B'
     },
     'BILIK-ROOM-C': {
       nama: 'Bilik C (Room C)',
@@ -1568,7 +1576,6 @@ const App = (function () {
   }
 
   function selectMapRoom(roomId) {
-    if (roomId === 'BILIK-ROOM-B') roomId = 'BILIK-ROOM-A';
     _selectedMapRoom = roomId;
 
     // Padamkan kelas aktif pada semua bilik (2D dan 3D)

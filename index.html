@@ -308,6 +308,7 @@
                 <option value="Bilik Mesyuarat" class="text-stone-900">Bilik Mesyuarat</option>
                 <option value="Kawasan Kaunter" class="text-stone-900">Kawasan Kaunter</option>
                 <option value="Bilik A (Room A)" class="text-stone-900">Bilik A (Room A)</option>
+                <option value="Bilik B (Room B)" class="text-stone-900">Bilik B (Room B)</option>
                 <option value="Bilik C (Room C)" class="text-stone-900">Bilik C (Room C)</option>
                 <option value="Bilik D (Room D)" class="text-stone-900">Bilik D (Room D)</option>
                 <option value="Bilik E (Room E)" class="text-stone-900">Bilik E (Room E)</option>
@@ -1165,8 +1166,8 @@
                   <!-- 8. Bilik Pegawai B (Room B - Baris Tengah Meja Merah / Sebelah Tandas) -->
                   <rect x="475" y="310" width="100" height="85" rx="4" class="svg-room" fill="#EF4444" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
                   
-                  <!-- 9. Bilik Pegawai A (Room A - Baris Tengah Meja Biru) -->
-                  <rect x="575" y="310" width="105" height="85" rx="4" class="svg-room" fill="#0284C7" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                  <!-- 9. Bilik Pegawai B (Room B - Baris Tengah Meja Biru) -->
+                  <rect x="575" y="310" width="105" height="85" rx="4" class="svg-room" fill="#0284C7" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
                   
                   <!-- 10. Tandas Kanan & Almari Utiliti (Right Utilities) -->
                   <rect x="680" y="310" width="125" height="110" rx="4" class="svg-room" fill="#D97706" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
@@ -1252,16 +1253,16 @@
                 <text x="425" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
 
                 <!-- Bilik Pegawai B (Room B) -->
-                <rect id="svg-room-b" x="460" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                <rect id="svg-room-a" x="460" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
                 <line x1="485" y1="340" x2="545" y2="340" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" pointer-events="none" />
-                <text x="515" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room B</text>
-                <text x="515" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya B</text>
+                <text x="515" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room A</text>
+                <text x="515" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya A</text>
 
                 <!-- Bilik Pegawai A (Room A) -->
-                <rect id="svg-room-a" x="570" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                <rect id="svg-room-b" x="570" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
                 <line x1="595" y1="340" x2="655" y2="340" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" pointer-events="none" />
-                <text x="625" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room A</text>
-                <text x="625" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya A</text>
+                <text x="625" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room B</text>
+                <text x="625" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya B</text>
 
                 <!-- Tandas 3 -->
                 <rect id="svg-room-toilet-3" x="680" y="340" width="60" height="80" class="svg-room room-toilet" data-room-id="TANDAS-3" onclick="App.selectMapRoom('TANDAS-3')" />
