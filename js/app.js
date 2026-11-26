@@ -1488,6 +1488,14 @@ const App = (function () {
       kapasiti: '15 Orang',
       foto: 'assets/rooms/room-d.jpg',
       pegawai: 'Pegawai Sumber UPK'
+    },
+    'ALMARI-MASUK': {
+      nama: 'Almari Masuk (Walk-in Closet)',
+      kod: 'ALMARI-MASUK',
+      kategori: 'Zone 03 - Walk-in Closet',
+      kapasiti: 'Simpanan Peribadi',
+      foto: 'assets/rooms/store.jpg',
+      pegawai: 'Pegawai Sumber UPK'
     }
   };
 
@@ -1650,6 +1658,7 @@ const App = (function () {
     if (bStr.includes('bilik b') || bStr.includes('room b')) return 'BILIK-ROOM-B';
     if (bStr.includes('bilik c') || bStr.includes('room c')) return 'BILIK-ROOM-C';
     if (bStr.includes('bilik d') || bStr.includes('room d')) return 'BILIK-ROOM-D';
+    if (bStr.includes('almari masuk') || bStr.includes('walk-in') || bStr.includes('walk in closet')) return 'ALMARI-MASUK';
     if (bStr.includes('koridor') || bStr.includes('walkway')) return 'BILIK-WALKWAY';
     return null;
   }

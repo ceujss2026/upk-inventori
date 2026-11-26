@@ -1176,6 +1176,9 @@
 
                   <!-- 14. Bilik Eksekutif & Sumber D (Room D & Balcony - Sofa Hijau & Balkoni) -->
                   <path d="M 600 430 L 805 430 L 805 575 Q 702 650 600 575 Z" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+
+                  <!-- 14b. Almari Masuk / Walk-in Closet (antara Room D & aircond) -->
+                  <rect x="680" y="310" width="120" height="85" rx="3" class="svg-room" fill="#D97706" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
                   
                   <!-- Kumpulan Penanda Aset Dinamik Pada Pelan 3D -->
                   <g id="map3d-asset-markers">
@@ -1261,10 +1264,10 @@
                 <rect id="svg-room-toilet-3" x="680" y="340" width="60" height="80" class="room-toilet" pointer-events="none" />
                 <text x="710" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                <!-- Suis Aircond & Almari Walk-in -->
-                <rect id="svg-room-ac" x="740" y="340" width="60" height="40" class="svg-room room-utility" data-room-id="SUIS-AC" onclick="App.selectMapRoom('SUIS-AC')" />
-                <text x="770" y="360" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Aircond</text>
-                <text x="770" y="372" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Switch</text>
+                <!-- Suis Aircond (Bukan Interaktif) -->
+                <rect id="svg-room-ac" x="740" y="340" width="60" height="40" class="room-toilet" pointer-events="none" />
+                <text x="770" y="360" text-anchor="middle" font-size="8" font-weight="600" fill="#64748B" pointer-events="none">Aircond</text>
+                <text x="770" y="372" text-anchor="middle" font-size="8" font-weight="600" fill="#64748B" pointer-events="none">Switch</text>
 
                 <rect id="svg-room-closet" x="740" y="380" width="60" height="60" class="svg-room room-utility" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
                 <text x="770" y="405" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Walk-in</text>
