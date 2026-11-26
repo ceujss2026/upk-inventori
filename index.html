@@ -1151,8 +1151,7 @@
                   <!-- 3b. Dewan Mesyuarat / Bilik Persidangan Utama (y:442..630) -->
                   <path d="M 175 442 L 355 442 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
                   
-                  <!-- 4. Tandas Sayap Utara (Top Toilet) -->
-                  <rect x="360" y="25" width="65" height="85" rx="3" class="svg-room" fill="#0284C7" data-room-id="TANDAS-NORTH" onclick="App.selectMapRoom('TANDAS-NORTH')" />
+                  <!-- 4. Tandas Sayap Utara (Kawasan Bukan Interaktif / Tiada Klik) -->
                   
                   <!-- 5. Bilik Arkib & Rekod (Room Top / Office) -->
                   <rect x="425" y="25" width="165" height="195" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
@@ -1160,10 +1159,9 @@
                   <!-- 6. Ruang Terbuka / Laman Tengah (Outdoor) -->
                   <rect x="365" y="220" width="130" height="90" rx="4" class="svg-room" fill="#10B981" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
                   
-                  <!-- 7. Tandas Tengah (Tandas 1 & 2) -->
-                  <rect x="365" y="310" width="110" height="85" rx="3" class="svg-room" fill="#0284C7" data-room-id="TANDAS-1" onclick="App.selectMapRoom('TANDAS-1')" />
+                  <!-- 7. Tandas Tengah (Kawasan Bukan Interaktif / Tiada Klik) -->
 
-                  <!-- 8. Bilik Pegawai B (Room B - Baris Tengah Meja Merah / Sebelah Tandas) -->
+                  <!-- 8. Bilik Pegawai A (Room A - Baris Tengah Meja Merah / Sebelah Tandas) -->
                   <rect x="475" y="310" width="100" height="85" rx="4" class="svg-room" fill="#EF4444" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
                   
                   <!-- 9. Bilik Pegawai B (Room B - Baris Tengah Meja Biru) -->
@@ -1178,8 +1176,7 @@
                   <!-- 12. Bilik Kaunseling & Kerjaya C (Room C - Baris Bawah Karpet Ungu) -->
                   <path d="M 365 455 L 525 455 L 525 575 Q 445 635 365 575 Z" class="svg-room" fill="#8B5CF6" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
                   
-                  <!-- 13. Tandas Bawah & Almari Utiliti -->
-                  <rect x="525" y="460" width="75" height="140" rx="3" class="svg-room" fill="#0284C7" data-room-id="TANDAS-4" onclick="App.selectMapRoom('TANDAS-4')" />
+                  <!-- 13. Tandas Bawah (Kawasan Bukan Interaktif / Tiada Klik) -->
 
                   <!-- 14. Bilik Eksekutif & Sumber D (Room D & Balcony - Sofa Hijau & Balkoni) -->
                   <path d="M 600 430 L 805 430 L 805 575 Q 702 650 600 575 Z" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
@@ -1225,9 +1222,9 @@
                 <text x="180" y="455" text-anchor="middle" font-size="11" fill="#475569" pointer-events="none">Dewan / Bilik Mesyuarat Utama</text>
 
                 <!-- 4. SAYAP UTARA (North Wing) -->
-                <!-- Tandas Utara -->
-                <rect id="svg-room-toilet-north" x="320" y="40" width="80" height="80" rx="2" class="svg-room room-toilet" data-room-id="TANDAS-NORTH" onclick="App.selectMapRoom('TANDAS-NORTH')" />
-                <text x="360" y="85" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <!-- Tandas Utara (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-north" x="320" y="40" width="80" height="80" rx="2" class="room-toilet" pointer-events="none" />
+                <text x="360" y="85" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
                 <!-- Laluan Utara (Walkway) -->
                 <rect id="svg-room-walkway-north" x="320" y="120" width="80" height="90" class="svg-room room-walkway" data-room-id="LALUAN-NORTH" onclick="App.selectMapRoom('LALUAN-NORTH')" />
@@ -1245,12 +1242,12 @@
                 <text x="400" y="288" text-anchor="middle" font-size="10" fill="#047857" pointer-events="none">Laman Terbuka</text>
 
                 <!-- 6. BARISAN TENGAH (Middle Row) -->
-                <!-- Tandas 1 & 2 -->
-                <rect id="svg-room-toilet-1" x="320" y="340" width="70" height="80" class="svg-room room-toilet" data-room-id="TANDAS-1" onclick="App.selectMapRoom('TANDAS-1')" />
-                <text x="355" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <!-- Tandas 1 & 2 (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-1" x="320" y="340" width="70" height="80" class="room-toilet" pointer-events="none" />
+                <text x="355" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                <rect id="svg-room-toilet-2" x="390" y="340" width="70" height="80" class="svg-room room-toilet" data-room-id="TANDAS-2" onclick="App.selectMapRoom('TANDAS-2')" />
-                <text x="425" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <rect id="svg-room-toilet-2" x="390" y="340" width="70" height="80" class="room-toilet" pointer-events="none" />
+                <text x="425" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
                 <!-- Bilik Pegawai B (Room B) -->
                 <rect id="svg-room-a" x="460" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
@@ -1264,9 +1261,9 @@
                 <text x="625" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room B</text>
                 <text x="625" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya B</text>
 
-                <!-- Tandas 3 -->
-                <rect id="svg-room-toilet-3" x="680" y="340" width="60" height="80" class="svg-room room-toilet" data-room-id="TANDAS-3" onclick="App.selectMapRoom('TANDAS-3')" />
-                <text x="710" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <!-- Tandas 3 (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-3" x="680" y="340" width="60" height="80" class="room-toilet" pointer-events="none" />
+                <text x="710" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
                 <!-- Suis Aircond & Almari Walk-in -->
                 <rect id="svg-room-ac" x="740" y="340" width="60" height="40" class="svg-room room-utility" data-room-id="SUIS-AC" onclick="App.selectMapRoom('SUIS-AC')" />
@@ -1288,16 +1285,16 @@
                 <text x="390" y="555" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room C</text>
                 <text x="390" y="572" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Kaunseling & Kerjaya</text>
 
-                <!-- Gugusan Tandas Bawah & Almari Stor -->
-                <rect id="svg-room-toilet-4" x="460" y="500" width="75" height="135" class="svg-room room-toilet" data-room-id="TANDAS-4" onclick="App.selectMapRoom('TANDAS-4')" />
-                <text x="497" y="575" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <!-- Gugusan Tandas Bawah & Almari Stor (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-4" x="460" y="500" width="75" height="135" class="room-toilet" pointer-events="none" />
+                <text x="497" y="575" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
                 <rect id="svg-room-store-closet" x="535" y="500" width="75" height="60" class="svg-room room-utility" data-room-id="ALMARI-STOR" onclick="App.selectMapRoom('ALMARI-STOR')" />
                 <text x="572" y="528" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Store</text>
                 <text x="572" y="540" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Closet</text>
 
-                <rect id="svg-room-toilet-5" x="535" y="560" width="75" height="75" class="svg-room room-toilet" data-room-id="TANDAS-5" onclick="App.selectMapRoom('TANDAS-5')" />
-                <text x="572" y="605" text-anchor="middle" font-weight="600" font-size="11" fill="#0369A1" pointer-events="none">Toilet</text>
+                <rect id="svg-room-toilet-5" x="535" y="560" width="75" height="75" class="room-toilet" pointer-events="none" />
+                <text x="572" y="605" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
                 <!-- Bilik Eksekutif & Sumber D (Room D) -->
                 <rect id="svg-room-d" x="610" y="440" width="190" height="195" rx="3" class="svg-room room-d" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />

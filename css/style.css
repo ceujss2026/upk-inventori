@@ -349,9 +349,12 @@ body {
   fill: #FFFFFF;
 }
 
-.svg-room.room-toilet {
-  fill: #E0F2FE;
-  stroke: #0284C7;
+.room-toilet {
+  fill: #F1F5F9;
+  stroke: #CBD5E1;
+  stroke-width: 1.5px;
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
 .svg-room.room-store,
