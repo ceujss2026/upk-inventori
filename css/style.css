@@ -222,9 +222,10 @@ body {
 
 .img-4-3 {
   aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
-  background-color: var(--upk-ice-blue);
+  background-color: #f8fafc;
+  padding: 0.5rem;
 }
 
 /* --------------------------------------------------------------------------
