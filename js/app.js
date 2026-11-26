@@ -1494,7 +1494,7 @@ const App = (function () {
       kod: 'ALMARI-MASUK',
       kategori: 'Zone 03 - Walk-in Closet',
       kapasiti: 'Simpanan Peribadi',
-      foto: 'assets/rooms/store.jpg',
+      foto: 'assets/rooms/almari-masuk.jpg',
       pegawai: 'Pegawai Sumber UPK'
     }
   };
