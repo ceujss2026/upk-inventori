@@ -1465,14 +1465,6 @@ const App = (function () {
       foto: 'assets/rooms/room-a.jpg',
       pegawai: 'Pegawai Kerjaya A'
     },
-    'BILIK-ROOM-B': {
-      nama: 'Bilik B (Room B)',
-      kod: 'BILIK-ROOM-B',
-      kategori: 'Zone 03 - Office Room B',
-      kapasiti: '4 Orang',
-      foto: 'assets/rooms/room-b.jpg',
-      pegawai: 'Pegawai Kerjaya B'
-    },
     'BILIK-ROOM-C': {
       nama: 'Bilik C (Room C)',
       kod: 'BILIK-ROOM-C',
@@ -1576,6 +1568,7 @@ const App = (function () {
   }
 
   function selectMapRoom(roomId) {
+    if (roomId === 'BILIK-ROOM-B') roomId = 'BILIK-ROOM-A';
     _selectedMapRoom = roomId;
 
     // Padamkan kelas aktif pada semua bilik (2D dan 3D)
