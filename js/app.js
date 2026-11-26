@@ -1612,19 +1612,24 @@ const App = (function () {
     if (catEl) catEl.textContent = rInfo.kategori;
     if (capEl) capEl.textContent = rInfo.kapasiti;
 
-    // Tapis aset di dalam bilik ini
+    // Tapis aset di dalam bilik ini mengikut nama dan kod bilik rasmi
     const roomItems = _katalogData.filter(a => {
       if (a.map_bilik_id === roomId) return true;
       const bStr = (a.Lokasi_Bilik || '').toLowerCase();
-      const rStr = (rInfo.nama || '').toLowerCase();
-      if (rStr.includes('meeting') && bStr.includes('mesyuarat')) return true;
-      if (rStr.includes('kitchen') && (bStr.includes('dapur') || bStr.includes('pantri'))) return true;
-      if (rStr.includes('store') && bStr.includes('stor')) return true;
-      if (rStr.includes('room a') && bStr.includes('bilik a')) return true;
-      if (rStr.includes('room b') && bStr.includes('bilik b')) return true;
-      if (rStr.includes('room c') && (bStr.includes('bilik c') || bStr.includes('kaunseling'))) return true;
-      if (rStr.includes('room d') && (bStr.includes('bilik d') || bStr.includes('sumber'))) return true;
-      if (rStr.includes('room top') && bStr.includes('arkib')) return true;
+      const rNama = (rInfo.nama || '').toLowerCase();
+      if (rNama && bStr.includes(rNama)) return true;
+      if (roomId === 'BILIK-COUNTER' && (bStr.includes('kaunter') || bStr.includes('counter'))) return true;
+      if (roomId === 'BILIK-MEETING' && (bStr.includes('mesyuarat') || bStr.includes('meeting'))) return true;
+      if (roomId === 'STORE-KORIDOR' && bStr.includes('stor koridor')) return true;
+      if (roomId === 'BILIK-STORE' && (bStr.includes('suis') || bStr.includes('storeroom'))) return true;
+      if (roomId === 'BILIK-WALKWAY' && (bStr.includes('koridor') || bStr.includes('walkway'))) return true;
+      if (roomId === 'BILIK-KITCHEN' && (bStr.includes('dapur') || bStr.includes('kitchen'))) return true;
+      if (roomId === 'BILIK-OUTDOOR' && (bStr.includes('ruang terbuka') || bStr.includes('outdoor'))) return true;
+      if (roomId === 'BILIK-ROOM-TOP' && (bStr.includes('bilik e') || bStr.includes('room e'))) return true;
+      if (roomId === 'BILIK-ROOM-A' && (bStr.includes('bilik a') || bStr.includes('room a'))) return true;
+      if (roomId === 'BILIK-ROOM-B' && (bStr.includes('bilik b') || bStr.includes('room b'))) return true;
+      if (roomId === 'BILIK-ROOM-C' && (bStr.includes('bilik c') || bStr.includes('room c'))) return true;
+      if (roomId === 'BILIK-ROOM-D' && (bStr.includes('bilik d') || bStr.includes('room d'))) return true;
       return false;
     });
 
