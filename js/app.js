@@ -1392,158 +1392,102 @@ const App = (function () {
   let _selectedMapAsset = null;
   let _mapZoom = 1;
 
-  const ROOM_DIRECTORY = {
+    const ROOM_DIRECTORY = {
     'BILIK-MEETING': {
-      nama: 'Bilik Mesyuarat Utama (Meeting Room)',
+      nama: 'Bilik Mesyuarat',
       kod: 'BILIK-MEETING',
-      kategori: 'Dewan / Bilik Utama',
+      kategori: 'Zone 01 - Meeting Room',
       kapasiti: '25 Orang',
       foto: 'assets/rooms/meeting-room.jpg',
       pegawai: 'Ketua Unit UPK'
     },
-    'BILIK-ROOM-C': {
-      nama: 'Bilik Kaunseling & Kerjaya C (Room C)',
-      kod: 'BILIK-ROOM-C',
-      kategori: 'Bilik Kaunseling',
-      kapasiti: '10 Orang',
-      foto: 'assets/rooms/room-c.jpg',
-      pegawai: 'Cikgu Siti (Kaunselor Kanan)'
+    'BILIK-COUNTER': {
+      nama: 'Kawasan Kaunter',
+      kod: 'BILIK-COUNTER',
+      kategori: 'Zone 01 - Counter Area',
+      kapasiti: '5 Orang',
+      foto: 'assets/rooms/meeting-room.jpg',
+      pegawai: 'Pegawai Kaunter UPK'
     },
-    'BILIK-ROOM-D': {
-      nama: 'Bilik Eksekutif & Sumber D (Room D)',
-      kod: 'BILIK-ROOM-D',
-      kategori: 'Bilik Eksekutif & Sumber',
-      kapasiti: '15 Orang',
-      foto: 'assets/rooms/room-d.jpg',
-      pegawai: 'Pegawai Sumber UPK'
-    },
-    'BILIK-ROOM-A': {
-      nama: 'Bilik Pegawai A (Room A)',
-      kod: 'BILIK-ROOM-A',
-      kategori: 'Bilik Pegawai',
-      kapasiti: '4 Orang',
-      foto: 'assets/rooms/room-a.jpg',
-      pegawai: 'Cikgu Ahmad (Pegawai Kerjaya A)'
-    },
-    'BILIK-ROOM-B': {
-      nama: 'Bilik Pegawai B (Room B)',
-      kod: 'BILIK-ROOM-B',
-      kategori: 'Bilik Pegawai',
-      kapasiti: '4 Orang',
-      foto: 'assets/rooms/room-b.jpg',
-      pegawai: 'Pegawai Kerjaya B'
-    },
-    'BILIK-KITCHEN': {
-      nama: 'Dapur & Pantri (Kitchen)',
-      kod: 'BILIK-KITCHEN',
-      kategori: 'Pantri Kakitangan',
-      kapasiti: '8 Orang',
-      foto: 'assets/rooms/kitchen.jpg',
-      pegawai: 'Penyelia Pantri UPK'
-    },
-    'BILIK-STORE': {
-      nama: 'Bilik Stor & Suis Elektrik',
-      kod: 'BILIK-STORE',
-      kategori: 'Stor & Utiliti',
-      kapasiti: '3 Orang',
+    'STORE-KORIDOR': {
+      nama: 'Stor Koridor',
+      kod: 'STORE-KORIDOR',
+      kategori: 'Zone 01 - Store Corridor',
+      kapasiti: 'Laluan Simpanan',
       foto: 'assets/rooms/store.jpg',
-      pegawai: 'Pegawai Stor & Aset'
-    },
-    'BILIK-ROOM-TOP': {
-      nama: 'Bilik Arkib & Rekod (Room Top)',
-      kod: 'BILIK-ROOM-TOP',
-      kategori: 'Arkib Rasmi',
-      kapasiti: '4 Orang',
-      foto: 'assets/rooms/room-top.jpg',
-      pegawai: 'Pegawai Arkib'
-    },
-    'BILIK-OUTDOOR': {
-      nama: 'Ruang Terbuka / Laman Luar (Outdoor)',
-      kod: 'BILIK-OUTDOOR',
-      kategori: 'Ruang Terbuka',
-      kapasiti: '15 Orang',
-      foto: 'assets/rooms/outdoor.jpg',
-      pegawai: 'Penyelia Bangunan'
+      pegawai: 'Pegawai Stor UPK'
     },
     'BILIK-WALKWAY': {
-      nama: 'Laluan Koridor Utama (Walkway)',
+      nama: 'Laluan Koridor',
       kod: 'BILIK-WALKWAY',
-      kategori: 'Koridor',
+      kategori: 'Zone 01 - Corridor',
       kapasiti: 'Laluan Pergerakan',
       foto: 'assets/rooms/walkway-center.jpg',
       pegawai: 'Semua Kakitangan'
     },
-    'TANDAS-NORTH': {
-      nama: 'Tandas Sayap Utara',
-      kod: 'TANDAS-NORTH',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-top.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'TANDAS-1': {
-      nama: 'Tandas Kakitangan 1',
-      kod: 'TANDAS-1',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-center.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'TANDAS-2': {
-      nama: 'Tandas Kakitangan 2',
-      kod: 'TANDAS-2',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-center.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'TANDAS-3': {
-      nama: 'Tandas Tetamu 3',
-      kod: 'TANDAS-3',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-center.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'TANDAS-4': {
-      nama: 'Tandas 4',
-      kod: 'TANDAS-4',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-center.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'TANDAS-5': {
-      nama: 'Tandas 5',
-      kod: 'TANDAS-5',
-      kategori: 'Kemudahan Sanitari',
-      kapasiti: '1 Orang',
-      foto: 'assets/rooms/walkway-center.jpg',
-      pegawai: 'Penyelia Kebersihan'
-    },
-    'SUIS-AC': {
-      nama: 'Panel Suis Penghawa Dingin',
-      kod: 'SUIS-AC',
-      kategori: 'Utiliti Elektrik',
-      kapasiti: 'Utiliti',
+    'BILIK-STORE': {
+      nama: 'Bilik Stor & Suis Elektrik',
+      kod: 'BILIK-STORE',
+      kategori: 'Zone 02 - Storeroom',
+      kapasiti: '3 Orang',
       foto: 'assets/rooms/store.jpg',
-      pegawai: 'Juruteknik Elektrik'
+      pegawai: 'Pegawai Stor & Aset'
     },
-    'ALMARI-MASUK': {
-      nama: 'Almari Masuk (Walk-in Closet)',
-      kod: 'ALMARI-MASUK',
-      kategori: 'Stor Simpanan',
-      kapasiti: 'Simpanan',
-      foto: 'assets/rooms/store.jpg',
-      pegawai: 'Pegawai Sumber'
+    'BILIK-KITCHEN': {
+      nama: 'Dapur',
+      kod: 'BILIK-KITCHEN',
+      kategori: 'Zone 02 - Kitchen',
+      kapasiti: '8 Orang',
+      foto: 'assets/rooms/kitchen.jpg',
+      pegawai: 'Penyelia Pantri UPK'
     },
-    'ALMARI-STOR': {
-      nama: 'Almari Stor Bawah',
-      kod: 'ALMARI-STOR',
-      kategori: 'Stor Simpanan',
-      kapasiti: 'Simpanan',
-      foto: 'assets/rooms/store.jpg',
-      pegawai: 'Pegawai Stor'
+    'BILIK-OUTDOOR': {
+      nama: 'Ruang Terbuka',
+      kod: 'BILIK-OUTDOOR',
+      kategori: 'Zone 02 - Outdoor',
+      kapasiti: '15 Orang',
+      foto: 'assets/rooms/outdoor.jpg',
+      pegawai: 'Penyelia Bangunan'
+    },
+    'BILIK-ROOM-TOP': {
+      nama: 'Bilik E (Room E)',
+      kod: 'BILIK-ROOM-TOP',
+      kategori: 'Zone 02 - Room E',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-top.jpg',
+      pegawai: 'Pegawai Kerjaya E'
+    },
+    'BILIK-ROOM-A': {
+      nama: 'Bilik A (Room A)',
+      kod: 'BILIK-ROOM-A',
+      kategori: 'Zone 03 - Office Room A',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-a.jpg',
+      pegawai: 'Pegawai Kerjaya A'
+    },
+    'BILIK-ROOM-B': {
+      nama: 'Bilik B (Room B)',
+      kod: 'BILIK-ROOM-B',
+      kategori: 'Zone 03 - Office Room B',
+      kapasiti: '4 Orang',
+      foto: 'assets/rooms/room-b.jpg',
+      pegawai: 'Pegawai Kerjaya B'
+    },
+    'BILIK-ROOM-C': {
+      nama: 'Bilik C (Room C)',
+      kod: 'BILIK-ROOM-C',
+      kategori: 'Zone 03 - Office Room C',
+      kapasiti: '10 Orang',
+      foto: 'assets/rooms/room-c.jpg',
+      pegawai: 'Kaunselor Kanan'
+    },
+    'BILIK-ROOM-D': {
+      nama: 'Bilik D (Room D)',
+      kod: 'BILIK-ROOM-D',
+      kategori: 'Zone 03 - Office Room D',
+      kapasiti: '15 Orang',
+      foto: 'assets/rooms/room-d.jpg',
+      pegawai: 'Pegawai Sumber UPK'
     }
   };
 

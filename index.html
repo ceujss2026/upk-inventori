@@ -305,11 +305,17 @@
               <input type="text" id="landing-quick-search" placeholder="Cari kod aset (cth: UPK-PP-001)..." aria-label="Masukkan Kod Aset" class="flex-1 min-w-0 bg-transparent py-1 text-xs text-white placeholder:text-stone-400 focus:outline-none">
               <select id="landing-room-select" aria-label="Pilih Bilik UPK" class="hidden sm:block bg-transparent py-1 px-2 text-[11px] font-medium text-stone-300 border-l border-white/15 focus:outline-none cursor-pointer">
                 <option value="Semua" class="text-stone-900">Semua Bilik</option>
-                <option value="Bilik Mesyuarat Utama" class="text-stone-900">Bilik Mesyuarat</option>
-                <option value="Bilik Kaunseling" class="text-stone-900">Bilik Kaunseling C</option>
-                <option value="Bilik Eksekutif" class="text-stone-900">Bilik Eksekutif D</option>
-                <option value="Dapur" class="text-stone-900">Dapur &amp; Pantri</option>
-                <option value="Stor" class="text-stone-900">Bilik Stor &amp; Suis</option>
+                <option value="Bilik Mesyuarat" class="text-stone-900">Bilik Mesyuarat</option>
+                <option value="Kawasan Kaunter" class="text-stone-900">Kawasan Kaunter</option>
+                <option value="Bilik A (Room A)" class="text-stone-900">Bilik A (Room A)</option>
+                <option value="Bilik B (Room B)" class="text-stone-900">Bilik B (Room B)</option>
+                <option value="Bilik C (Room C)" class="text-stone-900">Bilik C (Room C)</option>
+                <option value="Bilik D (Room D)" class="text-stone-900">Bilik D (Room D)</option>
+                <option value="Bilik E (Room E)" class="text-stone-900">Bilik E (Room E)</option>
+                <option value="Dapur" class="text-stone-900">Dapur</option>
+                <option value="Ruang Terbuka" class="text-stone-900">Ruang Terbuka</option>
+                <option value="Bilik Stor & Suis Elektrik" class="text-stone-900">Bilik Stor &amp; Suis</option>
+                <option value="Stor Koridor" class="text-stone-900">Stor Koridor</option>
               </select>
               <button type="submit" aria-label="Semak aset" class="px-4 py-2 rounded-full bg-[#DF826C] hover:bg-[#C86A4B] text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow">
                 <span>Cari</span>
@@ -331,7 +337,7 @@
             <!-- Metrik Ringkas Kaki Kad -->
             <div class="pt-6 mt-6 border-t border-white/10 grid grid-cols-3 gap-3 text-left max-w-lg">
               <div>
-                <p class="font-serif text-lg sm:text-xl font-bold text-white tabular-nums" id="landing-stat-total">86+</p>
+                <p class="font-serif text-lg sm:text-xl font-bold text-white tabular-nums" id="landing-stat-total">100+</p>
                 <p class="text-[10px] text-stone-400 font-light mt-0.5">Unit Terdaftar</p>
               </div>
               <div>
@@ -1140,7 +1146,7 @@
                   <rect x="180" y="210" width="175" height="105" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
                   
                   <!-- 3a. Ruang Kaunter Khidmat Pelanggan & Resepsi (y:315..440) -->
-                  <rect x="180" y="315" width="175" height="125" rx="4" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                  <rect x="180" y="315" width="175" height="125" rx="4" class="svg-room" fill="#0EA5E9" data-room-id="BILIK-COUNTER" onclick="App.selectMapRoom('BILIK-COUNTER')" />
 
                   <!-- 3b. Dewan Mesyuarat / Bilik Persidangan Utama (y:442..630) -->
                   <path d="M 175 442 L 355 442 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
