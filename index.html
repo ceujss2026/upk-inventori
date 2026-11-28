@@ -1134,51 +1134,46 @@
                 <!-- Lapisan SVG Interaktif Di Atas Pelan 3D (viewBox: 0 0 1024 683) -->
                 <svg id="svg-3d-overlay" viewBox="0 0 1024 683" class="absolute inset-0 w-full h-full pointer-events-auto">
                   <!-- Zon Panas Bilik 3D (Zon Sentuhan & Sorotan Tepat Isometrik) -->
-                  <!-- 1. Bilik Stor & Suis Elektrik (Top-Left y:105..210) -->
-                  <rect x="165" y="105" width="190" height="105" rx="4" class="svg-room" fill="#C18C3B" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
-                  
-                  <!-- 2. Dapur & Pantri (Kitchen - Middle-Left y:210..315) -->
-                  <rect x="180" y="210" width="175" height="105" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
-                  
-                  <!-- 3a. Ruang Kaunter Khidmat Pelanggan & Resepsi (y:315..440) -->
-                  <rect x="180" y="315" width="175" height="125" rx="4" class="svg-room" fill="#0EA5E9" data-room-id="BILIK-COUNTER" onclick="App.selectMapRoom('BILIK-COUNTER')" />
+                  <!-- 1. Bilik Stor & Suis Elektrik (kiri atas - bilik kuning 2D) -->
+                  <rect x="50" y="55" width="210" height="155" rx="4" class="svg-room" fill="#C18C3B" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
 
-                  <!-- 3b. Dewan Mesyuarat / Bilik Persidangan Utama (y:442..630) -->
-                  <path d="M 175 442 L 355 442 L 355 580 Q 265 640 175 580 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
-                  
-                  <!-- 4a. Tandas Sayap Utara (Kawasan Bukan Interaktif / Tiada Klik) -->
-                  
-                  <!-- 4b. Stor Koridor — tidak kelihatan pada pelan 3D (terlindung di dalam almari) -->
+                  <!-- 2. Dapur & Pantri (kiri tengah - bawah Store) -->
+                  <rect x="50" y="210" width="210" height="110" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
 
-                  <!-- 5. Bilik E (Room E / Office) -->
-                  <rect x="425" y="25" width="165" height="195" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
-                  
-                  <!-- 6. Ruang Terbuka / Laman Tengah (Outdoor) -->
-                  <rect x="365" y="220" width="130" height="90" rx="4" class="svg-room" fill="#10B981" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
-                  
-                  <!-- 7. Tandas Tengah (Kawasan Bukan Interaktif / Tiada Klik) -->
+                  <!-- 3a. Kawasan Kaunter (kiri bawah Store - sebelum Meeting) -->
+                  <rect x="50" y="320" width="210" height="100" rx="4" class="svg-room" fill="#0EA5E9" data-room-id="BILIK-COUNTER" onclick="App.selectMapRoom('BILIK-COUNTER')" />
 
-                  <!-- 8. Bilik Pegawai A (Room A - Baris Tengah Meja Merah / Sebelah Tandas) -->
-                  <rect x="475" y="310" width="100" height="85" rx="4" class="svg-room" fill="#EF4444" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
-                  
-                  <!-- 9. Bilik Pegawai B (Room B - Baris Tengah Meja Biru) -->
-                  <rect x="575" y="310" width="105" height="85" rx="4" class="svg-room" fill="#0284C7" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
-                  
-                  <!-- 10. Tandas Kanan & Almari Utiliti (Kawasan Bukan Interaktif / Tiada Klik) -->
+                  <!-- 3b. Dewan Mesyuarat (kiri bawah melengkung) -->
+                  <path d="M 45 420 L 285 420 L 285 585 Q 165 650 45 585 Z" class="svg-room" fill="#10B981" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
 
-                  <!-- 11. Laluan Tengah (Central Walkway) -->
-                  <polygon points="360,395 730,395 730,430 600,430 600,460 360,460" class="svg-room" fill="#94A3B8" data-room-id="BILIK-WALKWAY" onclick="App.selectMapRoom('BILIK-WALKWAY')" />
+                  <!-- 4b. Stor Koridor — tidak kelihatan pada pelan 3D -->
 
-                  <!-- 12. Bilik Kaunseling & Kerjaya C (Room C - Baris Bawah Karpet Ungu) -->
-                  <path d="M 365 455 L 525 455 L 525 575 Q 445 635 365 575 Z" class="svg-room" fill="#8B5CF6" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
-                  
-                  <!-- 13. Tandas Bawah (Kawasan Bukan Interaktif / Tiada Klik) -->
+                  <!-- 5. Bilik E / Room Top (atas tengah - dua tingkat/tangga) -->
+                  <rect x="295" y="30" width="195" height="210" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
 
-                  <!-- 14. Bilik Eksekutif & Sumber D (Room D - bawah kanan, sofa teal + balkoni hijau) -->
-                  <path d="M 670 435 L 930 435 L 930 610 Q 860 670 770 670 Q 670 650 670 580 Z" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+                  <!-- 6. Ruang Terbuka / Outdoor (hijau tengah) -->
+                  <rect x="295" y="240" width="195" height="120" rx="4" class="svg-room" fill="#10B981" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
 
-                  <!-- 14b. Almari Masuk / Walk-in Closet (kanan atas Room D, bilik kecil) -->
-                  <rect x="870" y="320" width="90" height="115" rx="3" class="svg-room" fill="#D97706" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
+                  <!-- 8. Bilik A (1st office, baris kanan atas) -->
+                  <rect x="490" y="330" width="130" height="90" rx="4" class="svg-room" fill="#EF4444" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+
+                  <!-- 9. Bilik B (2nd office) -->
+                  <rect x="620" y="330" width="125" height="90" rx="4" class="svg-room" fill="#0284C7" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
+
+                  <!-- 10b. Bilik C kecil (3rd office kanan) -->
+                  <rect x="745" y="330" width="100" height="90" rx="4" class="svg-room" fill="#8B5CF6" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+
+                  <!-- 11. Almari Masuk (kanan atas, bilik kecil kuning) -->
+                  <rect x="845" y="330" width="135" height="90" rx="3" class="svg-room" fill="#D97706" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
+
+                  <!-- 11b. Laluan Koridor (strip mendatar tengah) -->
+                  <rect x="290" y="420" width="690" height="55" class="svg-room" fill="#94A3B8" data-room-id="BILIK-WALKWAY" onclick="App.selectMapRoom('BILIK-WALKWAY')" />
+
+                  <!-- 12. Bilik C (bawah tengah - melengkung, kaunseling) -->
+                  <path d="M 290 475 L 490 475 L 490 600 Q 390 660 290 600 Z" class="svg-room" fill="#8B5CF6" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+
+                  <!-- 14. Bilik D (besar kanan bawah) -->
+                  <rect x="490" y="475" width="490" height="195" rx="4" class="svg-room" fill="#0F3E5D" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
                   
                   <!-- Kumpulan Penanda Aset Dinamik Pada Pelan 3D -->
                   <g id="map3d-asset-markers">
@@ -1193,66 +1188,138 @@
 
             <!-- MOD 2: PETA VEKTOR INTERAKTIF (SVG 2D) -->
             <div id="pelan-svg-viewport" class="hidden overflow-hidden p-2 sm:p-4">
-              <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-white">
-                <img id="img-2d-floor-plan" src="assets/floor-plan-2d.jpg" alt="Pelan Lantai 2D UPK" class="w-full h-auto block select-none">
-                <!-- Lapisan SVG Interaktif Di Atas Pelan 2D (viewBox: 0 0 1024 768) -->
-                <svg id="svg-upk-floor-plan" viewBox="0 0 1024 768" class="absolute inset-0 w-full h-full pointer-events-auto">
+              <svg id="svg-upk-floor-plan" viewBox="0 0 850 720" class="svg-floor-plan">
+                <defs>
+                  <pattern id="grid-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#E2E8F0" />
+                  </pattern>
+                </defs>
 
-                  <!-- 1. BILIK STOR & SUIS ELEKTRIK (kuning, kiri atas) -->
-                  <rect id="svg-room-store" x="27" y="27" width="363" height="173" rx="4" class="svg-room room-store" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
+                <!-- Latar Grid -->
+                <rect width="100%" height="100%" fill="url(#grid-pattern)" />
 
-                  <!-- 2. DAPUR & PANTRI (putih, kiri tengah) -->
-                  <rect id="svg-room-kitchen" x="27" y="200" width="363" height="145" rx="4" class="svg-room room-kitchen" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
+                <!-- 1. BILIK STOR & SUIS ELEKTRIK (Top-Left) -->
+                <rect id="svg-room-store" x="40" y="40" width="280" height="130" rx="4" class="svg-room room-store" data-room-id="BILIK-STORE" onclick="App.selectMapRoom('BILIK-STORE')" />
+                <text x="180" y="95" text-anchor="middle" font-weight="700" font-size="13" fill="#92400E" pointer-events="none">Store / Electrical Switch</text>
+                <text x="180" y="115" text-anchor="middle" font-size="10" fill="#B45309" pointer-events="none">Bilik Stor & Suis Elektrik</text>
 
-                  <!-- 3. DEWAN MESYUARAT UTAMA (krim melengkung, kiri bawah) -->
-                  <path id="svg-room-meeting" d="M 27 345 L 390 345 L 390 580 Q 208 680 27 580 Z" class="svg-room room-meeting" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                <!-- 2. DAPUR & PANTRI (Kitchen - Left Middle) -->
+                <rect id="svg-room-kitchen" x="40" y="170" width="280" height="170" rx="4" class="svg-room room-kitchen" data-room-id="BILIK-KITCHEN" onclick="App.selectMapRoom('BILIK-KITCHEN')" />
+                <text x="180" y="250" text-anchor="middle" font-weight="700" font-size="14" fill="#0F172A" pointer-events="none">Kitchen</text>
+                <text x="180" y="270" text-anchor="middle" font-size="10" fill="#64748B" pointer-events="none">Dapur & Pantri Kakitangan</text>
 
-                  <!-- 4. TANDAS UTARA (bukan interaktif) -->
-                  <rect id="svg-room-toilet-north" x="390" y="27" width="135" height="200" rx="2" class="room-toilet" pointer-events="none" />
+                <!-- 3. DEWAN MESYUARAT UTAMA (Meeting Room - Bottom Left Curved) -->
+                <path id="svg-room-meeting" d="M 40 340 L 320 340 L 320 540 Q 180 630 40 540 Z" class="svg-room room-meeting" data-room-id="BILIK-MEETING" onclick="App.selectMapRoom('BILIK-MEETING')" />
+                <!-- Tingkap Melengkung Sian -->
+                <path d="M 130 585 Q 180 615 230 585" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" fill="none" pointer-events="none" />
+                <text x="180" y="435" text-anchor="middle" font-weight="800" font-size="15" fill="#0F172A" pointer-events="none">Meeting Room</text>
+                <text x="180" y="455" text-anchor="middle" font-size="11" fill="#475569" pointer-events="none">Dewan / Bilik Mesyuarat Utama</text>
 
-                  <!-- 5. BILIK E / ROOM TOP (kanan tengah atas) -->
-                  <rect id="svg-room-top" x="525" y="27" width="100" height="110" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
+                <!-- 4. SAYAP UTARA (North Wing) -->
+                <!-- Tandas Utara (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-north" x="320" y="40" width="80" height="80" rx="2" class="room-toilet" pointer-events="none" />
+                <text x="360" y="85" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                  <!-- 6. RUANG TERBUKA / OUTDOOR (hijau, tengah) -->
-                  <rect id="svg-room-outdoor" x="390" y="200" width="235" height="145" rx="4" class="svg-room room-outdoor" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
+                <!-- Laluan Utara / Koridor (Bukan Interaktif) -->
+                <rect id="svg-room-walkway-north" x="320" y="120" width="80" height="90" rx="2" class="room-toilet" pointer-events="none" />
+                <text x="360" y="170" text-anchor="middle" font-weight="600" font-size="10" fill="#64748B" pointer-events="none">Laluan</text>
 
-                  <!-- 7. TANDAS BARISAN TENGAH (bukan interaktif) -->
-                  <rect id="svg-room-toilet-1" x="390" y="345" width="80" height="85" class="room-toilet" pointer-events="none" />
-                  <rect id="svg-room-toilet-2" x="470" y="345" width="60" height="85" class="room-toilet" pointer-events="none" />
+                <!-- Bilik Atas / Arkib (Room Top) -->
+                <rect id="svg-room-top" x="400" y="40" width="80" height="170" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-TOP" onclick="App.selectMapRoom('BILIK-ROOM-TOP')" />
+                <line x1="480" y1="90" x2="480" y2="160" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" pointer-events="none" />
+                <text x="440" y="120" text-anchor="middle" font-weight="700" font-size="12" fill="#0F172A" pointer-events="none">Room</text>
+                <text x="440" y="136" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Arkib / Rekod</text>
 
-                  <!-- 8. BILIK A (Room A) -->
-                  <rect id="svg-room-a" x="530" y="345" width="130" height="85" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                <!-- 5. RUANG TERBUKA (Outdoor Courtyard) -->
+                <rect id="svg-room-outdoor" x="320" y="210" width="160" height="130" class="svg-room room-outdoor" data-room-id="BILIK-OUTDOOR" onclick="App.selectMapRoom('BILIK-OUTDOOR')" />
+                <text x="400" y="270" text-anchor="middle" font-weight="700" font-size="13" fill="#065F46" pointer-events="none">Outdoor</text>
+                <text x="400" y="288" text-anchor="middle" font-size="10" fill="#047857" pointer-events="none">Laman Terbuka</text>
 
-                  <!-- 9. BILIK B (Room B) -->
-                  <rect id="svg-room-b" x="660" y="345" width="120" height="85" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
+                <!-- 6. BARISAN TENGAH (Middle Row) -->
+                <!-- Tandas 1 & 2 (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-1" x="320" y="340" width="70" height="80" class="room-toilet" pointer-events="none" />
+                <text x="355" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                  <!-- 10. BILIK C (Room C) -->
-                  <rect id="svg-room-c-top" x="780" y="345" width="95" height="85" rx="2" class="svg-room room-c" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+                <rect id="svg-room-toilet-2" x="390" y="340" width="70" height="80" class="room-toilet" pointer-events="none" />
+                <text x="425" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                  <!-- 11. ALMARI MASUK / Walk-in Closet (kuning kecil, kanan atas) -->
-                  <rect id="svg-room-closet" x="875" y="345" width="122" height="85" rx="2" class="svg-room room-utility" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
+                <!-- Bilik Pegawai B (Room B) -->
+                <rect id="svg-room-a" x="460" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-A" onclick="App.selectMapRoom('BILIK-ROOM-A')" />
+                <line x1="485" y1="340" x2="545" y2="340" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" pointer-events="none" />
+                <text x="515" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room A</text>
+                <text x="515" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya A</text>
 
-                  <!-- 12. LALUAN KORIDOR -->
-                  <rect id="svg-room-walkway" x="390" y="430" width="610" height="60" class="svg-room room-walkway" data-room-id="BILIK-WALKWAY" onclick="App.selectMapRoom('BILIK-WALKWAY')" />
+                <!-- Bilik Pegawai A (Room A) -->
+                <rect id="svg-room-b" x="570" y="340" width="110" height="80" rx="2" class="svg-room room-office" data-room-id="BILIK-ROOM-B" onclick="App.selectMapRoom('BILIK-ROOM-B')" />
+                <line x1="595" y1="340" x2="655" y2="340" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" pointer-events="none" />
+                <text x="625" y="378" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room B</text>
+                <text x="625" y="394" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Pegawai Kerjaya B</text>
 
-                  <!-- 13. TANDAS BAWAH KIRI (bukan interaktif) -->
-                  <rect id="svg-room-toilet-3" x="390" y="490" width="250" height="85" class="room-toilet" pointer-events="none" />
+                <!-- Tandas 3 (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-3" x="680" y="340" width="60" height="80" class="room-toilet" pointer-events="none" />
+                <text x="710" y="385" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
 
-                  <!-- 14. STOR KORIDOR -->
-                  <rect id="svg-room-store-closet" x="640" y="490" width="90" height="80" rx="2" class="svg-room room-store" data-room-id="STORE-KORIDOR" onclick="App.selectMapRoom('STORE-KORIDOR')" />
+                <!-- Suis Aircond (Bukan Interaktif) -->
+                <rect id="svg-room-ac" x="740" y="340" width="60" height="40" class="room-toilet" pointer-events="none" />
+                <text x="770" y="360" text-anchor="middle" font-size="8" font-weight="600" fill="#64748B" pointer-events="none">Aircond</text>
+                <text x="770" y="372" text-anchor="middle" font-size="8" font-weight="600" fill="#64748B" pointer-events="none">Switch</text>
 
-                  <!-- 15. TANDAS BAWAH (bukan interaktif) -->
-                  <rect id="svg-room-toilet-4" x="390" y="575" width="250" height="80" class="room-toilet" pointer-events="none" />
-                  <rect id="svg-room-toilet-5" x="640" y="570" width="90" height="85" class="room-toilet" pointer-events="none" />
+                <rect id="svg-room-closet" x="740" y="380" width="60" height="60" class="svg-room room-utility" data-room-id="ALMARI-MASUK" onclick="App.selectMapRoom('ALMARI-MASUK')" />
+                <text x="770" y="405" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Walk-in</text>
+                <text x="770" y="417" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Closet</text>
 
-                  <!-- 16. BILIK D (Room D - besar kanan bawah) -->
-                  <rect id="svg-room-d" x="730" y="430" width="267" height="265" rx="3" class="svg-room room-d" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+                <!-- 7. LALUAN UTAMA (Central Walkway) -->
+                <path id="svg-room-walkway" d="M 320 420 L 740 420 L 740 440 L 610 440 L 610 500 L 460 500 L 460 440 L 320 440 Z" class="svg-room room-walkway" data-room-id="BILIK-WALKWAY" onclick="App.selectMapRoom('BILIK-WALKWAY')" />
+                <text x="490" y="468" text-anchor="middle" font-weight="600" font-size="12" fill="#475569" pointer-events="none">Walkway</text>
 
-                  <!-- 17. KUMPULAN PENANDA TITIK ASET -->
-                  <g id="map-asset-markers"></g>
-                  <g id="map-inspector-marker"></g>
-                </svg>
-              </div>
+                <!-- 8. BARISAN BAWAH (Lower Section) -->
+                <!-- Bilik Kaunseling & Kerjaya C (Room C - Curved Bottom) -->
+                <path id="svg-room-c" d="M 320 500 L 460 500 L 460 620 Q 390 660 320 620 Z" class="svg-room room-c" data-room-id="BILIK-ROOM-C" onclick="App.selectMapRoom('BILIK-ROOM-C')" />
+                <path d="M 360 642 Q 390 655 420 642" stroke="#06B6D4" stroke-width="7" stroke-linecap="round" fill="none" pointer-events="none" />
+                <text x="390" y="555" text-anchor="middle" font-weight="700" font-size="13" fill="#0F172A" pointer-events="none">Room C</text>
+                <text x="390" y="572" text-anchor="middle" font-size="9" fill="#64748B" pointer-events="none">Kaunseling & Kerjaya</text>
+
+                <!-- Gugusan Tandas Bawah & Almari Stor (Bukan Interaktif / Tiada Klik) -->
+                <rect id="svg-room-toilet-4" x="460" y="500" width="75" height="135" class="room-toilet" pointer-events="none" />
+                <text x="497" y="575" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
+
+                <rect id="svg-room-store-closet" x="535" y="500" width="75" height="60" class="svg-room room-store" data-room-id="STORE-KORIDOR" onclick="App.selectMapRoom('STORE-KORIDOR')" />
+                <text x="572" y="526" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Stor</text>
+                <text x="572" y="538" text-anchor="middle" font-size="8" font-weight="700" fill="#92400E" pointer-events="none">Koridor</text>
+
+                <rect id="svg-room-toilet-5" x="535" y="560" width="75" height="75" class="room-toilet" pointer-events="none" />
+                <text x="572" y="605" text-anchor="middle" font-weight="600" font-size="11" fill="#64748B" pointer-events="none">Toilet</text>
+
+                <!-- Bilik Eksekutif & Sumber D (Room D) -->
+                <rect id="svg-room-d" x="610" y="440" width="190" height="195" rx="3" class="svg-room room-d" data-room-id="BILIK-ROOM-D" onclick="App.selectMapRoom('BILIK-ROOM-D')" />
+                <text x="705" y="535" text-anchor="middle" font-weight="800" font-size="15" fill="#0F172A" pointer-events="none">Room D</text>
+                <text x="705" y="555" text-anchor="middle" font-size="10" fill="#64748B" pointer-events="none">Bilik Eksekutif & Sumber</text>
+
+                <!-- Balkoni Hijau Bergaris Putus-putus -->
+                <path d="M 610 635 Q 705 665 800 635" fill="none" stroke="#059669" stroke-width="3" stroke-dasharray="6,4" pointer-events="none" />
+                <text x="705" y="652" text-anchor="middle" font-size="9" font-weight="700" fill="#047857" pointer-events="none">Balcony</text>
+
+                <!-- 9. PINTU-PINTU (Doors - Red Openings) -->
+                <rect x="315" y="85" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="355" y="115" width="24" height="10" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="395" y="155" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="315" y="270" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="65" y="335" width="24" height="10" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="35" y="430" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="315" y="430" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="495" y="415" width="24" height="10" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="605" y="415" width="24" height="10" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="375" y="495" width="24" height="10" fill="#EF4444" rx="2" pointer-events="none" />
+                <rect x="605" y="480" width="10" height="24" fill="#EF4444" rx="2" pointer-events="none" />
+
+                <!-- 10. KUMPULAN PENANDA TITIK ASET (DYNAMIC ASSET HOTSPOTS) -->
+                <g id="map-asset-markers">
+                  <!-- Dijana secara dinamik oleh App.renderMapMarkers() -->
+                </g>
+
+                <!-- Sasaran Pemeriksa Koordinat 2D -->
+                <g id="map-inspector-marker"></g>
+              </svg>
             </div>
 
             <!-- MOD 2: PELAN ARKITEK ASAL (FOTO BERANOTASI) -->
